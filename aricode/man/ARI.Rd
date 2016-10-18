@@ -6,7 +6,23 @@
 \usage{
 ARI(c1, c2)
 }
+\arguments{
+\item{c1}{a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.}
+
+\item{c2}{a vector containing the labels of the second classification.}
+}
+\value{
+a scalar with the adjusted rand index.
+}
 \description{
-A function to compute the adjusted rand index
+A function to compute the adjusted rand index between two classifications
+}
+\examples{
+data(iris)
+cl <- cutree(hclust(dist(iris[,-5])), 4)
+ARI(cl,iris$Species)
+}
+\seealso{
+\code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 }
 

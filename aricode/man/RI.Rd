@@ -6,7 +6,23 @@
 \usage{
 RI(c1, c2)
 }
+\arguments{
+\item{c1}{a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.}
+
+\item{c2}{a vector containing the labels of the second classification.}
+}
+\value{
+a scalar with the rand index.
+}
 \description{
-A function to compute the rand index
+A function to compute the rand index between two classifications
+}
+\examples{
+data(iris)
+cl <- cutree(hclust(dist(iris[,-5])), 4)
+RI(cl,iris$Species)
+}
+\seealso{
+\code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 }
 

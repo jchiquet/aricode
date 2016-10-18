@@ -5,9 +5,10 @@
 void c_SortPairs(int * c1, int * c2, int * new_c1, int * new_c2,
 	       int *pair_c1, int *pair_c2, int *pair_count,
 	       int *count1, int *count2, int *n_, int *nzero){
-	int n =n_[0];
-	int N1 =0;
-	int N2 =0;
+
+	int n  = n_[0];
+	int N1 = 0;
+	int N2 = 0;
 
 	// Number of class in c1 and c2
 	for(int i=0; i <n; i++) N1 = MAX(N1,c1[i]);
@@ -44,7 +45,6 @@ void c_SortPairs(int * c1, int * c2, int * new_c1, int * new_c2,
 	shift1[0] = 0;
 	for(int i=1; i < N1+1; i++) shift1[i]=shift1[i-1]+count1[i-1];
 
-
 	for(int i=0; i <n; i++)
 	{
 		new_c1[shift1[tmp_c1[i]]] = tmp_c1[i];
@@ -52,10 +52,7 @@ void c_SortPairs(int * c1, int * c2, int * new_c1, int * new_c2,
 		shift1[tmp_c1[i]]++;
 	}
 
-
 	// Calcul of pairs
-
-	//
 	for(int i=0; i < n; i++) pair_count[i]=0;
 	int pair_cur_c1, pair_cur_c2, i_index;
 	i_index=0;

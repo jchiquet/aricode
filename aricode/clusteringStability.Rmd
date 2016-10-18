@@ -1,0 +1,53 @@
+---
+title: "Clustering Stability with Clustering comparison measures"
+output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+X <- read.table("http://statweb.stanford.edu/~tibs/ElemStatLearn/datasets/nci.data")
+class <- unlist(read.table("http://statweb.stanford.edu/~tibs/ElemStatLearn/datasets/nci.info.txt", skip=14))
+#X <- X[order(apply(X, 1, var))[1:100], ]
+p <- nrow(X)
+n <- ncol(X)
+```
+
+```{r}
+getOneTree <- function(i,prop.var = .75) {
+  return(hclust(dist(t(X[sample.int(p, round(p*prop.var)), ]))))
+}
+library(parallel)
+nsim <- 100
+trees <- mclapply(1:nsim, getOneTree, mc.cores=10)
+
+library(aricode)
+score <- NID
+scorevsRef <- sapply(trees, function(tree) {
+  apply(cutree(tree, 1:n), 2, score, class)
+})
+
+pairs <- combn(100, 2, simplify=FALSE)
+
+score.pairs <- do.call(rbind, mclapply(pairs, function(pair) {
+  classif1 <- cutree(trees[[pair[1]]], 1:(n-1))
+  classif2 <- cutree(trees[[pair[2]]], 1:(n-1))
+  return(sapply(1:(n-1), function(i) score(classif1[,i], classif2[,i])))
+}, mc.cores=10))
+
+score.pairs.boot <- do.call(rbind, mclapply(pairs, function(pair) {
+  classif1 <- cutree(trees[[pair[1]]], 1:(n-1))
+  classif2 <- cutree(trees[[pair[2]]], 1:(n-1))
+  return(sapply(1:(n-1), function(i) score(sample(classif1[,i]), classif2[,i])))
+}, mc.cores=10))
+
+matplot(scorevsRef, type="l")
+plot(colMeans(score.pairs) - colMeans(score.pairs.boot), type="l")
+
+```
+

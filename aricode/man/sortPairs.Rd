@@ -4,7 +4,7 @@
 \alias{sortPairs}
 \title{Sort Pairs}
 \usage{
-sortPairs(c1, c2)
+sortPairs(c1, c2, spMat = FALSE)
 }
 \description{
 A function to sort pairs of integers or factors

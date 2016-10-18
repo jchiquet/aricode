@@ -6,7 +6,23 @@
 \usage{
 NVI(c1, c2)
 }
+\arguments{
+\item{c1}{a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.}
+
+\item{c2}{a vector containing the labels of the second classification.}
+}
+\value{
+a scalar with the normalized variation of information.
+}
 \description{
-A function various measures of similarity between two classifications
+A function to compute the NVI between two classifications
+}
+\examples{
+data(iris)
+cl <- cutree(hclust(dist(iris[,-5])), 4)
+NVI(cl,iris$Species)
+}
+\seealso{
+\code{\link{RI}}, \code{\link{NID}}, \code{\link{NMI}}, \code{\link{ARI}}, \code{\link{clustComp}}
 }
 

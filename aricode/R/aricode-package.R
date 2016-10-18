@@ -1,0 +1,21 @@
+#' aricode
+#'
+#' A package for efficient computations of standard clustering comparison measures. Available measures are describes in the paper of Vinh et al, JMLR, 2009 (see reference below).
+#' @section Functions in aricode:
+#' The functions included in aricode are:
+#' \itemize{
+#'  \item{ARI:}{ compute the adjusted rand index}
+#'  \item{RI:}{ compute the rand index}
+#'  \item{NVI:}{ compute the normalized variation information}
+#'  \item{NID:}{ compute the normalized information distance}
+#'  \item{NMI:}{ compute the normalized mutual information}
+#'  \item{entropy:}{ compute the conditional and joint entropies}
+#'  \item{clustComp:}{ compute all clustering comparison measures at once}
+#' }
+#' @author Julien Chiquet \email{julien.chiquet@@gmail.com}
+#' @author Guillem Rigaill \email{guillem.rigaill@@evry.inra.fr}
+#' @references Vinh, Nguyen Xuan, Julien Epps, and James Bailey. "Information theoretic measures for clusterings comparison: Variants, properties, normalization and correction for chance." Journal of Machine Learning Research 11.Oct (2010): 2837-2854.
+#' @seealso \code{\link{ARI}}, \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{entropy}}, \code{\link{clustComp}}
+#' @docType package
+#' @name aricode
+NULL
