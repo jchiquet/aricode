@@ -1,0 +1,98 @@
+library(mclust)  # our reference for the (adjusted) rand Index
+library(aricode) # our implementation
+library(ggplot2) # for outputs
+library(gridExtra)
+
+g_legend<-function(a.gplot){
+    tmp <- ggplot_gtable(ggplot_build(a.gplot))
+    leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+    legend <- tmp$grobs[[leg]]
+    return(legend)
+}
+
+## common settings for consistency and timings
+ns <- sort(c(200 * 2^(0:8), 150 *2^(0:8)))
+
+## ==========================================================================
+## test same result as mclust
+nrep <- 20
+one.sim.consistency <- function(i) {
+    return(sapply(ns, function(n) {
+        c1 <- sample(1:(n/50), n, replace=TRUE)
+        c2 <- sample(1:(n/50), n, replace=TRUE)
+        return((ARI(c1, c2) == adjustedRandIndex(c1, c2)))
+    }))
+}
+
+
+cat("\nCheck consistency of the algorithm\n")
+check.ARI <- do.call("rbind", lapply(1:nrep, one.sim.consistency))
+if(any(!(check.ARI))) {
+    cat("\nFAIL...")
+} else {
+    cat("\nPassed!\n")
+}
+
+## ==========================================================================
+## test speed
+library(microbenchmark)
+# with random classif, number of classes grows with n
+sim.timings.1 <- function(n, times=1000) {
+    cat("",n)
+    c1 <- sample(1:(n/50), n, replace=TRUE)
+    c2 <- sample(1:(n/50), n, replace=TRUE)
+    out <- microbenchmark(aricode = ARI (c1, c2), mclust = adjustedRandIndex(c1, c2), times=times)
+    return(data.frame(time=out$time, method=out$expr, n = n))
+}
+
+# with random classif, constant number of classes
+sim.timings.2 <- function(n, times=1000) {
+    cat("",n)
+    c1 <- sample(1:100, n, replace=TRUE)
+    c2 <- sample(1:100, n, replace=TRUE)
+    out <- microbenchmark(aricode = ARI (c1, c2), mclust = adjustedRandIndex(c1, c2), times=times)
+    return(data.frame(time=out$time, method=out$expr, n = n))
+}
+
+# with similar classif, number of classes grows with n
+sim.timings.3 <- function(n, times=1000) {
+    cat("",n)
+    c1 <- sample(1:(n/50), n, replace=TRUE);c2 <- c1;
+    i_change <- sample(1:n, n/50, replace=FALSE)
+    c2[i_change] <- c2[rev(i_change)]
+    out <- microbenchmark(aricode = ARI (c1, c2), mclust = adjustedRandIndex(c1, c2), times=times)
+    return(data.frame(time=out$time, method=out$expr, n = n))
+}
+
+##  with random classif and nb of classes growing with n
+cat("\n\n============================================================")
+cat("\nTimings with random classif and nb of classes growing with n\n")
+cat("n =")
+timings.1 <- do.call("rbind", lapply(ns, sim.timings.1))
+p.timings1 <- ggplot(timings.1, aes(x=factor(n), y=time, fill=method)) +
+    geom_violin() + coord_trans(y="log10") + labs(x="n", y="time (log scale)")
+
+## with random classif and cst nb of classes (should be linear)
+cat("\n\n============================================================")
+cat("\nTimings with random classif and cst nb of classes (should be linear)\n")
+cat("n =")
+timings.2 <- do.call("rbind", lapply(ns, sim.timings.2))
+p.timings2 <- ggplot(timings.2, aes(x=factor(n), y=time, fill=method)) +
+    geom_violin() + coord_trans(y="log10") + labs(x="n", y="time (log scale)")
+
+## with similar classif, number of classes grows with n
+cat("\n\n============================================================")
+cat("\nTimings with similar classif, number of classes grows with n\n")
+cat("n =")
+timings.3 <- do.call("rbind", lapply(ns, sim.timings.3))
+p.timings3 <- ggplot(timings.3, aes(x=factor(n), y=time, fill=method)) +
+    geom_violin() + coord_trans(y="log10") + labs(x="n", y="time (log scale)")
+
+grid.arrange(
+    p.timings1 + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
+    p.timings2 + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
+    p.timings3 + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
+    g_legend(p.timings1), top="Timings for a growing nb of class, constant number of class, similar classes", nrow=1, widths=c(10,10,10,5)
+)
+
+
