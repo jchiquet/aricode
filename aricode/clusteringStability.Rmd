@@ -30,14 +30,14 @@ mc.cores=3
 ## using random projection
 ##
 suppressMessages(library(RPEnsemble))
-getOneTree <- function(i, d=100){
+getOneTree <- function(i, d=20){
   mat <- RPGenerate(p = nrow(X), d = d, method = "Haar", B2 = 1)
   Xproj <- crossprod((mat), as.matrix(X))
   return(hclust(dist(t(Xproj))))
 }
 
 library(parallel)
-nsim <- 100
+nsim <- 300
 trees <- mclapply(1:nsim, getOneTree, mc.cores=mc.cores)
 
 
@@ -53,8 +53,12 @@ system.time(scorevsRef <- sapply(trees, function(tree) {
   apply(cutree(tree, 1:n), 2, score, class)
 }))
 
+system.time(scorevsRef.boot <- sapply(trees, function(tree) {
+  apply(cutree(tree, 1:n), 2, FUN=function(obt.class, class){ 
+      score(sample(obt.class), class)}, class)   }))
 
-pairs <- combn(100, 2, simplify=FALSE)
+
+pairs <- combn(nsim, 2, simplify=FALSE)
 
 score.pairs <- do.call(rbind, mclapply(pairs, function(pair) {
   classif1 <- cutree(trees[[pair[1]]], 1:(n-1))
@@ -68,8 +72,13 @@ score.pairs.boot <- do.call(rbind, mclapply(pairs, function(pair) {
   return(sapply(1:(n-1), function(i) score(sample(classif1[,i]), classif2[,i])))
 }, mc.cores=mc.cores))
 
-matplot(scorevsRef, type="l")
-plot(colMeans(score.pairs) - colMeans(score.pairs.boot), type="l")
+output <- data.frame(withRef = rowMeans(scorevsRef - scorevsRef.boot)[-ncol(X)], 
+  intern = colMeans(score.pairs) - colMeans(score.pairs.boot))
+matplot(output, lty=1, type="b", xlab="Dimension", ylab="Avg. Measure")
+abline(v=apply(output, 2, which.min), col=1:2, lty=3)
+  
 
 ```
+
+
 
