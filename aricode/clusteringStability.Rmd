@@ -21,7 +21,7 @@ n <- ncol(X)
 
 ```{r}
 
-mc.cores=3
+mc.cores=10
 ## using resampling of genes
 #getOneTree <- function(i,prop.var = .25) {
 #  return(hclust(dist(t(X[sample.int(p, round(p*prop.var)), ]))))
@@ -57,7 +57,6 @@ system.time(scorevsRef.boot <- sapply(trees, function(tree) {
   apply(cutree(tree, 1:n), 2, FUN=function(obt.class, class){ 
       score(sample(obt.class), class)}, class)   }))
 
-
 pairs <- combn(nsim, 2, simplify=FALSE)
 
 score.pairs <- do.call(rbind, mclapply(pairs, function(pair) {
@@ -72,13 +71,38 @@ score.pairs.boot <- do.call(rbind, mclapply(pairs, function(pair) {
   return(sapply(1:(n-1), function(i) score(sample(classif1[,i]), classif2[,i])))
 }, mc.cores=mc.cores))
 
-output <- data.frame(withRef = rowMeans(scorevsRef - scorevsRef.boot)[-ncol(X)], 
+mean <- data.frame(withRef = rowMeans(scorevsRef - scorevsRef.boot)[-ncol(X)], 
   intern = colMeans(score.pairs) - colMeans(score.pairs.boot))
+
+sd <- data.frame(withRef = apply(scorevsRef - rowMeans(scorevsRef.boot), 1, sd)[-ncol(X)], 
+  intern = apply(t(score.pairs) - colMeans(score.pairs.boot), 1, sd))
+
 matplot(output, lty=1, type="b", xlab="Dimension", ylab="Avg. Measure")
 abline(v=apply(output, 2, which.min), col=1:2, lty=3)
   
 
 ```
 
+
+```{r}
+
+library(reshape2)
+library(ggplot2)
+dplot <- data.frame(mean = melt(mean), sd=melt(sd)[, 2], k = rep(1:63, 2))
+colnames(dplot) <- c("method", "nid", "se", "nb.class")
+
+p <- ggplot(dplot, aes(x=nb.class, y=nid, ymin=nid-se/sqrt(300), ymax=nid+se/sqrt(300), group=method, colour=method)) + geom_smooth(stat="identity")
+
+pdf(file="select_nbnclass_nci_tib.pdf")
+print(p)
+dev.off()
+
+```
+
+```{r}
+pdf(file="stability_points.png", height=5, width=7)
+p <- ggplot(dplot, aes(x=variable, y=value, group=method, colour=method)) + geom_smooth() + geom_point(alpha=0.5,size=0.25) + geom_vline(xintercept=)
+dev.off()
+```
 
 

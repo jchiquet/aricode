@@ -11,7 +11,7 @@ g_legend<-function(a.gplot){
 }
 
 ## common settings for consistency and timings
-ns <- sort(c(200 * 2^(0:8), 150 *2^(0:8)))
+ns <- sort(c(200 * 2^(0:8), 150 *2^(0:13)))
 
 ## ==========================================================================
 ## test same result as mclust
@@ -37,7 +37,7 @@ if(any(!(check.ARI))) {
 ## test speed
 library(microbenchmark)
 # with random classif, number of classes grows with n
-sim.timings.1 <- function(n, times=1000) {
+sim.timings.1 <- function(n, times=20) {
     cat("",n)
     c1 <- sample(1:(n/50), n, replace=TRUE)
     c2 <- sample(1:(n/50), n, replace=TRUE)
@@ -46,7 +46,7 @@ sim.timings.1 <- function(n, times=1000) {
 }
 
 # with random classif, constant number of classes
-sim.timings.2 <- function(n, times=1000) {
+sim.timings.2 <- function(n, times=20) {
     cat("",n)
     c1 <- sample(1:100, n, replace=TRUE)
     c2 <- sample(1:100, n, replace=TRUE)
@@ -55,7 +55,7 @@ sim.timings.2 <- function(n, times=1000) {
 }
 
 # with similar classif, number of classes grows with n
-sim.timings.3 <- function(n, times=1000) {
+sim.timings.3 <- function(n, times=20) {
     cat("",n)
     c1 <- sample(1:(n/50), n, replace=TRUE);c2 <- c1;
     i_change <- sample(1:n, n/50, replace=FALSE)
@@ -69,30 +69,55 @@ cat("\n\n============================================================")
 cat("\nTimings with random classif and nb of classes growing with n\n")
 cat("n =")
 timings.1 <- do.call("rbind", lapply(ns, sim.timings.1))
-p.timings1 <- ggplot(timings.1, aes(x=factor(n), y=time, fill=method)) +
-    geom_violin() + coord_trans(y="log10") + labs(x="n", y="time (log scale)")
 
 ## with random classif and cst nb of classes (should be linear)
 cat("\n\n============================================================")
 cat("\nTimings with random classif and cst nb of classes (should be linear)\n")
 cat("n =")
 timings.2 <- do.call("rbind", lapply(ns, sim.timings.2))
-p.timings2 <- ggplot(timings.2, aes(x=factor(n), y=time, fill=method)) +
-    geom_violin() + coord_trans(y="log10") + labs(x="n", y="time (log scale)")
 
 ## with similar classif, number of classes grows with n
 cat("\n\n============================================================")
 cat("\nTimings with similar classif, number of classes grows with n\n")
 cat("n =")
 timings.3 <- do.call("rbind", lapply(ns, sim.timings.3))
-p.timings3 <- ggplot(timings.3, aes(x=factor(n), y=time, fill=method)) +
-    geom_violin() + coord_trans(y="log10") + labs(x="n", y="time (log scale)")
 
+p.timings1 <- ggplot(timings.1, aes(x=n, y=time*1e-9, colour=method)) +
+    geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
+    scale_x_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))
+ ) +
+ scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))) +
+   annotation_logticks()                 
+    
+p.timings2 <- ggplot(timings.2, aes(x=n, y=time*1e-9, colour=method)) +
+  geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
+    scale_x_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))
+ ) +
+ scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))) +
+   annotation_logticks()                 
+
+p.timings3 <- ggplot(timings.3, aes(x=n, y=time*1e-9, colour=method)) +
+  geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
+    scale_x_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))
+ ) +
+ scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))) +
+   annotation_logticks()                 
+
+pdf(file="timings_aricode.pdf", width=15, height=5)
 grid.arrange(
-    p.timings1 + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
-    p.timings2 + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
-    p.timings3 + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
-    g_legend(p.timings1), top="Timings for a growing nb of class, constant number of class, similar classes", nrow=1, widths=c(10,10,10,5)
+    p.timings2 + ggtitle("Random classification, 100 classes") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
+    p.timings1 + ggtitle("Random classification, # of classes growth with n") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
+    p.timings3 + ggtitle("Similar classification, # class growth with n") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
+    g_legend(p.timings1), top="", nrow=1, widths=c(10,10,10,2)
 )
-
+dev.off()
 
