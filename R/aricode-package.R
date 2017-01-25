@@ -7,13 +7,13 @@
 #' @section Functions in aricode:
 #' The functions included in aricode are:
 #' \itemize{
-#'  \item{ARI:}{ compute the adjusted rand index}
-#'  \item{RI:}{ compute the rand index}
-#'  \item{NVI:}{ compute the normalized variation information}
-#'  \item{NID:}{ compute the normalized information distance}
-#'  \item{NMI:}{ compute the normalized mutual information}
-#'  \item{entropy:}{ compute the conditional and joint entropies}
-#'  \item{clustComp:}{ compute all clustering comparison measures at once}
+#'  \item{ARI:}{ computes the adjusted rand index}
+#'  \item{RI:}{ computes the rand index}
+#'  \item{NVI:}{ computes the normalized variation information}
+#'  \item{NID:}{ computes the normalized information distance}
+#'  \item{NMI:}{ computes the normalized mutual information}
+#'  \item{entropy:}{ computes the conditional and joint entropies}
+#'  \item{clustComp:}{ computes all clustering comparison measures at once}
 #' }
 #' @author Julien Chiquet \email{julien.chiquet@@gmail.com}
 #' @author Guillem Rigaill \email{guillem.rigaill@@evry.inra.fr}
