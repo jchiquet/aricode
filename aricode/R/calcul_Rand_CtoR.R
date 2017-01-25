@@ -1,19 +1,13 @@
 #' @title Sort Pairs
-#' @description A function to sort pairs of integers or factors
+#' @description A function to sort pairs of integers or factors and identify the pairs
+#'
+#' @param c1 a vector of length n with value between 0 and N1 < n
+#' @param c2 a vector of integer of length n with value between 0 and N2 < n
+#' @param spMat logical: send back the contigency table a sparsely encoded (cost more than the algorithm itself). Default is FALSE
 #' @import Matrix
 #' @useDynLib aricode
 #' @export
-sortPairs <- function(
-  ### Fonction to sort each individual and then identifiy pairs
-  c1,
-  ### a vector of integer of length n with value between 0 and N1 < n
-  c2,
-  ### a vector of integer of length n with value between 0 and N2 < n
-  ### if N1 or N2 > n should lead to segfault
-  spMat = FALSE
-  ### send back the result as a sparse Matrix (cos more than the algorithm itself)
-  ){
-
+sortPairs <- function(c1, c2, spMat = FALSE){
 
   if (anyNA(c1) | anyNA(c2))
     stop("NA are not supported.")
@@ -197,6 +191,7 @@ clustComp <- function(c1, c2) {
 
 #' @title Normalized mutual information (NMI)
 #' @description A function to compute the NMI between two classifications
+#'
 #' @param c1 a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.
 #' @param c2 a vector containing the labels of the second classification.
 #' @return a scalar with the normalized mutual information .
@@ -225,6 +220,7 @@ NMI <- function(c1, c2, variant=c("max", "min", "sqrt", "sum", "joint")) {
 
 #' @title Normalized information distance (NID)
 #' @description A function to compute the NID between two classifications
+#'
 #' @param c1 a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.
 #' @param c2 a vector containing the labels of the second classification.
 #' @return a scalar with the normalized information distance .

@@ -1,6 +1,9 @@
 #' aricode
 #'
 #' A package for efficient computations of standard clustering comparison measures. Available measures are describes in the paper of Vinh et al, JMLR, 2009 (see reference below).
+#'
+#' Traditional implementations (e.g., function \code{adjustedRandIndex} of package \code{mclust}) are in Omega(n + u v) where n is the size of the vectors the classifications of which are to be compared, u and v are the respective number of classes in each vectors. Here, the implementation is in Theta(n), plus the gain of speed due to the C code.
+#'
 #' @section Functions in aricode:
 #' The functions included in aricode are:
 #' \itemize{
