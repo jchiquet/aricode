@@ -53,7 +53,7 @@ sortPairs <- function(c1, c2, spMat = FALSE){
     count1     = integer(n),
     count2     = integer(n),
     n          = as.integer(n),
-    nzero      = as.integer(1), package="aricode")
+    nzero      = as.integer(1), PACKAGE="aricode")
 
   if (spMat) {
     spOut <- sparseMatrix(i=result$pair_c1[1:(result$nzero+1)],
