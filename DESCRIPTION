@@ -1,13 +1,15 @@
 Package: aricode
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Title: aricode
+Version: 0.1.1
+Author: Julien Chiquet, Guillem Rigaill
+Maintainer: Julien Chiquet <julien.chiquet@inra.fr>
+Description: efficient computations of standard clustering comparison measures
+License: GPL (>=2)
 LazyData: TRUE
 Imports:
     Matrix,
-RoxygenNote: 5.0.1
+    Rcpp
 Suggests: testthat
+LinkingTo: Rcpp
+RoxygenNote: 6.0.1

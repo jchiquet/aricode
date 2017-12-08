@@ -21,4 +21,6 @@
 #' @seealso \code{\link{ARI}}, \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{entropy}}, \code{\link{clustComp}}
 #' @docType package
 #' @name aricode
+#' @useDynLib aricode
+#' @importFrom Rcpp sourceCpp
 NULL

@@ -1,18 +1,16 @@
 #' @title Sort Pairs
-#' @description A function to sort pairs of integers or factors and identify the pairs
 #'
+#' @description A function to sort pairs of integers or factors and identify the pairs
 #' @param c1 a vector of length n with value between 0 and N1 < n
 #' @param c2 a vector of integer of length n with value between 0 and N2 < n
 #' @param spMat logical: send back the contigency table a sparsely encoded (cost more than the algorithm itself). Default is FALSE
 #' @import Matrix
-#' @useDynLib aricode
 #' @export
-sortPairs <- function(c1, c2, spMat = FALSE){
-
+sortPairs_new <- function(c1, c2, spMat=FALSE){
   if (anyNA(c1) | anyNA(c2))
     stop("NA are not supported.")
 
-  if (( (!is.vector(c1) & !is.factor(c1)) | is.list(c1)) | ((!is.vector(c2) & !is.factor(c2)) | is.list(c2)))
+  if (((!is.vector(c1) & !is.factor(c1)) | is.list(c1)) | ((!is.vector(c2) & !is.factor(c2)) | is.list(c2)))
     stop("c1 and c2 must be vectors or factors but not lists.")
 
   if (length(c1) != length(c2))
@@ -30,7 +28,7 @@ sortPairs <- function(c1, c2, spMat = FALSE){
       c1 <- as.integer(factor(c1, levels = mylevels$c1)) - 1L
       c2 <- as.integer(factor(c2, levels = mylevels$c2)) - 1L
     }
-  ## if factor, force conversion to integer
+    ## if factor, force conversion to integer
   } else if (is.factor(c1) & is.factor(c2)) {
     mylevels <- list(c1 = levels(c1), c2 = levels(c2))
     c1 <- as.integer(c1) - 1L
@@ -42,23 +40,15 @@ sortPairs <- function(c1, c2, spMat = FALSE){
     c2 <- as.integer(factor(c2, levels = mylevels$c2)) - 1L
   }
 
-  result <- .C("c_SortPairs",
-    c1         = as.integer(c1),
-    c2         = as.integer(c2),
-    new_c1     = integer(n),
-    new_c2     = integer(n),
-    pair_c1    = integer(n),
-    pair_c2    = integer(n),
-    pair_count = integer(n),
-    count1     = integer(n),
-    count2     = integer(n),
-    n          = as.integer(n),
-    nzero      = as.integer(1), PACKAGE="aricode")
+
+  i_order <- order(c1, c2, method="radix") - 1L
+  out <- countPairs(c1, c2, i_order)
+
 
   if (spMat) {
-    spOut <- sparseMatrix(i=result$pair_c1[1:(result$nzero+1)],
-                          j=result$pair_c2[1:(result$nzero+1)],
-                          x=result$pair_count[1:(result$nzero+1)],
+    spOut <- sparseMatrix(i=out$pair_c1[, 1],
+                          j=out$pair_c2[, 2],
+                          x=out$pair_nb[, 3],
                           dims=sapply(mylevels,length),
                           dimnames = mylevels, index1=FALSE)
   } else {
@@ -67,9 +57,10 @@ sortPairs <- function(c1, c2, spMat = FALSE){
 
   return(list(spMat = spOut,
               levels = mylevels,
-              nij = result$pair_count[1:(result$nzero+1)],
-              ni. = result$count1[which(result$count1 > 0)],
-              n.j = result$count2[which(result$count2 > 0)])
+              nij = out$pair_nb,
+              ni. = out$c1_nb,
+              n.j = out$c2_nb
+  )
   )
 }
 
