@@ -1,3 +1,5 @@
+
+
 # aricode: a package for efficient computations of standard clustering comparison measures
 
 ## Installation
@@ -29,4 +31,9 @@ The functions included in aricode are:
 - `NMI`: computes the normalized mutual information
 - `entropy`: computes the conditional and joint entropies
 - `clustComp`: computes all clustering comparison measures at once
+
+## Timings
+
+
+![plot of chunk timings_plot](figure/timings_plot-1.png)
 

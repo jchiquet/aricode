@@ -36,7 +36,7 @@ The functions included in aricode are:
 
 ## Timings
 
-```{r timings_function, echo=FALSE}
+```{r timings_function, echo=FALSE, message=FALSE, warning=FALSE}
 library(aricode)
 library(mclust)
 library(ggplot2)
@@ -58,7 +58,6 @@ time.method <- function(times, c1, c2, n){
 
 # with random classif, number of classes grows with sqrt(n)
 sim.timings.a <- function(n, times=20) {
-    cat("",n)
     c1 <- sample(1:(sqrt(n)/2), n, replace=TRUE)
     c2 <- sample(1:(sqrt(n)/2), n, replace=TRUE)
     out <- time.method(times, c1, c2, n)
@@ -67,7 +66,6 @@ sim.timings.a <- function(n, times=20) {
 
 # with random classif, constant number of classes
 sim.timings.b <- function(n, times=20) {
-    cat("",n)
     c1 <- sample(1:100, n, replace=TRUE)
     c2 <- sample(1:100, n, replace=TRUE)
     out <- time.method(times, c1, c2, n)
@@ -76,7 +74,6 @@ sim.timings.b <- function(n, times=20) {
 
 # with similar classif, number of classes grows with n
 sim.timings.c <- function(n, times=20) {
-    cat("",n)
     c1 <- sample(1:(n/200), n, replace=TRUE);c2 <- c1;
     i_change <- sample(1:n, n/50, replace=FALSE)
     c2[i_change] <- c2[rev(i_change)]
@@ -85,7 +82,7 @@ sim.timings.c <- function(n, times=20) {
 }
 ```
 
-```{r timings_run, cache=TRUE, echo=FALSE}
+```{r timings_run, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
 ns <- sort(c(200 * 2^(3:14), 150 *2^(3:14)))
 
 ##  with random classif and nb of classes growing with n
@@ -98,8 +95,15 @@ timings.b <- do.call("rbind", lapply(ns, sim.timings.b))
 timings.c <- do.call("rbind", lapply(ns, sim.timings.c))
 ```
 
-```{r timings_plot, echo=FALSE}
-p.timings1 <- ggplot(timings.1, aes(x=n, y=time*scale.time, colour=method)) +
+```{r timings_plot, echo=FALSE, message=FALSE, warning=FALSE}
+g_legend<-function(a.gplot){
+    tmp <- ggplot_gtable(ggplot_build(a.gplot))
+    leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+    legend <- tmp$grobs[[leg]]
+    return(legend)
+}
+
+p.timings.a <- ggplot(timings.a, aes(x=n, y=time, colour=method)) +
     geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
     scale_x_log10(
    breaks = scales::trans_breaks("log10", function(x) 10^x),
@@ -109,7 +113,7 @@ p.timings1 <- ggplot(timings.1, aes(x=n, y=time*scale.time, colour=method)) +
    labels = scales::trans_format("log10", scales::math_format(10^.x))) +
    annotation_logticks()                 
     
-p.timings1a <- ggplot(timings.1a, aes(x=n, y=time*scale.time, colour=method)) +
+p.timings.b <- ggplot(timings.b, aes(x=n, y=time, colour=method)) +
     geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
     scale_x_log10(
    breaks = scales::trans_breaks("log10", function(x) 10^x),
@@ -119,7 +123,7 @@ p.timings1a <- ggplot(timings.1a, aes(x=n, y=time*scale.time, colour=method)) +
    labels = scales::trans_format("log10", scales::math_format(10^.x))) +
    annotation_logticks()        
 
-p.timings1b <- ggplot(timings.1b, aes(x=n, y=time*scale.time, colour=method)) +
+p.timings.c <- ggplot(timings.c, aes(x=n, y=time, colour=method)) +
   geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
     scale_x_log10(
    breaks = scales::trans_breaks("log10", function(x) 10^x),
@@ -130,10 +134,10 @@ p.timings1b <- ggplot(timings.1b, aes(x=n, y=time*scale.time, colour=method)) +
    annotation_logticks()                 
 
 grid.arrange(
-    p.timings1 + ggtitle("Random classification, # of classes growth with n") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
-    p.timings1a + ggtitle("Random classification, # of classes growth with sqrt(n)") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
-    p.timings1b + ggtitle("Random classification, 100 classes") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
-    g_legend(p.timings1), top="", nrow=1, widths=c(10,10,10,2)
+    p.timings.a + ggtitle("Random classification, # of classes growth with n") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
+    p.timings.b + ggtitle("Random classification, # of classes growth with sqrt(n)") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
+    p.timings.c + ggtitle("Random classification, 100 classes") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
+    g_legend(p.timings.a), top="", nrow=1, widths=c(10,10,10,2)
 )
 ```
 
