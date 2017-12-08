@@ -8,10 +8,10 @@ List countPairs(IntegerVector classi1, IntegerVector classi2, IntegerVector orde
 
   // count per classification
   IntegerVector count1(n, 0);
-  for(int i = 0; i < n; i++) count1[classi1[i]-1]++;
+  for(int i = 0; i < n; i++) count1[classi1[i]]++;
 
   IntegerVector count2(n, 0);
-  for(int i = 0; i < n; i++) count2[classi2[i]-1]++;
+  for(int i = 0; i < n; i++) count2[classi2[i]]++;
 
   // count per pairs
   int count = 1;
@@ -20,7 +20,7 @@ List countPairs(IntegerVector classi1, IntegerVector classi2, IntegerVector orde
 
   for(int i = 1; i < n; i++){
     if( (class1_cur != classi1[order[i]]) | (class2_cur != classi2[order[i]]) ){
-      count += 1;
+      count++;
       class1_cur = classi1[order[i]];
       class2_cur = classi2[order[i]];
     }

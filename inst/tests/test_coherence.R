@@ -19,31 +19,30 @@ adjustedRandIndex <- function (x, y)
   return(ARI)
 }
 
-
 test_that("Testing coherence of the adjusted Rand Index", {
 
-  cat(" -large random vectors- ")
-  n <- 10000
+  cat("\n-large random vectors- ")
+  n <- 1e5
   c1 <- as.numeric(sample(1:(n/100), n, replace=TRUE))
   c2 <- as.numeric(sample(1:(n/100), n, replace=TRUE))
   expect_equal(ARI(c1,c2), adjustedRandIndex(c1,c2))
 
-  cat(" -real data- ")
+  cat("\n-real data- ")
   data(iris)
   cl <- cutree(hclust(dist(iris[,-5])), 4)
   expect_equal(ARI(cl,iris$Species), adjustedRandIndex(cl,iris$Species))
 
-  cat("-completely equal vectors with no groups-")
+  cat("\n-completely equal vectors with no groups-")
   c1 <- 1:100
   c2 <- 1:100
   expect_equal(ARI(c1,c2), adjustedRandIndex(c1,c2))
 
-  cat("-completely equal vectors with one groups-")
+  cat("\n-completely equal vectors with one groups-")
   c1 <- rep(1,100)
   c2 <- rep(2,100)
   expect_equal(ARI(c1,c2), adjustedRandIndex(c1,c2))
 
-  cat("-completely different vectors with one groups-")
+  cat("\n-completely different vectors with one groups-")
   c1 <- c(rep(0,99),1)
   c2 <- rep(1,100)
   expect_equal(ARI(c1,c2), adjustedRandIndex(c1,c2))

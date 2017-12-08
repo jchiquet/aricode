@@ -1,0 +1,139 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# aricode: a package for efficient computations of standard clustering comparison measures
+
+## Installation
+
+```
+devtools::install_github("jchiquet/aricode")
+```
+
+## Description
+
+Traditional implementations (e.g., function `adjustedRandIndex` of package **mclust**) are in $\Omega(n + u v)$ where 
+
+- $n$ is the size of the vectors the classifications of which are to be compared,
+- $u$ and $v$ are the respective number of classes in each vectors. 
+
+Here, the implementation is in $\Theta(n)$, plus the gain of speed due to the `C` implementation.
+
+Available measures are describes in the paper of Vinh et al, JMLR, 2009 (see reference below).
+
+Vinh, Nguyen Xuan, Julien Epps, and James Bailey. *"Information theoretic measures for clusterings comparison: Variants, properties, normalization and correction for chance."* Journal of Machine Learning Research 11.Oct (2010): 2837-2854.
+
+## Available functions
+
+The functions included in aricode are:
+
+- `ARI`: computes the adjusted rand index
+- `NVI`: computes the the normalized variation information
+- `NID`: computes the normalized information distance
+- `NMI`: computes the normalized mutual information
+- `entropy`: computes the conditional and joint entropies
+- `clustComp`: computes all clustering comparison measures at once
+
+## Timings
+
+```{r timings_function, echo=FALSE}
+library(aricode)
+library(mclust)
+library(ggplot2)
+
+time.aricode <- function(times, c1, c2){
+  replicate(times, system.time(ARI(c1, c2))[3])
+}
+
+time.mclust <- function(times, c1, c2){
+  replicate(times, system.time(mclust::adjustedRandIndex(c1, c2))[3])
+}
+
+time.method <- function(times, c1, c2, n){
+  rbind(
+    data.frame(time = time.aricode(times, c1, c2), expr="aricode", n=n),
+    data.frame(time = time.mclust(times, c1, c2), expr="mclust", n=n)
+  )
+}
+
+# with random classif, number of classes grows with sqrt(n)
+sim.timings.a <- function(n, times=20) {
+    cat("",n)
+    c1 <- sample(1:(sqrt(n)/2), n, replace=TRUE)
+    c2 <- sample(1:(sqrt(n)/2), n, replace=TRUE)
+    out <- time.method(times, c1, c2, n)
+    return(data.frame(time=out$time, method=out$expr, n = n))
+}
+
+# with random classif, constant number of classes
+sim.timings.b <- function(n, times=20) {
+    cat("",n)
+    c1 <- sample(1:100, n, replace=TRUE)
+    c2 <- sample(1:100, n, replace=TRUE)
+    out <- time.method(times, c1, c2, n)
+    return(data.frame(time=out$time, method=out$expr, n = n))
+}
+
+# with similar classif, number of classes grows with n
+sim.timings.c <- function(n, times=20) {
+    cat("",n)
+    c1 <- sample(1:(n/200), n, replace=TRUE);c2 <- c1;
+    i_change <- sample(1:n, n/50, replace=FALSE)
+    c2[i_change] <- c2[rev(i_change)]
+    out <- time.method(times, c1, c2, n)
+    return(data.frame(time=out$time, method=out$expr, n = n))
+}
+```
+
+```{r timings_run, cache=TRUE, echo=FALSE}
+ns <- sort(c(200 * 2^(3:14), 150 *2^(3:14)))
+
+##  with random classif and nb of classes growing with n
+timings.a <- do.call("rbind", lapply(ns, sim.timings.a))
+
+##  with random classif and nb of classes growing with n
+timings.b <- do.call("rbind", lapply(ns, sim.timings.b))
+
+## with random classif and cst nb of classes (should be linear)
+timings.c <- do.call("rbind", lapply(ns, sim.timings.c))
+```
+
+```{r timings_plot, echo=FALSE}
+p.timings1 <- ggplot(timings.1, aes(x=n, y=time*scale.time, colour=method)) +
+    geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
+    scale_x_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))
+ ) +
+ scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))) +
+   annotation_logticks()                 
+    
+p.timings1a <- ggplot(timings.1a, aes(x=n, y=time*scale.time, colour=method)) +
+    geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
+    scale_x_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))
+ ) +
+ scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))) +
+   annotation_logticks()        
+
+p.timings1b <- ggplot(timings.1b, aes(x=n, y=time*scale.time, colour=method)) +
+  geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
+    scale_x_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))
+ ) +
+ scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))) +
+   annotation_logticks()                 
+
+grid.arrange(
+    p.timings1 + ggtitle("Random classification, # of classes growth with n") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
+    p.timings1a + ggtitle("Random classification, # of classes growth with sqrt(n)") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
+    p.timings1b + ggtitle("Random classification, 100 classes") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
+    g_legend(p.timings1), top="", nrow=1, widths=c(10,10,10,2)
+)
+```
+

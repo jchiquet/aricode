@@ -6,7 +6,7 @@
 #' @param spMat logical: send back the contigency table a sparsely encoded (cost more than the algorithm itself). Default is FALSE
 #' @import Matrix
 #' @export
-sortPairs_new <- function(c1, c2, spMat=FALSE){
+sortPairs <- function(c1, c2, spMat=FALSE){
   if (anyNA(c1) | anyNA(c2))
     stop("NA are not supported.")
 
@@ -43,7 +43,6 @@ sortPairs_new <- function(c1, c2, spMat=FALSE){
 
   i_order <- order(c1, c2, method="radix") - 1L
   out <- countPairs(c1, c2, i_order)
-
 
   if (spMat) {
     spOut <- sparseMatrix(i=out$pair_c1[, 1],
