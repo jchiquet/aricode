@@ -36,6 +36,8 @@ The functions included in aricode are:
 
 ## Timings
 
+Here are some timings to compare the cost of computing the adjusted Rand Index with **aricode** or with the commonly used function `adjustedRandIndex` of the *mclust* package : the cost of the latter can be prohibitivefor large vectors: 
+
 ```{r timings_function, echo=FALSE, message=FALSE, warning=FALSE}
 library(aricode)
 library(mclust)
@@ -133,11 +135,8 @@ p.timings.c <- ggplot(timings.c, aes(x=n, y=time, colour=method)) +
    labels = scales::trans_format("log10", scales::math_format(10^.x))) +
    annotation_logticks()                 
 
-grid.arrange(
-    p.timings.a + ggtitle("Random classification, # of classes growth with n") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
-    p.timings.b + ggtitle("Random classification, # of classes growth with sqrt(n)") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
-    p.timings.c + ggtitle("Random classification, 100 classes") + theme(legend.position="none",plot.margin= unit(c(0,0.05,0,0), "lines")),
-    g_legend(p.timings.a), top="", nrow=1, widths=c(10,10,10,2)
-)
+p.timings.a + ggtitle("# of classes growth with n") + theme(plot.margin= unit(c(0,0.05,0,0), "lines"))
+p.timings.b + ggtitle("of classes growth with sqrt(n)") + theme(plot.margin= unit(c(0,0.05,0,0), "lines"))
+p.timings.c + ggtitle("fixed number of classes (100)") + theme(plot.margin= unit(c(0,0.05,0,0), "lines"))
 ```
 

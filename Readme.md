@@ -34,6 +34,11 @@ The functions included in aricode are:
 
 ## Timings
 
+Here are some timings to compare the cost of computing the adjusted Rand Index with **aricode** or with the commonly used function `adjustedRandIndex` of the *mclust* package : the cost of the latter can be prohibitivefor large vectors: 
 
-![plot of chunk timings_plot](figure/timings_plot-1.png)
+
+
+
+
+![plot of chunk timings_plot](figure/timings_plot-1.png)![plot of chunk timings_plot](figure/timings_plot-2.png)![plot of chunk timings_plot](figure/timings_plot-3.png)
 
