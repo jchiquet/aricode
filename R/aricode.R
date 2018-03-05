@@ -45,9 +45,9 @@ sortPairs <- function(c1, c2, spMat=FALSE){
   out <- countPairs(c1, c2, i_order)
 
   if (spMat) {
-    spOut <- sparseMatrix(i=out$pair_c1[, 1],
-                          j=out$pair_c2[, 2],
-                          x=out$pair_nb[, 3],
+    spOut <- sparseMatrix(i=out$pair_c1,
+                          j=out$pair_c2,
+                          x=out$pair_nb,
                           dims=sapply(mylevels,length),
                           dimnames = mylevels, index1=FALSE)
   } else {
