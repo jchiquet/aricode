@@ -6,7 +6,7 @@
 \alias{aricode-package}
 \title{aricode}
 \description{
-A package for efficient computations of standard clustering comparison measures. Available measures are describes in the paper of Vinh et al, JMLR, 2009 (see reference below).
+A package for efficient computations of standard clustering comparison measures. Available measures are described in the paper of Vinh et al, JMLR, 2009 (see reference below).
 }
 \details{
 Traditional implementations (e.g., function \code{adjustedRandIndex} of package \code{mclust}) are in Omega(n + u v) where n is the size of the vectors the classifications of which are to be compared, u and v are the respective number of classes in each vectors. Here, the implementation is in Theta(n), plus the gain of speed due to the C code.
