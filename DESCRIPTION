@@ -1,10 +1,10 @@
 Package: aricode
 Type: Package
-Title: aricode: a package for efficient computations of standard clustering comparison measures
+Title: Efficient Computations of Standard Clustering Comparison Measures
 Version: 0.1.1
 Author: Julien Chiquet, Guillem Rigaill
 Maintainer: Julien Chiquet <julien.chiquet@inra.fr>
-Description: Implements an efficient O(n) algorithm based on bucket-sorting for fast computation of standard clustering comparison measures (RI, ARI, NID, NVI, NMI, entropy) as described in Vinh et al (2009) <https://doi.org/10.1145/1553374.1553511>.
+Description: Implements an efficient O(n) algorithm based on bucket-sorting for fast computation of standard clustering comparison measures (RI, ARI, NID, NVI, NMI, entropy) as described in Vinh et al (2009) <doi:10.1145/1553374.1553511>.
 License: GPL (>=3)
 LazyData: TRUE
 Imports:
