@@ -1,11 +1,11 @@
 Package: aricode
 Type: Package
-Title: aricode
+Title: aricode: a package for efficient computations of standard clustering comparison measures
 Version: 0.1.1
 Author: Julien Chiquet, Guillem Rigaill
 Maintainer: Julien Chiquet <julien.chiquet@inra.fr>
-Description: efficient computations of standard clustering comparison measures
-License: GPL (>=2)
+Description: Implements efficient algorithm for fast computation of standard clustering comparison measures.
+License: GPL (>=3)
 LazyData: TRUE
 Imports:
     Matrix,

@@ -1,2 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+cran-comments.md
+figure
+Readme.md
+Readme.rmd

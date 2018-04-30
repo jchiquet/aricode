@@ -3,7 +3,7 @@
 #' @description A function to sort pairs of integers or factors and identify the pairs
 #' @param c1 a vector of length n with value between 0 and N1 < n
 #' @param c2 a vector of integer of length n with value between 0 and N2 < n
-#' @param spMat logical: send back the contigency table a sparsely encoded (cost more than the algorithm itself). Default is FALSE
+#' @param spMat logical: send back the contingency table a sparsely encoded (cost more than the algorithm itself). Default is FALSE
 #' @import Matrix
 #' @export
 sortPairs <- function(c1, c2, spMat=FALSE){
@@ -184,6 +184,7 @@ clustComp <- function(c1, c2) {
 #'
 #' @param c1 a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.
 #' @param c2 a vector containing the labels of the second classification.
+#' @param variant a string in ("max", "min", "sqrt", "sum", "joint"): different variants of NMI. Default use "max".
 #' @return a scalar with the normalized mutual information .
 #' @seealso \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{ARI}}, \code{\link{clustComp}}
 #' @examples
@@ -191,7 +192,7 @@ clustComp <- function(c1, c2) {
 #' cl <- cutree(hclust(dist(iris[,-5])), 4)
 #' NMI(cl,iris$Species)
 #' @export
-NMI <- function(c1, c2, variant=c("max", "min", "sqrt", "sum", "joint")) {
+NMI <- function(c1, c2, variant = c("max", "min", "sqrt", "sum", "joint")) {
 
   variant <- match.arg(variant)
 

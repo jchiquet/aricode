@@ -11,7 +11,7 @@ sortPairs(c1, c2, spMat = FALSE)
 
 \item{c2}{a vector of integer of length n with value between 0 and N2 < n}
 
-\item{spMat}{logical: send back the contigency table a sparsely encoded (cost more than the algorithm itself). Default is FALSE}
+\item{spMat}{logical: send back the contingency table a sparsely encoded (cost more than the algorithm itself). Default is FALSE}
 }
 \description{
 A function to sort pairs of integers or factors and identify the pairs
