@@ -4,8 +4,14 @@ Title: Efficient Computations of Standard Clustering Comparison Measures
 Version: 0.1.1
 Author: Julien Chiquet, Guillem Rigaill
 Maintainer: Julien Chiquet <julien.chiquet@inra.fr>
-Description: Implements an efficient O(n) algorithm based on bucket-sorting for fast computation of standard clustering comparison measures (RI, ARI, NID, NVI, NMI, entropy) as described in Vinh et al (2009) <doi:10.1145/1553374.1553511>.
+Description: Implements an efficient O(n) algorithm based on bucket-sorting for 
+    fast computation of standard clustering comparison measures. Available measures
+    include adjusted Rand index (ARI), normalized information distance (NID), 
+    normalized mutual information (NMI), normalized variation information (NVI) and
+    entropy, as described in Vinh et al (2009) <doi:10.1145/1553374.1553511>.
 License: GPL (>=3)
+URL: https://github.com/jchiquet/aricode (dev version)
+BugReports: https://github.com/jchiquet/aricode/issues
 LazyData: TRUE
 Imports:
     Matrix,

@@ -2,8 +2,8 @@
 #'
 #' @description A function to sort pairs of integers or factors and identify the pairs
 #' @param c1 a vector of length n with value between 0 and N1 < n
-#' @param c2 a vector of integer of length n with value between 0 and N2 < n
-#' @param spMat logical: send back the contingency table a sparsely encoded (cost more than the algorithm itself). Default is FALSE
+#' @param c2 a vector of length n with value between 0 and N2 < n
+#' @param spMat logical: send back the contingency table as sparsely encoded (cost more than the algorithm itself). Default is FALSE
 #' @import Matrix
 #' @export
 sortPairs <- function(c1, c2, spMat=FALSE){
@@ -54,13 +54,13 @@ sortPairs <- function(c1, c2, spMat=FALSE){
     spOut <- NULL
   }
 
-  return(list(spMat = spOut,
+  res <- list(spMat = spOut,
               levels = mylevels,
               nij = out$pair_nb,
               ni. = out$c1_nb,
               n.j = out$c2_nb
   )
-  )
+  res
 }
 
 #' @title Adjusted Rand Index
@@ -92,10 +92,11 @@ ARI <- function(c1, c2){
     maximumIndex <- (srow+scol)/2
 
     if (expectedIndex == maximumIndex & stot != 0) {
-      return(1)
+      res <- 1
     } else {
-      return((stot-expectedIndex)/(maximumIndex-expectedIndex))
+      res <- (stot-expectedIndex)/(maximumIndex-expectedIndex)
     }
+    res
 }
 
 #' @title Rand Index
@@ -119,7 +120,8 @@ RI <- function(c1, c2){
   N <- length(c1)
 
   ## return the rand-index
-  return(1 + (sum(res$nij^2) - (sum(res$ni.^2) + sum(res$n.j^2))/2)/choose(N,2))
+  res <- 1 + (sum(res$nij^2) - (sum(res$ni.^2) + sum(res$n.j^2))/2)/choose(N,2)
+  res
 }
 
 #' @title Entropy
@@ -142,7 +144,8 @@ entropy <- function(c1, c2){
   H.U  <- - sum(res$ni. * log(res$ni.))/N + log(N)
   H.V  <- - sum(res$n.j * log(res$n.j))/N + log(N)
 
-  return(list(UV = H.UV, U = H.U, V = H.V))
+  res <- list(UV = H.UV, U = H.U, V = H.V)
+  res
 }
 
 #' @title measures of similarity between two classification
@@ -168,7 +171,7 @@ clustComp <- function(c1, c2) {
   NID <- 1 - MI / max(H$U, H$V)
   NMI <- MI / max(H$U, H$V)
 
-  return(list(RI  = RI(c1,c2)             ,
+  res <- list(RI  = RI(c1,c2)             ,
               ARI = ARI(c1,c2)            ,
               MI  = - H$UV + H$U + H$V    ,
               VI  = H$UV - MI             ,
@@ -176,7 +179,8 @@ clustComp <- function(c1, c2) {
               ID  = max(H$U, H$V) - MI    ,
               NID = 1 - MI / max(H$U, H$V),
               NMI = MI / max(H$U, H$V)
-  ))
+  )
+  res
 }
 
 #' @title Normalized mutual information (NMI)
@@ -206,7 +210,8 @@ NMI <- function(c1, c2, variant = c("max", "min", "sqrt", "sum", "joint")) {
           "min" = min(H$U, H$V),
           "sum" = .5*(H$U + H$V),
          "joint" = H$UV)
-  return(MI / D)
+  res <- MI / D
+  res
 }
 
 #' @title Normalized information distance (NID)
@@ -226,7 +231,8 @@ NID <- function(c1, c2) {
   H   <- entropy(c1,c2)
 
   MI  <- - H$UV + H$U + H$V
-  return(1 - MI / max(H$U, H$V))
+  res <- 1 - MI / max(H$U, H$V)
+  res
 }
 
 #' @title Normalized variation of information (NVI)
@@ -244,5 +250,6 @@ NVI <- function(c1, c2) {
 
   H   <- entropy(c1,c2)
   MI  <- - H$UV + H$U + H$V
-  return(1 - MI/H$UV)
+  res <- 1 - MI/H$UV
+  res
 }
