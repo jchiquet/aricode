@@ -1,0 +1,7 @@
+# Travis CI for automatic building.
+#
+# Changelog:
+#  - 2018-07-5: first try
+
+language: r
+cache: packages
