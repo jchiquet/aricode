@@ -2,9 +2,22 @@
 
 # aricode: a package for efficient computations of standard clustering comparison measures
 
+[![Travis_CI Build status](https://travis-ci.org/jchiquet/PLNmodels.svg?branch=master)](https://travis-ci.org/jchiquet/PLNmodels)
+[![CRAN Status](https://www.r-pkg.org/badges/version/aricode)](https://CRAN.R-project.org/package=aricode)
+
 ## Installation
 
+Stable version on the [CRAN](https://cran.rstudio.com/web/packages/aricode/).
+
+
+```r
+install.packages("aricode")
 ```
+
+The development version is available via:
+
+
+```r
 devtools::install_github("jchiquet/aricode")
 ```
 
