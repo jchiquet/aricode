@@ -2,7 +2,7 @@
 
 # aricode: a package for efficient computations of standard clustering comparison measures
 
-[![Travis_CI Build status](https://travis-ci.org/jchiquet/PLNmodels.svg?branch=master)](https://travis-ci.org/jchiquet/PLNmodels)
+[![Travis_CI Build status](https://travis-ci.org/jchiquet/aricode.svg?branch=master)](https://travis-ci.org/jchiquet/aricode)
 [![CRAN Status](https://www.r-pkg.org/badges/version/aricode)](https://CRAN.R-project.org/package=aricode)
 [![codecov](https://codecov.io/gh/jchiquet/aricode/branch/master/graph/badge.svg)](https://codecov.io/gh/jchiquet/aricode)
 
