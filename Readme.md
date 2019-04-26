@@ -48,7 +48,7 @@ The functions included in aricode are:
 
 ## Timings
 
-Here are some timings to compare the cost of computing the adjusted Rand Index with **aricode** or with the commonly used function `adjustedRandIndex` of the *mclust* package : the cost of the latter can be prohibitivefor large vectors: 
+Here are some timings to compare the cost of computing the adjusted Rand Index with **aricode** or with the commonly used function `adjustedRandIndex` of the *mclust* package : the cost of the latter can be prohibitive for large vectors: 
 
 
 
