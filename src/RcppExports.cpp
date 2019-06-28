@@ -18,9 +18,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// expected_MI
+double expected_MI(IntegerVector ni_, IntegerVector n_j);
+RcppExport SEXP _aricode_expected_MI(SEXP ni_SEXP, SEXP n_jSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type ni_(ni_SEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type n_j(n_jSEXP);
+    rcpp_result_gen = Rcpp::wrap(expected_MI(ni_, n_j));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_aricode_countPairs", (DL_FUNC) &_aricode_countPairs, 3},
+    {"_aricode_expected_MI", (DL_FUNC) &_aricode_expected_MI, 2},
     {NULL, NULL, 0}
 };
 

@@ -5,3 +5,7 @@ countPairs <- function(classi1, classi2, order) {
     .Call('_aricode_countPairs', PACKAGE = 'aricode', classi1, classi2, order)
 }
 
+expected_MI <- function(ni_, n_j) {
+    .Call('_aricode_expected_MI', PACKAGE = 'aricode', ni_, n_j)
+}
+

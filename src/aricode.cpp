@@ -57,3 +57,37 @@ List countPairs(IntegerVector classi1, IntegerVector classi2, IntegerVector orde
   ListOut["c2_nb"]   = count2[count2 > 0];
   return(ListOut);
 }
+
+
+// [[Rcpp::export]]
+double expected_MI(IntegerVector ni_, IntegerVector n_j) {
+
+  int N = sum(ni_) ;
+
+  double emi = 0.0 ;
+
+  NumericVector ni_f = lfactorial(ni_) ;
+  NumericVector nj_f = lfactorial(n_j) ;
+  NumericVector Nmni_f = lfactorial(N - ni_) ;
+  NumericVector Nmnj_f = lfactorial(N - n_j) ;
+  double N_f = lgamma(N + 1) ;
+
+  for (int i=0; i< ni_.size(); i++) {
+    for (int j=0; j< n_j.size(); j++) {
+
+      int start_nij = std::max(1, ni_[i] + n_j[j] - N) ;
+      int end_nij = std::min(ni_[i], n_j[j]) ;
+
+      for (int nij = start_nij; nij <= end_nij; nij++ ) {
+
+          double t1 = ((float) nij / (float) N) * std::log((float)(nij * N) / (float)(ni_[i]*n_j[j])) ;
+
+          double t2 = std::exp((ni_f[i] + nj_f[j] + Nmni_f[i] + Nmnj_f[j] - N_f - lgamma(1 + nij) - lgamma(1 + ni_[i] - nij) - lgamma(1 + n_j[j] - nij) - lgamma(1 + N - ni_[i] - n_j[j] + nij))) ;
+
+          emi += t1*t2;
+      }
+    }
+  }
+  return emi;
+
+}

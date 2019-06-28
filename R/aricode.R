@@ -129,7 +129,7 @@ RI <- function(c1, c2){
 #'
 #' @param c1 a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.
 #' @param c2 a vector containing the labels of the second classification.
-#' @return a list with the two conditional entropies and the joint entropy.
+#' @return a list with the two conditional entropies, the joint entropy and output of sortPairs.
 #' @examples
 #' data(iris)
 #' cl <- cutree(hclust(dist(iris[,-5])), 4)
@@ -144,7 +144,7 @@ entropy <- function(c1, c2){
   H.U  <- - sum(res$ni. * log(res$ni.))/N + log(N)
   H.V  <- - sum(res$n.j * log(res$n.j))/N + log(N)
 
-  res <- list(UV = H.UV, U = H.U, V = H.V)
+  res <- list(UV = H.UV, U = H.U, V = H.V, sortPairs = res)
   res
 }
 
@@ -171,15 +171,40 @@ clustComp <- function(c1, c2) {
   NID <- 1 - MI / max(H$U, H$V)
   NMI <- MI / max(H$U, H$V)
 
+  EMI <- expected_MI(as.integer(H$ni.), as.integer(H$n.j))
+
   res <- list(RI  = RI(c1,c2)             ,
               ARI = ARI(c1,c2)            ,
               MI  = - H$UV + H$U + H$V    ,
+              AMI = (- H$UV + H$U + H$V - EMI) / (max(H$U,H$V) - EMI),
               VI  = H$UV - MI             ,
               NVI = 1 - MI/H$UV           ,
               ID  = max(H$U, H$V) - MI    ,
               NID = 1 - MI / max(H$U, H$V),
               NMI = MI / max(H$U, H$V)
   )
+  res
+}
+
+#' @title Adjusted Mutual Information
+#' @description A function to compute the adjusted mutual information between two classifications
+#'
+#' @param c1 a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.
+#' @param c2 a vector containing the labels of the second classification.
+#' @return a scalar with the adjusted rand index.
+#' @seealso \code{\link{ARI}}, \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
+#' @examples
+#' data(iris)
+#' cl <- cutree(hclust(dist(iris[,-5])), 4)
+#' AMI(cl,iris$Species)
+#' @export
+AMI <- function(c1, c2){
+
+  H   <- entropy(c1,c2)
+  MI  <- - H$UV + H$U + H$V
+  EMI <- expected_MI(as.integer(H$ni.), as.integer(H$n.j))
+
+  res <- (MI - EMI) / (max(H$U,H$V) - EMI)
   res
 }
 
@@ -253,3 +278,7 @@ NVI <- function(c1, c2) {
   res <- 1 - MI/H$UV
   res
 }
+
+
+
+
