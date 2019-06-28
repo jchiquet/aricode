@@ -4,3 +4,4 @@ cran-comments.md
 figure
 Readme.md
 Readme.rmd
+.travis.yml
