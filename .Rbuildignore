@@ -6,3 +6,4 @@ Readme.md
 Readme.rmd
 .travis.yml
 Readme_cache
+^CRAN-RELEASE$
