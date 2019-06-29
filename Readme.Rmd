@@ -74,8 +74,8 @@ time.mclust <- function(times, c1, c2){
 time.method <- function(times, c1, c2, n){
   rbind(
     data.frame(time = time.aricode(times, c1, c2), expr = "aricode", n = n),
-    data.frame(time = time.mclust(times, c1, c2), expr = "mclust", n = n)
   )
+    data.frame(time = time.mclust(times, c1, c2), expr = "mclust", n = n)
 }
 
 # with similar classif, number of classes grows with n
@@ -88,20 +88,13 @@ sim.timings <- function(n, times = 10) {
 }
 ```
 
-```{r timings_run, echo=FALSE, message=FALSE, warning=FALSE}
+```{r timings_run, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 # with similar classif, number of classes grows with n
-ns <- sort(c(200 * 2^(3:14), 150 *2^(3:15)))
+ns <- sort(c(200 * 2^(3:14), 150 * 2^(3:15)))
 timings <- do.call("rbind", lapply(ns, sim.timings))
 ```
 
 ```{r timings_plot, echo=FALSE, message=FALSE, warning=FALSE}
-g_legend <- function(a.gplot){
-    tmp <- ggplot_gtable(ggplot_build(a.gplot))
-    leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
-    legend <- tmp$grobs[[leg]]
-    return(legend)
-}
-
 p.timings <- ggplot(timings, aes(x=n, y=time, colour=method)) +
   geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
     scale_x_log10(
