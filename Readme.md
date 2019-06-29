@@ -43,6 +43,7 @@ The functions included in aricode are:
 - `NVI`: computes the the normalized variation information
 - `NID`: computes the normalized information distance
 - `NMI`: computes the normalized mutual information
+- `AMI`: computes the adjusted mutual information
 - `entropy`: computes the conditional and joint entropies
 - `clustComp`: computes all clustering comparison measures at once
 

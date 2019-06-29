@@ -1,5 +1,12 @@
+---
+output: github_document
+---
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  fig.path = "man/figures/"
+)
 ```
 
 # aricode: a package for efficient computations of standard clustering comparison measures
@@ -43,12 +50,13 @@ The functions included in aricode are:
 - `NVI`: computes the the normalized variation information
 - `NID`: computes the normalized information distance
 - `NMI`: computes the normalized mutual information
+- `AMI`: computes the adjusted mutual information
 - `entropy`: computes the conditional and joint entropies
 - `clustComp`: computes all clustering comparison measures at once
 
 ## Timings
 
-Here are some timings to compare the cost of computing the adjusted Rand Index with **aricode** or with the commonly used function `adjustedRandIndex` of the *mclust* package : the cost of the latter can be prohibitivefor large vectors: 
+Here are some timings to compare the cost of computing the adjusted Rand Index with **aricode** or with the commonly used function `adjustedRandIndex` of the *mclust* package: the cost of the latter can be prohibitive for large vectors: 
 
 ```{r timings_function, echo=FALSE, message=FALSE, warning=FALSE}
 library(aricode)
@@ -65,79 +73,36 @@ time.mclust <- function(times, c1, c2){
 
 time.method <- function(times, c1, c2, n){
   rbind(
-    data.frame(time = time.aricode(times, c1, c2), expr="aricode", n=n),
-    data.frame(time = time.mclust(times, c1, c2), expr="mclust", n=n)
+    data.frame(time = time.aricode(times, c1, c2), expr = "aricode", n = n),
+    data.frame(time = time.mclust(times, c1, c2), expr = "mclust", n = n)
   )
 }
 
-# with random classif, number of classes grows with sqrt(n)
-sim.timings.a <- function(n, times=20) {
-    c1 <- sample(1:(sqrt(n)/2), n, replace=TRUE)
-    c2 <- sample(1:(sqrt(n)/2), n, replace=TRUE)
-    out <- time.method(times, c1, c2, n)
-    return(data.frame(time=out$time, method=out$expr, n = n))
-}
-
-# with random classif, constant number of classes
-sim.timings.b <- function(n, times=20) {
-    c1 <- sample(1:100, n, replace=TRUE)
-    c2 <- sample(1:100, n, replace=TRUE)
-    out <- time.method(times, c1, c2, n)
-    return(data.frame(time=out$time, method=out$expr, n = n))
-}
-
 # with similar classif, number of classes grows with n
-sim.timings.c <- function(n, times=20) {
+sim.timings <- function(n, times = 10) {
     c1 <- sample(1:(n/200), n, replace=TRUE);c2 <- c1;
     i_change <- sample(1:n, n/50, replace=FALSE)
     c2[i_change] <- c2[rev(i_change)]
     out <- time.method(times, c1, c2, n)
-    return(data.frame(time=out$time, method=out$expr, n = n))
+    data.frame(time=out$time, method=out$expr, n = n)
 }
 ```
 
-```{r timings_run, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
-ns <- sort(c(200 * 2^(3:14), 150 *2^(3:14)))
-
-##  with random classif and nb of classes growing with n
-timings.a <- do.call("rbind", lapply(ns, sim.timings.a))
-
-##  with random classif and nb of classes growing with n
-timings.b <- do.call("rbind", lapply(ns, sim.timings.b))
-
-## with random classif and cst nb of classes (should be linear)
-timings.c <- do.call("rbind", lapply(ns, sim.timings.c))
+```{r timings_run, echo=FALSE, message=FALSE, warning=FALSE}
+# with similar classif, number of classes grows with n
+ns <- sort(c(200 * 2^(3:14), 150 *2^(3:15)))
+timings <- do.call("rbind", lapply(ns, sim.timings))
 ```
 
 ```{r timings_plot, echo=FALSE, message=FALSE, warning=FALSE}
-g_legend<-function(a.gplot){
+g_legend <- function(a.gplot){
     tmp <- ggplot_gtable(ggplot_build(a.gplot))
     leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
     legend <- tmp$grobs[[leg]]
     return(legend)
 }
 
-p.timings.a <- ggplot(timings.a, aes(x=n, y=time, colour=method)) +
-    geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
-    scale_x_log10(
-   breaks = scales::trans_breaks("log10", function(x) 10^x),
-   labels = scales::trans_format("log10", scales::math_format(10^.x))
- ) +
- scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
-   labels = scales::trans_format("log10", scales::math_format(10^.x))) +
-   annotation_logticks()                 
-    
-p.timings.b <- ggplot(timings.b, aes(x=n, y=time, colour=method)) +
-    geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
-    scale_x_log10(
-   breaks = scales::trans_breaks("log10", function(x) 10^x),
-   labels = scales::trans_format("log10", scales::math_format(10^.x))
- ) +
- scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
-   labels = scales::trans_format("log10", scales::math_format(10^.x))) +
-   annotation_logticks()        
-
-p.timings.c <- ggplot(timings.c, aes(x=n, y=time, colour=method)) +
+p.timings <- ggplot(timings, aes(x=n, y=time, colour=method)) +
   geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
     scale_x_log10(
    breaks = scales::trans_breaks("log10", function(x) 10^x),
@@ -147,8 +112,6 @@ p.timings.c <- ggplot(timings.c, aes(x=n, y=time, colour=method)) +
    labels = scales::trans_format("log10", scales::math_format(10^.x))) +
    annotation_logticks()                 
 
-p.timings.a + ggtitle("# of classes growth with n") + theme(plot.margin= unit(c(0,0.05,0,0), "lines"))
-p.timings.b + ggtitle("of classes growth with sqrt(n)") + theme(plot.margin= unit(c(0,0.05,0,0), "lines"))
-p.timings.c + ggtitle("fixed number of classes (100)") + theme(plot.margin= unit(c(0,0.05,0,0), "lines"))
+p.timings + ggtitle("number of classes grows with n") + theme_bw()
 ```
 
