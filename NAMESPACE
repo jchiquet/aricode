@@ -2,6 +2,8 @@
 
 export(AMI)
 export(ARI)
+export(CHI2)
+export(MARI)
 export(NID)
 export(NMI)
 export(NVI)

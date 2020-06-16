@@ -126,6 +126,66 @@ RI <- function(c1, c2){
   res
 }
 
+#' @title Modified Adjusted Rand Index
+#' @description A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep
+#'
+#' @param c1 a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.
+#' @param c2 a vector containing the labels of the second classification.
+#' @return a scalar with the rand index.
+#' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
+#' @examples
+#' data(iris)
+#' cl <- cutree(hclust(dist(iris[,-5])), 4)
+#' MARI(cl,iris$Species)
+#' @export
+MARI <- function(c1, c2){
+  ## get pairs using C
+  ## ensure that values of c1 and c2 are between 0 and n1
+  res <- sortPairs(c1, c2)
+  N <- length(c1)
+  ##
+  allCrossProd <- sum(choose(res$ni., 2))*sum(choose(res$n.j, 2))
+  ## pairs
+  P1 <- sum(choose(res$nij, 2))
+  ## triplets
+  T1 <- 2*N
+  T2 <- sum(res$nij * res$ni.[res$pair_c1+1] * res$n.j[res$pair_c2+1])
+  T3 <- -sum(res$nij^2) - sum(res$ni.^2) - sum(res$n.j^2)
+  
+  ## quadruplets
+  Quad <- allCrossProd - P1 - (T1+T2+T3)
+  
+  ## 
+
+  ## return the rand-index
+  res <- P1 / choose(N, 2) - Quad / (6 *choose(N, 4))
+  res
+}
+
+#' @title Chi-square statistics
+#' @description A function to compute the Chi-2 statistics
+#'
+#' @param c1 a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.
+#' @param c2 a vector containing the labels of the second classification.
+#' @return a scalar with the rand index.
+#' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
+#' @examples
+#' data(iris)
+#' cl <- cutree(hclust(dist(iris[,-5])), 4)
+#' CHI2(cl,iris$Species)
+#' @export
+CHI2 <- function(c1, c2){
+  ## get pairs using C
+  ## ensure that values of c1 and c2 are between 0 and n1
+  res <- sortPairs(c1, c2)
+  N <- length(c1)
+  
+  res <- N* sum(res$nij^2 / (res$ni.[res$pair_c1+1] * res$n.j[res$pair_c2+1]) )
+  res <- res - N
+  res
+}
+
+
 #' @title Entropy
 #' @description A function to compute the empirical entropy for two vectors of classification and the joint entropy
 #'
@@ -172,8 +232,9 @@ clustComp <- function(c1, c2) {
   ID  <- max(H$U, H$V) - MI
   NID <- 1 - MI / max(H$U, H$V)
   NMI <- MI / max(H$U, H$V)
-
+  
   EMI <- expected_MI(as.integer(H$ni.), as.integer(H$n.j))
+
 
   res <- list(RI  = RI(c1,c2)             ,
               ARI = ARI(c1,c2)            ,
@@ -183,7 +244,10 @@ clustComp <- function(c1, c2) {
               NVI = 1 - MI/H$UV           ,
               ID  = max(H$U, H$V) - MI    ,
               NID = 1 - MI / max(H$U, H$V),
-              NMI = MI / max(H$U, H$V)
+              NMI = MI / max(H$U, H$V),
+	      ## new
+	      CHI2 = CHI2(c1,c2),
+  	      MARI = MARI(c1,c2)
   )
   res
 }

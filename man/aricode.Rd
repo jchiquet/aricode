@@ -3,7 +3,6 @@
 \docType{package}
 \name{aricode}
 \alias{aricode}
-\alias{aricode-package}
 \title{aricode}
 \description{
 A package for efficient computations of standard clustering comparison measures. Available measures are described in the paper of Vinh et al, JMLR, 2009 (see reference below).
