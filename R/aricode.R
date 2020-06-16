@@ -58,7 +58,9 @@ sortPairs <- function(c1, c2, spMat=FALSE){
               levels = mylevels,
               nij = out$pair_nb,
               ni. = out$c1_nb,
-              n.j = out$c2_nb
+              n.j = out$c2_nb,
+              pair_c1 = out$pair_c1,
+              pair_c2 = out$pair_c2
   )
   res
 }
