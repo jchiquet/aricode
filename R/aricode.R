@@ -131,7 +131,7 @@ RI <- function(c1, c2){
 #'
 #' @param c1 a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.
 #' @param c2 a vector containing the labels of the second classification.
-#' @return a scalar with the rand index.
+#' @return a scalar with the modified ARI.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
 #' data(iris)
@@ -167,7 +167,7 @@ MARI <- function(c1, c2){
 #'
 #' @param c1 a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.
 #' @param c2 a vector containing the labels of the second classification.
-#' @return a scalar with the rand index.
+#' @return a scalar with the chi-square statistics.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
 #' data(iris)

@@ -12,7 +12,7 @@ MARI(c1, c2)
 \item{c2}{a vector containing the labels of the second classification.}
 }
 \value{
-a scalar with the rand index.
+a scalar with the modified ARI.
 }
 \description{
 A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep

@@ -12,7 +12,7 @@ CHI2(c1, c2)
 \item{c2}{a vector containing the labels of the second classification.}
 }
 \value{
-a scalar with the rand index.
+a scalar with the chi-square statistics.
 }
 \description{
 A function to compute the Chi-2 statistics
