@@ -152,15 +152,18 @@ MARI <- function(c1, c2){
   srow <- sum(choose(res$ni., 2), na.rm=TRUE)
   scol <- sum(choose(res$n.j, 2), na.rm=TRUE)
 
+  ## using Lemma 3.3
   ## triplets
   T1 <- 2*N
-  T2 <- sum(res$nij * res$ni.[res$pair_c1+1] * res$n.j[res$pair_c2+1])
-  T3 <- -sum(res$nij^2) - sum(res$ni.^2) - sum(res$n.j^2)
+  T2 <- sum(res$nij * res$ni.[res$pair_c1+1] * res$n.j[res$pair_c2+1], na.rm=TRUE)
+  T3 <- -sum(res$nij^2, na.rm=TRUE) - sum(res$ni.^2, na.rm=TRUE) - sum(res$n.j^2, na.rm=TRUE)
   
-  ## expected
-  expectedIndex <- ( (srow*scol) - stot - (T1+T2+T3) ) / (6 *choose(N, 4))
-  maximumIndex <- (srow+scol)/2
+  ## quadruplets (and division by 6 choose(N, 4)
+  expectedIndex <- (srow*scol - stot - (T1+T2+T3)) / (6 *choose(N, 4))
 
+  ## return the rand-index
+  expectedIndex <- expectedIndex * choose(N, 2) ## RESCALE SO THAT THE CODE IS EQUIVALENT TO THE ARI
+  maximumIndex <- (srow+scol)/2 
   if (expectedIndex == maximumIndex & stot != 0) {
     res <- 1
   } else {
@@ -293,7 +296,8 @@ clustComp <- function(c1, c2) {
               NMI = MI / max(H$U, H$V),
 	      ## new
 	      CHI2 = CHI2(c1,c2),
-  	      MARI = MARI(c1,c2)
+  	      MARI = MARI(c1,c2),
+	      MARI.raw = MARI.raw(c1,c2)
   )
   res
 }
