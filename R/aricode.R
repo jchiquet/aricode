@@ -21,13 +21,16 @@ sortPairs <- function(c1, c2, spMat=FALSE){
   ## if c1 and c2 are integer
   if (is.integer(c1) & is.integer(c2)) {
     mylevels <- list(c1 = unique(c1), c2 = unique(c2))
-    c1 <- c1 - min(c1)
-    c2 <- c2 - min(c2)
+    #c1 <- c1 - min(c1)
+    #c2 <- c2 - min(c2)
     ## if the range is not adapted to the C code
-    if (!(max(c1) <= n-1 & max(c2) <= n-1)) {
+    #if (!(max(c1) <= n-1 & max(c2) <= n-1)) { 
+    ## HERE WE MAKE ENSURE THAT ALL INDEX FROM 1 to K and 1 to L are present which is 
+    ## usefull for sparseMatrix and the calculation of some criteria linking: n_k. n_.l to n_kl
+    ## TODO add a skip parameter if we can ensure that this is not needed?
       c1 <- as.integer(factor(c1, levels = mylevels$c1)) - 1L
       c2 <- as.integer(factor(c2, levels = mylevels$c2)) - 1L
-    }
+    #} 
     ## if factor, force conversion to integer
   } else if (is.factor(c1) & is.factor(c2)) {
     mylevels <- list(c1 = levels(c1), c2 = levels(c2))
@@ -127,7 +130,7 @@ RI <- function(c1, c2){
 }
 
 #' @title Modified Adjusted Rand Index
-#' @description A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep
+#' @description A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep, based on a multinomial model. 
 #'
 #' @param c1 a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.
 #' @param c2 a vector containing the labels of the second classification.
@@ -144,21 +147,64 @@ MARI <- function(c1, c2){
   res <- sortPairs(c1, c2)
   N <- length(c1)
   ##
-  allCrossProd <- sum(choose(res$ni., 2))*sum(choose(res$n.j, 2))
-  ## pairs
-  P1 <- sum(choose(res$nij, 2))
+
+  stot <- sum(choose(res$nij, 2), na.rm=TRUE)
+  srow <- sum(choose(res$ni., 2), na.rm=TRUE)
+  scol <- sum(choose(res$n.j, 2), na.rm=TRUE)
+
   ## triplets
   T1 <- 2*N
   T2 <- sum(res$nij * res$ni.[res$pair_c1+1] * res$n.j[res$pair_c2+1])
   T3 <- -sum(res$nij^2) - sum(res$ni.^2) - sum(res$n.j^2)
   
-  ## quadruplets
-  Quad <- allCrossProd - P1 - (T1+T2+T3)
+  ## expected
+  expectedIndex <- ( (srow*scol) - stot - (T1+T2+T3) ) / (6 *choose(N, 4))
+  maximumIndex <- (srow+scol)/2
+
+  if (expectedIndex == maximumIndex & stot != 0) {
+    res <- 1
+  } else {
+    res <- (stot-expectedIndex)/(maximumIndex-expectedIndex)
+  }
+    res
+  ## return the adjusted (and divided) rand-index
+  res
+}
+
+#' @title raw Modified Adjusted Rand Index
+#' @description A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep, based on a multinomial model. Raw means, that the index is not divided by the (maximum - expected) value.
+#'
+#' @param c1 a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.
+#' @param c2 a vector containing the labels of the second classification.
+#' @return a scalar with the modified ARI.
+#' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
+#' @examples
+#' data(iris)
+#' cl <- cutree(hclust(dist(iris[,-5])), 4)
+#' MARI.raw(cl,iris$Species)
+#' @export
+MARI.raw <- function(c1, c2){
+  ## get pairs using C
+  ## ensure that values of c1 and c2 are between 0 and n1
+  res <- sortPairs(c1, c2)
+  N <- length(c1)
+  ##
+
+  stot <- sum(choose(res$nij, 2), na.rm=TRUE)
+  srow <- sum(choose(res$ni., 2), na.rm=TRUE)
+  scol <- sum(choose(res$n.j, 2), na.rm=TRUE)
+
+  ## using Lemma 3.3
+  ## triplets
+  T1 <- 2*N
+  T2 <- sum(res$nij * res$ni.[res$pair_c1+1] * res$n.j[res$pair_c2+1], na.rm=TRUE)
+  T3 <- -sum(res$nij^2, na.rm=TRUE) - sum(res$ni.^2, na.rm=TRUE) - sum(res$n.j^2, na.rm=TRUE)
   
-  ## 
+  ## quadruplets (and division by 6 choose(N, 4)
+  expectedIndex <- (srow*scol - stot - (T1+T2+T3)) / (6 *choose(N, 4))
 
   ## return the rand-index
-  res <- P1 / choose(N, 2) - Quad / (6 *choose(N, 4))
+  res <- (stot / choose(N, 2)) - expectedIndex
   res
 }
 
