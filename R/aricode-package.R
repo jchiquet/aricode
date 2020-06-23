@@ -10,7 +10,7 @@
 #'  \item{ARI:}{ computes the adjusted rand index}
 #'  \item{Chi2:}{ computes the Chi-square statistics}
 #'  \item{MARI:}{ computes the modified adjusted rand index (Sundqvist et al, in preparation)}
-#'  \item{MARIraw:}{ computes the multinomial adjusted rand index}
+#'  \item{MARIraw:}{ computes the raw version of the modified adjusted rand index}
 #'  \item{RI:}{ computes the rand index}
 #'  \item{NVI:}{ computes the normalized variation information}
 #'  \item{NID:}{ computes the normalized information distance}
