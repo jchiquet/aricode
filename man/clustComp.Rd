@@ -2,7 +2,7 @@
 % Please edit documentation in R/aricode.R
 \name{clustComp}
 \alias{clustComp}
-\title{measures of similarity between two classification}
+\title{Measures of similarity between two classification}
 \usage{
 clustComp(c1, c2)
 }

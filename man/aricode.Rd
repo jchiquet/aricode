@@ -8,13 +8,16 @@
 A package for efficient computations of standard clustering comparison measures. Available measures are described in the paper of Vinh et al, JMLR, 2009 (see reference below).
 }
 \details{
-Traditional implementations (e.g., function \code{adjustedRandIndex} of package \code{mclust}) are in Omega(n + u v) where n is the size of the vectors the classifications of which are to be compared, u and v are the respective number of classes in each vectors. Here, the implementation is in Theta(n), plus the gain of speed due to the C code.
+Traditional implementations (e.g., function \code{adjustedRandIndex} of package \code{mclust}) are in Omega(n + u v) where n is the size of the vectors the classifications of which are to be compared, u and v are the respective number of classes in each vectors. Here, the implementation is in Theta(n), plus the gain of speed due to the C++ code.
 }
 \section{Functions in aricode}{
 
 The functions included in aricode are:
 \itemize{
  \item{ARI:}{ computes the adjusted rand index}
+ \item{Chi2:}{ computes the Chi-square statistics}
+ \item{MARI:}{ computes the modified adjusted rand index (Sundqvist et al, in preparation)}
+ \item{MARIraw:}{ computes the multinomial adjusted rand index}
  \item{RI:}{ computes the rand index}
  \item{NVI:}{ computes the normalized variation information}
  \item{NID:}{ computes the normalized information distance}
@@ -32,7 +35,9 @@ Nguyen Xuan Vinh, Julien Epps, and James Bailey. "Information theoretic measures
 \code{\link{ARI}}, \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{AMI}}, \code{\link{NMI}}, \code{\link{entropy}}, \code{\link{clustComp}}
 }
 \author{
-Julien Chiquet \email{julien.chiquet@gmail.com}
+Julien Chiquet \email{julien.chiquet@inrae.com}
 
-Guillem Rigaill \email{guillem.rigaill@evry.inra.fr}
+Guillem Rigaill \email{guillem.rigaill@inrae.fr}
+
+Martina Sundqvist \email{martina.sundqvist@agroparistech.fr}
 }
