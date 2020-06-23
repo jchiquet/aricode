@@ -30,10 +30,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// getRank
+List getRank(IntegerVector classi);
+RcppExport SEXP _aricode_getRank(SEXP classiSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type classi(classiSEXP);
+    rcpp_result_gen = Rcpp::wrap(getRank(classi));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_aricode_countPairs", (DL_FUNC) &_aricode_countPairs, 3},
     {"_aricode_expected_MI", (DL_FUNC) &_aricode_expected_MI, 2},
+    {"_aricode_getRank", (DL_FUNC) &_aricode_getRank, 1},
     {NULL, NULL, 0}
 };
 

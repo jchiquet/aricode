@@ -9,3 +9,7 @@ expected_MI <- function(ni_, n_j) {
     .Call('_aricode_expected_MI', PACKAGE = 'aricode', ni_, n_j)
 }
 
+getRank <- function(classi) {
+    .Call('_aricode_getRank', PACKAGE = 'aricode', classi)
+}
+
