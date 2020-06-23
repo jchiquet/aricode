@@ -9,29 +9,29 @@ test_that("Testing supposedly handled input types", {
   cat("\n-numeric type-")
   c1.numeric <- c1
   c2.numeric <- c2
-  ref.object <- list(spMat = NULL, levels = list(c1 = unique(c1.numeric), c2 = unique(c2.numeric)), nij = rep(3,3), ni. =  rep(3,3),  n.j = rep(3,3))
+  ref.object <- list(spMat = NULL, levels = list(c1 = unique(c1.numeric), c2 = unique(c2.numeric)), nij = rep(3,3), ni. =  rep(3,3),  n.j = rep(3,3), pair_c1 = 0:2, pair_c2 = 0:2)
   expect_that(sortPairs(c1.numeric,c2.numeric), equals(ref.object))
 
   cat("\n-integer type-")
   c1.integer <- as.integer(c1)
   c2.integer <- as.integer(c2)
-  ref.object <- list(spMat = NULL, levels = list(c1 = unique(c1.integer), c2 = unique(c2.integer)), nij = rep(3,3), ni. =  rep(3,3),  n.j = rep(3,3))
+  ref.object <- list(spMat = NULL, levels = list(c1 = unique(c1.integer), c2 = unique(c2.integer)), nij = rep(3,3), ni. =  rep(3,3),  n.j = rep(3,3), pair_c1 = 0:2, pair_c2 = 0:2)
   expect_that(sortPairs(c1.integer,c2.integer), equals(ref.object))
 
   cat("\n-character type-")
   c1.char <- as.character(c1)
   c2.char <- as.character(c2)
-  ref.object <- list(spMat = NULL, levels = list(c1 = unique(c1.char), c2 = unique(c2.char)), nij = rep(3,3), ni. =  rep(3,3),  n.j = rep(3,3))
+  ref.object <- list(spMat = NULL, levels = list(c1 = unique(c1.char), c2 = unique(c2.char)), nij = rep(3,3), ni. =  rep(3,3),  n.j = rep(3,3), pair_c1 = 0:2, pair_c2 = 0:2)
   expect_that(sortPairs(c1.char,c2.char), equals(ref.object))
 
   cat("\n-factor type-")
   c1.factor <- as.factor(c1.char)
   c2.factor <- as.factor(c2.char)
-  ref.object <- list(spMat = NULL, levels = list(c1 = levels(c1.factor), c2 = levels(c2.factor)), nij = rep(3,3), ni. =  rep(3,3),  n.j = rep(3,3))
+  ref.object <- list(spMat = NULL, levels = list(c1 = levels(c1.factor), c2 = levels(c2.factor)), nij = rep(3,3), ni. =  rep(3,3),  n.j = rep(3,3), pair_c1 = 0:2, pair_c2 = 0:2)
   expect_that(sortPairs(c1.factor,c2.factor), equals(ref.object))
 
   cat("\n-different types-")
-  ref.object <- list(spMat = NULL, levels = list(c1 = unique(c1.char), c2 = unique(c2.factor)), nij = rep(3,3), ni. =  rep(3,3),  n.j = rep(3,3))
+  ref.object <- list(spMat = NULL, levels = list(c1 = unique(c1.char), c2 = unique(c2.factor)), nij = rep(3,3), ni. =  rep(3,3),  n.j = rep(3,3), pair_c1 = 0:2, pair_c2 = 0:2)
   expect_that(sortPairs(c1.char,c2.factor), equals(ref.object))
 })
 
