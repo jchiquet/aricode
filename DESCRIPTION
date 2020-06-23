@@ -3,12 +3,13 @@ Type: Package
 Title: Efficient Computations of Standard Clustering Comparison Measures
 Version: 0.2.0
 Authors@R: c(
-    person("Julien", "Chiquet", role = c("aut", "cre"), email = "julien.chiquet@inra.fr",
+    person("Julien", "Chiquet", role = c("aut", "cre"), email = "julien.chiquet@inrae.fr",
       comment = c(ORCID = "0000-0002-3629-3429")),
     person("Guillem", "Rigaill", role = "aut", email = "guillem.rigaill@inra.fr"),
+    person("Martina", "Sundqvist", role = "ctb", email = "martina.sundqvist@agroparistech.fr"),
     person("Valentin", "Dervieux", role = "ctb", email = "valentin.dervieux@gmail.com")
   )
-Maintainer: Julien Chiquet <julien.chiquet@inra.fr>
+Maintainer: Julien Chiquet <julien.chiquet@inrae.fr>
 Description: Implements an efficient O(n) algorithm based on bucket-sorting for 
     fast computation of standard clustering comparison measures. Available measures
     include adjusted Rand index (ARI), normalized information distance (NID), 
