@@ -2,9 +2,9 @@
 
 export(AMI)
 export(ARI)
-export(CHI2)
+export(Chi2)
 export(MARI)
-export(MARI.raw)
+export(MARIraw)
 export(NID)
 export(NMI)
 export(NVI)
