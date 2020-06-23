@@ -301,12 +301,12 @@ clustComp <- function(c1, c2) {
               NVI = 1 - MI/H$UV           ,
               ID  = max(H$U, H$V) - MI    ,
               NID = 1 - MI / max(H$U, H$V),
-              NMI = MI / max(H$U, H$V),
-	      ## new
-	      CHI2 = CHI2(c1,c2),
-  	      MARI = MARI(c1,c2),
-	      MARI.raw = MARI.raw(c1,c2)
+              NMI = MI / max(H$U, H$V)    ,
+      	      Chi2 = Chi2(c1,c2)          ,
+  	          MARI = MARI(c1,c2)          ,
+	         MARIraw = MARIraw(c1,c2)
   )
+  res
   res
 }
 
