@@ -21,7 +21,16 @@ sortPairs <- function(c1, c2, spMat=FALSE){
 
   ## if c1 and c2 are integer
   if (is.integer(c1) & is.integer(c2)) {
-    mylevels <- list(c1 = unique(c1), c2 = unique(c2))
+    ## should be O(n) if max(c1)-min(c1) and max(c2)-min(c2) is of order length(c1)=length(c2)
+    ## TODO: should we add a test for that
+    ## NOTE: slight improvement over unique(c1) and unique(c2) index are sorted.
+    res1 <- getRank(c1)
+    res2 <- getRank(c2)
+    mylevels <- list(c1=res1$index, c2=res2$index)
+    c1 <- res1$translated
+    c2 <- res2$translated
+    ## PREVIOUS CODE
+    ## mylevels <- list(c1 = unique(c1), c2 = unique(c2))
     #c1 <- c1 - min(c1)
     #c2 <- c2 - min(c2)
     ## if the range is not adapted to the C code
@@ -29,10 +38,11 @@ sortPairs <- function(c1, c2, spMat=FALSE){
     ## HERE WE MAKE ENSURE THAT ALL INDEX FROM 1 to K and 1 to L are present which is
     ## usefull for sparseMatrix and the calculation of some criteria linking: n_k. n_.l to n_kl
     ## TODO add a skip parameter if we can ensure that this is not needed?
-      c1 <- as.integer(factor(c1, levels = mylevels$c1)) - 1L
-      c2 <- as.integer(factor(c2, levels = mylevels$c2)) - 1L
+    ##  c1 <- as.integer(factor(c1, levels = mylevels$c1)) - 1L
+    ##  c2 <- as.integer(factor(c2, levels = mylevels$c2)) - 1L
     #}
     ## if factor, force conversion to integer
+    ## END PREVIOUS CODE
   } else if (is.factor(c1) & is.factor(c2)) {
     mylevels <- list(c1 = levels(c1), c2 = levels(c2))
     c1 <- as.integer(c1) - 1L
