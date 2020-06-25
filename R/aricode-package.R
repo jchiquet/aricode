@@ -1,6 +1,6 @@
 #' aricode
 #'
-#' A package for efficient computations of standard clustering comparison measures. Available measures are described in the paper of Vinh et al, JMLR, 2009 (see reference below).
+#' A package for efficient computations of standard clustering comparison measures. Most of the available measures are described in the paper of Vinh et al, JMLR, 2009 (see reference below).
 #'
 #' Traditional implementations (e.g., function \code{adjustedRandIndex} of package \code{mclust}) are in Omega(n + u v) where n is the size of the vectors the classifications of which are to be compared, u and v are the respective number of classes in each vectors. Here, the implementation is in Theta(n), plus the gain of speed due to the C++ code.
 #'
@@ -8,7 +8,7 @@
 #' The functions included in aricode are:
 #' \itemize{
 #'  \item{ARI:}{ computes the adjusted rand index}
-#'  \item{Chi2:}{ computes the Chi-square statistics}
+#'  \item{Chi2:}{ computes the Chi-square statistic}
 #'  \item{MARI:}{ computes the modified adjusted rand index (Sundqvist et al, in preparation)}
 #'  \item{MARIraw:}{ computes the raw version of the modified adjusted rand index}
 #'  \item{RI:}{ computes the rand index}

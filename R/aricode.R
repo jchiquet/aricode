@@ -191,7 +191,6 @@ MARIraw <- function(c1, c2){
   ## ensure that values of c1 and c2 are between 0 and n1
   res <- sortPairs(c1, c2)
   N <- length(c1)
-  ##
 
   stot <- sum(choose(res$nij, 2), na.rm=TRUE)
   srow <- sum(choose(res$ni., 2), na.rm=TRUE)
@@ -402,7 +401,5 @@ NVI <- function(c1, c2) {
   res <- 1 - MI/H$UV
   res
 }
-
-
 
 
