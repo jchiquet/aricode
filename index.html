@@ -78,11 +78,12 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="aricode-a-package-for-efficient-computations-of-standard-clustering-comparison-measures" class="section level1">
+<div id="aricode" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#aricode-a-package-for-efficient-computations-of-standard-clustering-comparison-measures" class="anchor"></a>aricode: a package for efficient computations of standard clustering comparison measures</h1></div>
+<a href="#aricode" class="anchor"></a>aricode</h1></div>
 <!-- badges: start -->
 
+<p>A package for efficient computations of standard clustering comparison measures</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -98,22 +99,18 @@
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#description" class="anchor"></a>Description</h2>
-<p>Traditional implementations (e.g., function <code>adjustedRandIndex</code> of package <strong>mclust</strong>) are in <span class="math inline"><em>Ω</em>(<em>n</em> + <em>u</em><em>v</em>)</span> where</p>
+<p>Computation of measures for clustering comparison (ARI, AMI, NID and even the <img src="https://latex.codecogs.com/png.latex?%5Cchi%5E2%20%22%5Cchi%5E2%22" alt="\chi^2"> distance) are usually based on the contingency table. Traditional implementations (e.g., function <code>adjustedRandIndex</code> of package <strong>mclust</strong>) are in <img src="https://latex.codecogs.com/png.latex?%5COmega%28n%20%2B%20u%20v%29%20%22%5COmega(n%20+%20u%20v)%22" alt="\Omega(n + u v)"> where</p>
 <ul>
 <li>
-<span class="math inline"><em>n</em></span> is the size of the vectors the classifications of which are to be compared,</li>
+<embed src="https://latex.codecogs.com/png.latex?n" title="n"></embed> is the size of the vectors the classifications of which are to be compared,</li>
 <li>
-<span class="math inline"><em>u</em></span> and <span class="math inline"><em>v</em></span> are the respective number of classes in each vectors.</li>
+<embed src="https://latex.codecogs.com/png.latex?u" title="u"></embed> and <embed src="https://latex.codecogs.com/png.latex?v" title="v"></embed> are the respective number of classes in each vectors.</li>
 </ul>
-<p>Here, the implementation is in <span class="math inline"><em>Θ</em>(<em>n</em>)</span>, plus the gain of speed due to the <code>C</code> implementation.</p>
-<p>Available measures are describes in the paper of Vinh et al, JMLR, 2009 (see reference below).</p>
-<p>Vinh, Nguyen Xuan, Julien Epps, and James Bailey. <em>“Information theoretic measures for clusterings comparison: Variants, properties, normalization and correction for chance.”</em> Journal of Machine Learning Research 11.Oct (2010): 2837-2854.</p>
-<p>A modified adjusted Rand Index (unbiased and motivated by a multinomial model of the clusterings) is available.</p>
-<p>A fast implementation for computing the Chi-square statistics is also implemented.</p>
+<p>In <strong>aricode</strong> we propose an implementation, based on counting sort, that is in <img src="https://latex.codecogs.com/png.latex?%5CTheta%28n%29%20%22%5CTheta(n)%22" alt="\Theta(n)"> in time and space. Our implementation of the ARI for instance is one or two order of magnitude faster than some standard implementation in <code>R</code>.</p>
 </div>
-<div id="available-functions" class="section level2">
+<div id="available-measures-and-functions" class="section level2">
 <h2 class="hasAnchor">
-<a href="#available-functions" class="anchor"></a>Available functions</h2>
+<a href="#available-measures-and-functions" class="anchor"></a>Available measures and functions</h2>
 <p>The functions included in aricode are:</p>
 <ul>
 <li>
@@ -121,7 +118,7 @@
 <li>
 <code>Chi2</code>: computes the Chi-square statistics</li>
 <li>
-<code>MARI</code>: computes the modified adjusted rand index (Sundqvist et al, in preparation)</li>
+<code>MARI/MARIraw</code>: computes the modified adjusted rand index (Sundqvist et al, in preparation)</li>
 <li>
 <code>NVI</code>: computes the the normalized variation information</li>
 <li>
@@ -130,6 +127,8 @@
 <code>NMI</code>: computes the normalized mutual information</li>
 <li>
 <code>AMI</code>: computes the adjusted mutual information</li>
+<li>
+<code>expected_MI</code>: computes the expected mutual information</li>
 <li>
 <code>entropy</code>: computes the conditional and joint entropies</li>
 <li>
@@ -175,7 +174,6 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/jchiquet/aricode/actions"><img src="https://github.com/jchiquet/aricode/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://CRAN.R-project.org/package=aricode"><img src="https://www.r-pkg.org/badges/version/aricode" alt="CRAN Status"></a></li>
 <li><a href="https://codecov.io/gh/jchiquet/aricode"><img src="https://codecov.io/gh/jchiquet/aricode/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
 <li><a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-blue.svg" alt="Lifecycle: stable"></a></li>
