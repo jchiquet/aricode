@@ -8,3 +8,6 @@ Readme.rmd
 Readme_cache
 ^CRAN-RELEASE$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

@@ -1,0 +1,19 @@
+templates:
+  params:
+    bootswatch: readable
+
+navbar:
+  title: "aricode"
+  type: inverse
+  left:
+    - icon: fa-home
+    - text: "Home"
+      href: index.html
+    - text: "Reference"
+      href: "reference/index.html"
+    - text: "Changelog"
+      href: news/index.html
+  right:
+    - icon: fa-github
+      href: https://github.com/jchiquet/aricode
+
