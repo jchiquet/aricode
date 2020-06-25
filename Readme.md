@@ -1,8 +1,8 @@
 
 # aricode: a package for efficient computations of standard clustering comparison measures
 
-[![Travis\_CI Build
-status](https://travis-ci.org/jchiquet/aricode.svg?branch=master)](https://travis-ci.org/jchiquet/aricode)
+<!-- badges: start --> [![R build
+status](https://github.com/jchiquet/aricode/workflows/R-CMD-check/badge.svg)](https://github.com/jchiquet/aricode/actions)
 [![CRAN
 Status](https://www.r-pkg.org/badges/version/aricode)](https://CRAN.R-project.org/package=aricode)
 [![Coverage
@@ -10,6 +10,7 @@ status](https://codecov.io/gh/jchiquet/aricode/branch/master/graph/badge.svg)](h
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![](https://img.shields.io/github/last-commit/jchiquet/aricode.svg)](https://github.com/jchiquet/aricode/commits/master)
+<!-- badges: end -->
 
 ## Installation
 

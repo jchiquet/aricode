@@ -11,11 +11,13 @@ knitr::opts_chunk$set(
 
 # aricode: a package for efficient computations of standard clustering comparison measures
 
-[![Travis_CI Build status](https://travis-ci.org/jchiquet/aricode.svg?branch=master)](https://travis-ci.org/jchiquet/aricode)
+ <!-- badges: start -->
+[![R build status](https://github.com/jchiquet/aricode/workflows/R-CMD-check/badge.svg)](https://github.com/jchiquet/aricode/actions)
 [![CRAN Status](https://www.r-pkg.org/badges/version/aricode)](https://CRAN.R-project.org/package=aricode)
 [![Coverage status](https://codecov.io/gh/jchiquet/aricode/branch/master/graph/badge.svg)](https://codecov.io/gh/jchiquet/aricode)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![](https://img.shields.io/github/last-commit/jchiquet/aricode.svg)](https://github.com/jchiquet/aricode/commits/master)
+  <!-- badges: end -->
 
 ## Installation
 
@@ -105,7 +107,7 @@ timings <- do.call("rbind", lapply(ns, sim.timings))
 
 ```{r timings_plot, echo=FALSE, message=FALSE, warning=FALSE}
 p.timings <- ggplot(timings, aes(x=n, y=time, colour=method)) +
-  geom_smooth() + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
+  geom_smooth(data = dplyr::filter(timings, n > 1e4), method = "lm") + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
     scale_x_log10(
    breaks = scales::trans_breaks("log10", function(x) 10^x),
    labels = scales::trans_format("log10", scales::math_format(10^.x))
