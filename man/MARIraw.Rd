@@ -12,7 +12,7 @@ MARIraw(c1, c2)
 \item{c2}{a vector containing the labels of the second classification.}
 }
 \value{
-a scalar with the modified ARI without the division by the (max-expected)
+a scalar with the modified ARI without the division by the (maximum - expected)
 }
 \description{
 A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep, based on a multinomial model. Raw means, that the index is not divided by the (maximum - expected) value.
