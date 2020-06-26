@@ -99,14 +99,15 @@
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#description" class="anchor"></a>Description</h2>
-<p>Computation of measures for clustering comparison (ARI, AMI, NID and even the <img src="https://latex.codecogs.com/png.latex?%5Cchi%5E2%20%22%5Cchi%5E2%22" alt="\chi^2"> distance) are usually based on the contingency table. Traditional implementations (e.g., function <code>adjustedRandIndex</code> of package <strong>mclust</strong>) are in <img src="https://latex.codecogs.com/png.latex?%5COmega%28n%20%2B%20u%20v%29%20%22%5COmega(n%20+%20u%20v)%22" alt="\Omega(n + u v)"> where</p>
+<p>Computation of measures for clustering comparison (ARI, AMI, NID and even the <span class="math inline"><em>χ</em><sup>2</sup></span> distance) are usually based on the contingency table. Traditional implementations (e.g., function <code>adjustedRandIndex</code> of package <strong>mclust</strong>) are in <span class="math inline"><em>Ω</em>(<em>n</em> + <em>u</em><em>v</em>)</span> where</p>
 <ul>
 <li>
-<embed src="https://latex.codecogs.com/png.latex?n" title="n"></embed> is the size of the vectors the classifications of which are to be compared,</li>
+<span class="math inline"><em>n</em></span> is the size of the vectors the classifications of which are to be compared,</li>
 <li>
-<embed src="https://latex.codecogs.com/png.latex?u" title="u"></embed> and <embed src="https://latex.codecogs.com/png.latex?v" title="v"></embed> are the respective number of classes in each vectors.</li>
+<span class="math inline"><em>u</em></span> and <span class="math inline"><em>v</em></span> are the respective number of classes in each vectors.</li>
 </ul>
-<p>In <strong>aricode</strong> we propose an implementation, based on counting sort, that is in <img src="https://latex.codecogs.com/png.latex?%5CTheta%28n%29%20%22%5CTheta(n)%22" alt="\Theta(n)"> in time and space. Our implementation of the ARI for instance is one or two order of magnitude faster than some standard implementation in <code>R</code>.</p>
+<p>In <strong>aricode</strong> we propose an implementation, based on radix sort, that is in <span class="math inline"><em>Θ</em>(<em>n</em>)</span> in time and space.<br>
+Importantly, the complexity does not depends on <span class="math inline"><em>u</em></span> and <span class="math inline"><em>v</em></span>. Our implementation of the ARI for instance is one or two order of magnitude faster than some standard implementation in <code>R</code>.</p>
 </div>
 <div id="available-measures-and-functions" class="section level2">
 <h2 class="hasAnchor">
