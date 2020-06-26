@@ -21,13 +21,13 @@ sortPairs <- function(c1, c2, spMat=FALSE){
 
   ## if c1 and c2 are integer
   if (is.integer(c1) & is.integer(c2)) {
-    ## should be O(n) if max(c1)-min(c1) and max(c2)-min(c2) is of order length(c1)=length(c2)
-    ## NOTE: slight improvement over unique(c1) and unique(c2) index are sorted.
+    ## getRank is O(n) if max(c1)-min(c1) and max(c2)-min(c2) is of order length(c1)=length(c2)
+    ## NOTE: getRank does not assume c1 and c2 are between 0 and n
     res1 <- getRank(c1)
     res2 <- getRank(c2)
     mylevels <- list(c1=res1$index, c2=res2$index)
-    c1 <- res1$translated
-    c2 <- res2$translated
+    c1 <- res1$translated  # here ranks are in [0, n)
+    c2 <- res2$translated  # here ranks are in [0, n)
   } else if (is.factor(c1) & is.factor(c2)) {
     mylevels <- list(c1 = levels(c1), c2 = levels(c2))
     c1 <- as.integer(c1) - 1L
@@ -179,7 +179,7 @@ MARI <- function(c1, c2){
 #'
 #' @param c1 a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.
 #' @param c2 a vector containing the labels of the second classification.
-#' @return a scalar with the modified ARI without the division by the (max-expected)
+#' @return a scalar with the modified ARI without the division by the (maximum - expected)
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
 #' data(iris)

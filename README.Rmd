@@ -44,8 +44,9 @@ Computation of measures for clustering comparison (ARI, AMI, NID and even the $\
 - $n$ is the size of the vectors the classifications of which are to be compared,
 - $u$ and $v$ are the respective number of classes in each vectors. 
 
-In **aricode** we propose an implementation, based on counting sort, that is in $\Theta(n)$ in time and space.  Our
-implementation of the ARI for instance is one or two order of magnitude faster than some standard implementation in `R`.
+In **aricode** we propose an implementation, based on radix sort, that is in $\Theta(n)$ in time and space.  
+Importantly, the complexity does not depends on $u$ and $v$.
+Our implementation of the ARI for instance is one or two order of magnitude faster than some standard implementation in `R`.
 
 ## Available measures and functions
 
