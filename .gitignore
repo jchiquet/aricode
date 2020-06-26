@@ -20,6 +20,10 @@
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
+
+# web files
+docs/*
+
 # doc files
 inst/doc/*
 
@@ -39,4 +43,3 @@ inst/doc/*
 src/*.o
 src/*.so
 src/*.dll
-docs
