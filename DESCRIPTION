@@ -6,7 +6,7 @@ Authors@R: c(
     person("Julien", "Chiquet", role = c("aut", "cre"), email = "julien.chiquet@inrae.fr",
       comment = c(ORCID = "0000-0002-3629-3429")),
     person("Guillem", "Rigaill", role = "aut", email = "guillem.rigaill@inrae.fr"),
-    person("Martina", "Sundqvist", role = "ctb", email = "martina.sundqvist@agroparistech.fr"),
+    person("Martina", "Sundqvist", role = "aut", email = "martina.sundqvist@agroparistech.fr"),
     person("Valentin", "Dervieux", role = "ctb", email = "valentin.dervieux@gmail.com")
   )
 Maintainer: Julien Chiquet <julien.chiquet@inrae.fr>
