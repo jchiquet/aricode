@@ -184,7 +184,7 @@ test_that("Testing coherence of the MARI", {
 
 })
 
-test_that("Testing coherence of the MARI with ARI when equivalent", {
+test_that("Testing coherence of the MARI with ARI : in case of independance their values should be close", {
   n <- rpois(lambda=100, n=1) +   3
   k1 <- rpois(lambda=5, n=1)+2; k2 <- rpois(lambda=5, n=1)+2
   class1 <- sample(1:k1, n, replace=T)
