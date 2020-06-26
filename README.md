@@ -33,25 +33,20 @@ devtools::install_github("jchiquet/aricode")
 ## Description
 
 Computation of measures for clustering comparison (ARI, AMI, NID and
-even the ![\\chi^2](https://latex.codecogs.com/png.latex?%5Cchi%5E2
-"\\chi^2") distance) are usually based on the contingency table.
-Traditional implementations (e.g., function `adjustedRandIndex` of
-package **mclust**) are in ![\\Omega(n + u
-v)](https://latex.codecogs.com/png.latex?%5COmega%28n%20%2B%20u%20v%29
-"\\Omega(n + u v)") where
+even the \(\chi^2\) distance) are usually based on the contingency
+table. Traditional implementations (e.g., function `adjustedRandIndex`
+of package **mclust**) are in \(\Omega(n + u v)\) where
 
-  - ![n](https://latex.codecogs.com/png.latex?n "n") is the size of the
-    vectors the classifications of which are to be compared,
-  - ![u](https://latex.codecogs.com/png.latex?u "u") and
-    ![v](https://latex.codecogs.com/png.latex?v "v") are the respective
-    number of classes in each vectors.
+  - \(n\) is the size of the vectors the classifications of which are to
+    be compared,
+  - \(u\) and \(v\) are the respective number of classes in each
+    vectors.
 
-In **aricode** we propose an implementation, based on counting sort,
-that is in
-![\\Theta(n)](https://latex.codecogs.com/png.latex?%5CTheta%28n%29
-"\\Theta(n)") in time and space. Our implementation of the ARI for
-instance is one or two order of magnitude faster than some standard
-implementation in `R`.
+In **aricode** we propose an implementation, based on radix sort, that
+is in \(\Theta(n)\) in time and space.  
+Importantly, the complexity does not depends on \(u\) and \(v\). Our
+implementation of the ARI for instance is one or two order of magnitude
+faster than some standard implementation in `R`.
 
 ## Available measures and functions
 
