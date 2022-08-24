@@ -70,7 +70,7 @@ jobs:
           cd R
           RDscript${{ matrix.sanitizer }} -e "install.packages(c('testthat'))"
           RD${{ matrix.sanitizer }} CMD build .
-          RD${{ matrix.sanitizer }} CMD INSTALL SyncRNG_*.tar.gz || exit -1
+          RD${{ matrix.sanitizer }} CMD INSTALL aricode_*.tar.gz || exit -1
       - name: Run tests with sanitizer
         shell: bash
         run: |
