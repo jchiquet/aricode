@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 # aricode
 
  <!-- badges: start -->
-![R-CMD-check](https://github.com/jchiquet/aricode/workflows/R-CMD-check/badge.svg?branch=master)
+[![R-CMD-check](https://github.com/jchiquet/aricode/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jchiquet/aricode/actions/workflows/R-CMD-check.yaml)
 [![CRAN Status](https://www.r-pkg.org/badges/version/aricode)](https://CRAN.R-project.org/package=aricode)
 [![Coverage status](https://codecov.io/gh/jchiquet/aricode/branch/master/graph/badge.svg)](https://codecov.io/gh/jchiquet/aricode)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://www.tidyverse.org/lifecycle/#stable)
