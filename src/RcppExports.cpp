@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // countPairs
 List countPairs(IntegerVector classi1, IntegerVector classi2, IntegerVector order);
 RcppExport SEXP _aricode_countPairs(SEXP classi1SEXP, SEXP classi2SEXP, SEXP orderSEXP) {
