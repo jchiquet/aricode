@@ -25,6 +25,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">aricode</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0-9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0-9000</span>
       </span>
     </div>
 
@@ -61,7 +63,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jchiquet/aricode">
+  <a href="https://github.com/jchiquet/aricode" class="external-link">
     <span class="fa fa-github"></span>
      
   </a>
@@ -78,40 +80,35 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="aricode" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#aricode" class="anchor"></a>aricode</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="aricode">aricode<a class="anchor" aria-label="anchor" href="#aricode"></a>
+</h1></div>
 <!-- badges: start -->
-
 <p>A package for efficient computations of standard clustering comparison measures</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>Stable version on the <a href="https://cran.rstudio.com/web/packages/aricode/">CRAN</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"aricode"</span>)
-</pre></div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>Stable version on the <a href="https://cran.rstudio.com/web/packages/aricode/" class="external-link">CRAN</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"aricode"</span><span class="op">)</span></span></code></pre></div>
 <p>The development version is available via:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">devtools</span>::<span class="fu">install_github</span>(<span class="st">"jchiquet/aricode"</span>)
-</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jchiquet/aricode"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="description" class="section level2">
-<h2 class="hasAnchor">
-<a href="#description" class="anchor"></a>Description</h2>
-<p>Computation of measures for clustering comparison (ARI, AMI, NID and even the <span class="math inline"><em>χ</em><sup>2</sup></span> distance) are usually based on the contingency table. Traditional implementations (e.g., function <code>adjustedRandIndex</code> of package <strong>mclust</strong>) are in <span class="math inline"><em>Ω</em>(<em>n</em> + <em>u</em><em>v</em>)</span> where</p>
+<div class="section level2">
+<h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
+</h2>
+<p>Computation of measures for clustering comparison (ARI, AMI, NID and even the (^2) distance) are usually based on the contingency table. Traditional implementations (e.g., function <code>adjustedRandIndex</code> of package <strong>mclust</strong>) are in ((n + u v)) where</p>
 <ul>
-<li>
-<span class="math inline"><em>n</em></span> is the size of the vectors the classifications of which are to be compared,</li>
-<li>
-<span class="math inline"><em>u</em></span> and <span class="math inline"><em>v</em></span> are the respective number of classes in each vectors.</li>
+<li>(n) is the size of the vectors the classifications of which are to be compared,</li>
+<li>(u) and (v) are the respective number of classes in each vectors.</li>
 </ul>
-<p>In <strong>aricode</strong> we propose an implementation, based on radix sort, that is in <span class="math inline"><em>Θ</em>(<em>n</em>)</span> in time and space.<br>
-Importantly, the complexity does not depends on <span class="math inline"><em>u</em></span> and <span class="math inline"><em>v</em></span>. Our implementation of the ARI for instance is one or two order of magnitude faster than some standard implementation in <code>R</code>.</p>
+<p>In <strong>aricode</strong> we propose an implementation, based on radix sort, that is in ((n)) in time and space.<br>
+Importantly, the complexity does not depends on (u) and (v). Our implementation of the ARI for instance is one or two order of magnitude faster than some standard implementation in <code>R</code>.</p>
 </div>
-<div id="available-measures-and-functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#available-measures-and-functions" class="anchor"></a>Available measures and functions</h2>
+<div class="section level2">
+<h2 id="available-measures-and-functions">Available measures and functions<a class="anchor" aria-label="anchor" href="#available-measures-and-functions"></a>
+</h2>
 <p>The functions included in aricode are:</p>
 <ul>
 <li>
@@ -136,9 +133,9 @@ Importantly, the complexity does not depends on <span class="math inline"><em>u<
 <code>clustComp</code>: computes all clustering comparison measures at once</li>
 </ul>
 </div>
-<div id="timings" class="section level2">
-<h2 class="hasAnchor">
-<a href="#timings" class="anchor"></a>Timings</h2>
+<div class="section level2">
+<h2 id="timings">Timings<a class="anchor" aria-label="anchor" href="#timings"></a>
+</h2>
 <p>Here are some timings to compare the cost of computing the adjusted Rand Index with <strong>aricode</strong> or with the commonly used function <code>adjustedRandIndex</code> of the <em>mclust</em> package: the cost of the latter can be prohibitive for large vectors:</p>
 <p><img src="reference/figures/timings_plot-1.png"><!-- --></p>
 </div>
@@ -147,51 +144,61 @@ Importantly, the complexity does not depends on <span class="math inline"><em>u<
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=aricode">https://​cloud.r-project.org/​package=aricode</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/jchiquet/aricode/">https://​github.com/​jchiquet/​aricode/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/jchiquet/aricode/issues">https://​github.com/​jchiquet/​aricode/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=aricode" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/jchiquet/aricode/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/jchiquet/aricode/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;=3)</li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Julien Chiquet <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-3629-3429" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Guillem Rigaill <br><small class="roles"> Author </small>  </li>
-<li>Martina Sundqvist <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing aricode</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://CRAN.R-project.org/package=aricode"><img src="https://www.r-pkg.org/badges/version/aricode" alt="CRAN Status"></a></li>
-<li><a href="https://codecov.io/gh/jchiquet/aricode"><img src="https://codecov.io/gh/jchiquet/aricode/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-blue.svg" alt="Lifecycle: stable"></a></li>
-<li><a href="https://github.com/jchiquet/aricode/commits/master"><img src="https://img.shields.io/github/last-commit/jchiquet/aricode.svg"></a></li>
+<li>Julien Chiquet <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-3629-3429" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Guillem Rigaill <br><small class="roles"> Author </small>  </li>
+<li>Martina Sundqvist <br><small class="roles"> Author </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://CRAN.R-project.org/package=aricode" class="external-link"><img src="https://www.r-pkg.org/badges/version/aricode" alt="CRAN Status"></a></li>
+<li><a href="https://codecov.io/gh/jchiquet/aricode" class="external-link"><img src="https://codecov.io/gh/jchiquet/aricode/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-blue.svg" alt="Lifecycle: stable"></a></li>
+<li><a href="https://github.com/jchiquet/aricode/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/jchiquet/aricode.svg"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Julien Chiquet, Guillem Rigaill, Martina Sundqvist.</p>
+  <p></p>
+<p>Developed by Julien Chiquet, Guillem Rigaill, Martina Sundqvist.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -199,6 +206,8 @@ Importantly, the complexity does not depends on <span class="math inline"><em>u<
 
   
 
+
+  
 
   </body>
 </html>
