@@ -68,6 +68,8 @@ jobs:
         shell: bash
         run: |
           RDscript${{ matrix.sanitizer }} -e "install.packages(c('testthat'))"
+          RDscript${{ matrix.sanitizer }} -e "install.packages(c('Matrix'))"
+          RDscript${{ matrix.sanitizer }} -e "install.packages(c('Rcpp'))"
           RD${{ matrix.sanitizer }} CMD build .
           RD${{ matrix.sanitizer }} CMD INSTALL aricode_*.tar.gz || exit -1
       - name: Run tests with sanitizer
