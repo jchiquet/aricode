@@ -1,35 +1,34 @@
+This submission is in response to a request from a CRAN maintainer due to upcoming switch to HTML5 in documentation
 
-## Package update
+## aricode 1.0.1
 
-This package uses a bucket-sorting algorithm to avoid useless storage and computations in sparse contingency tables when comparing two classifications with many entries. It is then used to compute fastly adjusted Rand index and other clustering comparison measures. In this new version we
-
-  -	added the Modified adjusted Rand Index
-  -	added the Chi-Square statistics
-  - fixed bugs
-
-Thank you for your time and work on CRAN.
+- fix warnings in C++
+- fix documentation for to comply with CRAN policy and HTML5 validation
 
 ## Tested environments
 
-- macOS 10.13.6 High Sierra, R-release, CRAN's setup (R hub)
-- macOS Catalina 10.15, R-release (github action)
-- macOS Catalina 10.15, R-devel (github action)
-- Linux ubuntu 16.04, R-release (github-action)
-- Linux ubuntu 18.04 R-release, (local)
-- Linux Debian GCC  R-devel, (R hub)
-- Windows Server 2019, R-release (github action)
-- Windows Server 2008 R2 SP1, R-release  (R hub)
-- Windows, R-oldrelease (winbuilder)
-- Windows, R-release (winbuilder)
-- Windows, R-devel  (winbuilder)
+* tested locally on Ubuntu Linux 22.04.1 LTS, R-release, GCC
+
+* tested remotely with github-action
+
+- Linux ubuntu 20.04, R-release (github-action)
+- Linux ubuntu 20.04, R-oldrel (github-action)
+- Linux ubuntu 20.04, R-devel (github-action)
+- Windows Server 2022, R-release, 64 bit
+- macOS Big Sur 11, R-release (github action)
+- Linux ubuntu 20.04, R-release, gcc + unit test with sanitizers (github-action)
+- Linux ubuntu 20.04, R-release, clang + unit test with sanitizers (github-action)
+
+* tested remotely with win-builder (R version 4.2.1, R dev, R version 4.1.3)
 
 all status OK 
 
-## R CMD check results
+## Local R CMD check results
 
-── R CMD check results ────────────────────────────────────── aricode 1.0.0 ────
-Duration: 26.5s
+── R CMD check results ──────────────────────────────────────────────────────────────── aricode 1.0.1 ────
+Duration: 33.4s
 
-0 errors ✓ | 0 warnings ✓ | 0 notes ✓
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
 R CMD check succeeded
+

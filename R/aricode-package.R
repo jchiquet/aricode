@@ -19,7 +19,7 @@
 #'  \item{entropy:}{ computes the conditional and joint entropies}
 #'  \item{clustComp:}{ computes all clustering comparison measures at once}
 #' }
-#' @author Julien Chiquet \email{julien.chiquet@@inrae.com}
+#' @author Julien Chiquet \email{julien.chiquet@@inrae.fr}
 #' @author Guillem Rigaill \email{guillem.rigaill@@inrae.fr}
 #' @author Martina Sundqvist \email{martina.sundqvist@@agroparistech.fr}
 #' @references Nguyen Xuan Vinh, Julien Epps, and James Bailey. "Information theoretic measures for clusterings comparison: Variants, properties, normalization and correction for chance." Journal of Machine Learning Research 11.Oct (2010): 2837-2854. as described in Vinh et al (2009)

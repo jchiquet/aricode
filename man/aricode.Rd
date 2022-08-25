@@ -35,7 +35,7 @@ Nguyen Xuan Vinh, Julien Epps, and James Bailey. "Information theoretic measures
 \code{\link{ARI}}, \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{AMI}}, \code{\link{NMI}}, \code{\link{entropy}}, \code{\link{clustComp}}
 }
 \author{
-Julien Chiquet \email{julien.chiquet@inrae.com}
+Julien Chiquet \email{julien.chiquet@inrae.fr}
 
 Guillem Rigaill \email{guillem.rigaill@inrae.fr}
 
