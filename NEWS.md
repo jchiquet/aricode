@@ -1,4 +1,4 @@
-## aricode 1.0-1 (2022-08-25)
+## aricode 1.0-1 (2022-09-04)
 
 - fix warnings in C++
 - fix documentation for to comply with CRAN policy and HTML5 validation

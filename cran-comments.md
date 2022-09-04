@@ -1,4 +1,4 @@
-This submission is in response to a request from a CRAN maintainer due to upcoming switch to HTML5 in documentation
+This submission is in response to a request from a CRAN maintainer due to upcoming switch to HTML5 in documentation and error in USBAN check (due to bad use of R_Na with integer vector)
 
 ## aricode 1.0.1
 
