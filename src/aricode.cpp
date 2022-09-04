@@ -117,7 +117,7 @@ List getRank(IntegerVector classi){
 	index[indexCur] = i+mini;
 	indexCur++;
      } else {
-        translator[i] = R_NaN;
+        translator[i] = NA_INTEGER;
      }
    }
    // Converted Vector
@@ -126,11 +126,8 @@ List getRank(IntegerVector classi){
 
    // output as a list
    List ListOut;
-   ListOut["index"] =  index;
+   ListOut["index"] = index;
    ListOut["translator"] = translator;
-   ListOut["translated"]   = translated;
+   ListOut["translated"] = translated;
    return ListOut;
 }
-
-
-
