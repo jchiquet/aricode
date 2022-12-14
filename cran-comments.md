@@ -18,9 +18,11 @@ This submission follows the reporting of a bug in the calculation of the AMI.
 - Linux ubuntu 20.04, R-release, gcc + unit test with sanitizers (github-action)
 - Linux ubuntu 20.04, R-release, clang + unit test with sanitizers (github-action)
 
-* tested remotely with win-builder (R version 4.2.1, R dev, R version 4.1.3)
+* tested remotely with win-builder (R version 4.2.2, R dev, R version 4.1.3)
 
-all status OK 
+all status OK, except for 1 NOTE on Windows with 4.1.3
+"Possibly mis-spelled words in DESCRIPTION:" (it wrongly identifies names as mis-spelled)
+
 
 ## Local R CMD check results
 
