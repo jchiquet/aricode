@@ -43,3 +43,6 @@ inst/doc/*
 src/*.o
 src/*.so
 src/*.dll
+
+# revdep testing
+revdep/

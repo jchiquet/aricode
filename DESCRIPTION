@@ -8,7 +8,7 @@ Authors@R: c(
     person("Guillem", "Rigaill", role = "aut", email = "guillem.rigaill@inrae.fr"),
     person("Martina", "Sundqvist", role = "aut", email = "martina.sundqvist@agroparistech.fr"),
     person("Valentin", "Dervieux", role = "ctb", email = "valentin.dervieux@gmail.com"),
-    person("Florent", "Bersani", role = "ctb", email = "florent.bersani@m4x.org")
+    person("Florent", "Bersani", role = "ctb", email = "florent@bersani.org")
   )
 Maintainer: Julien Chiquet <julien.chiquet@inrae.fr>
 Description: Implements an efficient O(n) algorithm based on bucket-sorting for 

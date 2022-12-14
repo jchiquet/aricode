@@ -1,3 +1,7 @@
+## aricode 1.0-2 (2022-12-14)
+
+- fix a serious bug in the AMI function pointed by Florent Bersani
+
 ## aricode 1.0-1 (2022-09-04)
 
 - fix warnings in C++
