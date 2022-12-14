@@ -283,9 +283,7 @@ clustComp <- function(c1, c2) {
   ID  <- max(H$U, H$V) - MI
   NID <- 1 - MI / max(H$U, H$V)
   NMI <- MI / max(H$U, H$V)
-
-  EMI <- expected_MI(as.integer(H$ni.), as.integer(H$n.j))
-
+  EMI <- expected_MI(as.integer(H$sortPairs$ni.), as.integer(H$sortPairs$n.j))
 
   res <- list(RI  = RI(c1,c2)             ,
               ARI = ARI(c1,c2)            ,
@@ -321,7 +319,7 @@ AMI <- function(c1, c2){
 
   H   <- entropy(c1,c2)
   MI  <- - H$UV + H$U + H$V
-  EMI <- expected_MI(as.integer(H$ni.), as.integer(H$n.j))
+  EMI <- expected_MI(as.integer(H$sortPairs$ni.), as.integer(H$sortPairs$n.j))
 
   res <- (MI - EMI) / (max(H$U,H$V) - EMI)
   res

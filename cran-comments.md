@@ -1,9 +1,8 @@
-This submission is in response to a request from a CRAN maintainer due to upcoming switch to HTML5 in documentation and error in USBAN check (due to bad use of R_Na with integer vector)
+This submission follows the reporting of a bug in the calculation of the AMI.
 
-## aricode 1.0.1
+## aricode 1.0.2
 
-- fix warnings in C++
-- fix documentation for to comply with CRAN policy and HTML5 validation
+- fix serious bug in computation of AMI, thanks to Florent Bersani
 
 ## Tested environments
 
@@ -25,8 +24,8 @@ all status OK
 
 ## Local R CMD check results
 
-── R CMD check results ──────────────────────────────────────────────────────────────── aricode 1.0.1 ────
-Duration: 33.4s
+── R CMD check results ─────────────────────────────────────────────────────────────────────────────── aricode 1.0.2 ────
+Duration: 22.8s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
