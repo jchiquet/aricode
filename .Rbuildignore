@@ -14,3 +14,4 @@ README_cache
 ^docs/*.*
 ^docs/*
 ^CRAN-SUBMISSION$
+^revdep
