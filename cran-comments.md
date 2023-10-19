@@ -1,8 +1,8 @@
 This submission follows the reporting of a bug in the calculation of the AMI.
 
-## aricode 1.0.2
+## aricode 1.0.3
 
-- fix serious bug in computation of AMI, thanks to Florent Bersani
+- minor fix in package documentation due to evolution of roxygen2 7.0.0 <https://github.com/r-lib/roxygen2/issues/1491>.
 
 ## Tested environments
 
@@ -10,26 +10,23 @@ This submission follows the reporting of a bug in the calculation of the AMI.
 
 * tested remotely with github-action
 
-- Linux ubuntu 20.04, R-release (github-action)
-- Linux ubuntu 20.04, R-oldrel (github-action)
-- Linux ubuntu 20.04, R-devel (github-action)
+- Linux ubuntu 22.04, R-release (github-action)
+- Linux ubuntu 22.04, R-oldrel (github-action)
+- Linux ubuntu 22.04, R-devel (github-action)
 - Windows Server 2022, R-release, 64 bit
-- macOS Big Sur 11, R-release (github action)
-- Linux ubuntu 20.04, R-release, gcc + unit test with sanitizers (github-action)
-- Linux ubuntu 20.04, R-release, clang + unit test with sanitizers (github-action)
+- macOS 12, R-release (github action)
+- Linux ubuntu 22.04, R-release, gcc + unit test with sanitizers (github-action)
+- Linux ubuntu 22.04, R-release, clang + unit test with sanitizers (github-action)
 
-* tested remotely with win-builder (R version 4.2.2, R dev, R version 4.1.3)
+* tested remotely with win-builder (R version 4.3.1, R unstable, R version 4.2.3)
 
-all status OK, except for 1 NOTE on Windows with 4.1.3
-"Possibly mis-spelled words in DESCRIPTION:" (it wrongly identifies names as mis-spelled)
-
+all status OK
 
 ## Local R CMD check results
 
-── R CMD check results ─────────────────────────────────────────────────────────────────────────────── aricode 1.0.2 ────
-Duration: 22.8s
+── R CMD check results ──────────────────────────────────────────────── aricode 1.0.3 ────
+Duration: 43.1s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
 R CMD check succeeded
-
