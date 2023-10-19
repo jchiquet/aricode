@@ -1,3 +1,6 @@
+#' @keywords internal
+"_PACKAGE"
+
 #' aricode
 #'
 #' A package for efficient computations of standard clustering comparison measures. Most of the available measures are described in the paper of Vinh et al, JMLR, 2009 (see reference below).
@@ -24,8 +27,12 @@
 #' @author Martina Sundqvist \email{martina.sundqvist@@agroparistech.fr}
 #' @references Nguyen Xuan Vinh, Julien Epps, and James Bailey. "Information theoretic measures for clusterings comparison: Variants, properties, normalization and correction for chance." Journal of Machine Learning Research 11.Oct (2010): 2837-2854. as described in Vinh et al (2009)
 #' @seealso \code{\link{ARI}}, \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{AMI}}, \code{\link{NMI}}, \code{\link{entropy}}, \code{\link{clustComp}}
-#' @docType package
-#' @name aricode
+#' @name aricode-package
+
+# The following block is used by usethis to automatically manage
+# roxygen namespace tags. Modify with care!
+## usethis namespace: start
 #' @useDynLib aricode
 #' @importFrom Rcpp sourceCpp
+## usethis namespace: end
 NULL

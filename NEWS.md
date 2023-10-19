@@ -1,3 +1,7 @@
+## aricode 1.0-3 (2023-10-19)
+
+- minor fix in package documentation due to evolution of roxygen2 7.0.0 <https://github.com/r-lib/roxygen2/issues/1491>.
+
 ## aricode 1.0-2 (2022-12-14)
 
 - fix a serious bug in the AMI function pointed by Florent Bersani

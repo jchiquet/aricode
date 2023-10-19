@@ -1,7 +1,7 @@
 Package: aricode
 Type: Package
 Title: Efficient Computations of Standard Clustering Comparison Measures
-Version: 1.0.2
+Version: 1.0.3
 Authors@R: c(
     person("Julien", "Chiquet", role = c("aut", "cre"), email = "julien.chiquet@inrae.fr",
       comment = c(ORCID = "0000-0002-3629-3429")),
