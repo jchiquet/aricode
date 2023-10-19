@@ -20,7 +20,7 @@ Description: Implements an efficient O(n) algorithm based on bucket-sorting for
     a modified version of ARI (MARI), as described in Sundqvist et al. <doi:10.1007/s00180-022-01230-7> 
     and simple Chi-square distance since version 1.0.0.
 License: GPL (>=3)
-URL: https://github.com/jchiquet/aricode (dev version)
+URL: https://github.com/jchiquet/aricode
 BugReports: https://github.com/jchiquet/aricode/issues
 Encoding: UTF-8
 Imports:

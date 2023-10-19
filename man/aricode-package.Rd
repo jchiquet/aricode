@@ -37,7 +37,7 @@ Nguyen Xuan Vinh, Julien Epps, and James Bailey. "Information theoretic measures
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/jchiquet/aricode (dev version)}
+  \item \url{https://github.com/jchiquet/aricode}
   \item Report bugs at \url{https://github.com/jchiquet/aricode/issues}
 }
 
