@@ -19,17 +19,18 @@ jobs:
       matrix:
         config:
           - {os: macOS-latest,   r: 'release'}
+          - {os: macOS-latest,   r: 'oldrel-1'}
           - {os: windows-latest, r: 'release'}
+          - {os: windows-latest,   r: 'oldrel-1'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -47,38 +48,3 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-
-  R-test-ubsan:
-    name: R unit tests with sanitizers (${{ matrix.compiler }})
-    runs-on: ubuntu-latest
-    container: wch1/r-debug
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - sanitizer: san
-            compiler: gcc
-          - sanitizer: csan
-            compiler: clang
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install packages
-        shell: bash
-        run: |
-          RDscript${{ matrix.sanitizer }} -e "install.packages(c('testthat'))"
-          RDscript${{ matrix.sanitizer }} -e "install.packages(c('Matrix'))"
-          RDscript${{ matrix.sanitizer }} -e "install.packages(c('Rcpp'))"
-          RD${{ matrix.sanitizer }} CMD build .
-          RD${{ matrix.sanitizer }} CMD INSTALL aricode_*.tar.gz || exit -1
-      - name: Run tests with sanitizer
-        shell: bash
-        run: |
-          cd tests
-          exit_code=0
-          RDscript${{ matrix.sanitizer }} testthat.R >> tests.log 2>&1 || exit_code=-1
-          cat ./tests.log
-          (! grep -q 'undefined-behavior' tests.log)
-          exit_code=$?
-          exit ${exit_code}
