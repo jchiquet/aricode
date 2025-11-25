@@ -235,6 +235,31 @@ Chi2 <- function(c1, c2){
 }
 
 
+#' Froebenius norm
+#'
+#' A function to compute the Froebenius norm between two classification as defined in Lajugie et al. 2014 and Arlot et al 2019
+#' Lajugie, Rémi, Francis Bach, and Sylvain Arlot. "Large-margin metric learning for constrained partitioning problems." International Conference on Machine Learning. PMLR, 2014.
+#' Arlot, Sylvain, Alain Celisse, and Zaid Harchaoui. "A kernel multiple change-point algorithm via model selection." Journal of machine learning research 20.162 (2019): 1-56.
+#'
+#' @param c1 a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.
+#' @param c2 a vector containing the labels of the second classification.
+#' @return a scalar with the chi-square statistics.
+#' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
+#' @examples
+#' data(iris)
+#' cl <- cutree(hclust(dist(iris[,-5])), 4)
+#' Froebenius(cl,iris$Species)
+#' @export
+Froebenius <- function(c1, c2){
+  ## get pairs using C
+  ## ensure that values of c1 and c2 are between 0 and n1
+  res <- sortPairs(c1, c2)
+  
+
+  out <- length(res$ni.) + length(res$n.j) - 2* sum(res$nij^2 / (res$ni.[res$pair_c1+1] * res$n.j[res$pair_c2+1]) )
+  out
+}
+
 #' Entropy
 #'
 #' A function to compute the empirical entropy for two vectors of classification and the joint entropy

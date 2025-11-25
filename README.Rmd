@@ -52,7 +52,7 @@ The functions included in aricode are:
 
 - `ARI`: computes the adjusted rand index
 - `Chi2`: computes the Chi-square statistics
-- `MARI/MARIraw`: computes the modified adjusted rand index (Sundqvist et al, in preparation)
+- `MARI/MARIraw`: computes the modified adjusted rand index (Sundqvist et al, 2023)
 - `NVI`: computes the the normalized variation information
 - `NID`: computes the normalized information distance
 - `NMI`: computes the normalized mutual information
