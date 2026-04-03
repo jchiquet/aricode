@@ -2,13 +2,12 @@ library(microbenchmark)
 library(aricode)
 library(mclust)
 
-n <- 10^5
-c1 <- sample.int(100, size = n, replace=TRUE)
-c2 <- sample.int(100, size = n, replace=TRUE)
+n <- 10^7
+c1 <- sample.int(100, size = n, replace = TRUE)
+c2 <- sample.int(100, size = n, replace = TRUE)
 
 ## define the ARI as in the mclust package
-adjustedRandIndex <- function (x, y)
-{
+adjusted_rand_index <- function(x, y) {
   x <- as.vector(x)
   y <- as.vector(y)
   if (length(x) != length(y))
@@ -20,12 +19,13 @@ adjustedRandIndex <- function (x, y)
   b <- sum(choose(rowSums(tab), 2)) - a
   c <- sum(choose(colSums(tab), 2)) - a
   d <- choose(sum(tab), 2) - a - b - c
-  ARI <- (a - (a + b) * (a + c)/(a + b + c + d))/((a + b + a + c)/2 - (a + b) * (a + c)/(a + b + c + d))
+  ARI <- (a - (a + b) * (a + c) / (a + b + c + d)) /
+    ((a + b + a + c) / 2 - (a + b) * (a + c)/(a + b + c + d))
   return(ARI)
 }
 
-res <- microbenchmark(aricode = ARI(c1, c2),
-                      R = adjustedRandIndex(c1, c2),
-                      mclust = mclust::adjustedRandIndex(c1, c2), times=100L)
+res <- microbenchmark(aricode = aricode::ARI(c1, c2),
+                      R = adjusted_rand_index(c1, c2),
+                      mclust = mclust::adjustedRandIndex(c1, c2), times=20L)
 ggplot2::autoplot(res)
 

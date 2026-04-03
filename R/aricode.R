@@ -4,31 +4,31 @@
 #'
 #' @param c1 a vector of length n with value between 0 and N1 < n
 #' @param c2 a vector of length n with value between 0 and N2 < n
-#' @param spMat logical: send back the contingency table as sparsely encoded (cost more than the algorithm itself). Default is FALSE
+#' @param spMat logical: send back the contingency table as sparsely encoded
+#' (cost more than the algorithm itself). Default is FALSE
 #' @import Matrix
 #' @export
-sortPairs <- function(c1, c2, spMat=FALSE){
-  if (anyNA(c1) | anyNA(c2))
+sortPairs <- function(c1, c2, spMat = FALSE) {
+  if (anyNA(c1) || anyNA(c2))
     stop("NA are not supported.")
 
-  if (((!is.vector(c1) & !is.factor(c1)) | is.list(c1)) | ((!is.vector(c2) & !is.factor(c2)) | is.list(c2)))
+  if (((!is.vector(c1) && !is.factor(c1)) || is.list(c1)) ||
+      ((!is.vector(c2) && !is.factor(c2)) || is.list(c2)))
     stop("c1 and c2 must be vectors or factors but not lists.")
 
   if (length(c1) != length(c2))
     stop("the two vectors must have the same length.")
 
-  n <- length(c1)
-
   ## if c1 and c2 are integer
-  if (is.integer(c1) & is.integer(c2)) {
+  if (is.integer(c1) && is.integer(c2)) {
     ## getRank is O(n) if max(c1)-min(c1) and max(c2)-min(c2) is of order length(c1)=length(c2)
     ## NOTE: getRank does not assume c1 and c2 are between 0 and n
     res1 <- getRank(c1)
     res2 <- getRank(c2)
-    mylevels <- list(c1=res1$index, c2=res2$index)
+    mylevels <- list(c1 = res1$index, c2 = res2$index)
     c1 <- res1$translated  # here ranks are in [0, n)
     c2 <- res2$translated  # here ranks are in [0, n)
-  } else if (is.factor(c1) & is.factor(c2)) {
+  } else if (is.factor(c1) && is.factor(c2)) {
     mylevels <- list(c1 = levels(c1), c2 = levels(c2))
     c1 <- as.integer(c1) - 1L
     c2 <- as.integer(c2) - 1L
@@ -39,9 +39,7 @@ sortPairs <- function(c1, c2, spMat=FALSE){
     c2 <- as.integer(factor(c2, levels = mylevels$c2)) - 1L
   }
 
-
-  i_order <- order(c1, c2, method="radix") - 1L
-  out <- countPairs(c1, c2, i_order)
+  out <- cpp_SortPairs(c1, c2)
 
   if (spMat) {
     spOut <- sparseMatrix(i=out$pair_c1,
@@ -86,17 +84,17 @@ ARI <- function(c1, c2){
     ## get ARI using pairs
     N <- length(c1)
 
-    stot <- sum(choose(res$nij, 2), na.rm=TRUE)
-    srow <- sum(choose(res$ni., 2), na.rm=TRUE)
-    scol <- sum(choose(res$n.j, 2), na.rm=TRUE)
+    stot <- sum(choose(res$nij, 2), na.rm = TRUE)
+    srow <- sum(choose(res$ni., 2), na.rm = TRUE)
+    scol <- sum(choose(res$n.j, 2), na.rm = TRUE)
 
     expectedIndex <-(srow*scol)/(choose(N,2))
     maximumIndex <- (srow+scol)/2
 
-    if (expectedIndex == maximumIndex & stot != 0) {
+    if (expectedIndex == maximumIndex && stot != 0) {
       res <- 1
     } else {
-      res <- (stot-expectedIndex)/(maximumIndex-expectedIndex)
+      res <- (stot-expectedIndex) / (maximumIndex-expectedIndex)
     }
     res
 }
@@ -145,7 +143,6 @@ MARI <- function(c1, c2){
   ## ensure that values of c1 and c2 are between 0 and n1
   res <- sortPairs(c1, c2)
   N <- length(c1)
-  ##
 
   stot <- sum(choose(res$nij, 2), na.rm=TRUE)
   srow <- sum(choose(res$ni., 2), na.rm=TRUE)
@@ -254,7 +251,7 @@ Froebenius <- function(c1, c2){
   ## get pairs using C
   ## ensure that values of c1 and c2 are between 0 and n1
   res <- sortPairs(c1, c2)
-  
+
 
   out <- length(res$ni.) + length(res$n.j) - 2* sum(res$nij^2 / (res$ni.[res$pair_c1+1] * res$n.j[res$pair_c2+1]) )
   out

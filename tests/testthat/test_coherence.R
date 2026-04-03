@@ -35,7 +35,7 @@ EMI <- function(counts) {
             t1<- (n.ij / n) * log((n.ij * n) / (ai*bj))
             t2 <- exp(lfactorial(ai) + lfactorial(bj) + lfactorial(n - ai) + lfactorial(n - bj) - lfactorial(n) - lfactorial(n.ij) - lfactorial(ai - n.ij) - lfactorial(bj - n.ij) - lfactorial(n - ai - bj + n.ij))
             emi <- sum(t1*t2)
-            if (is.nan(emi)) browser()
+            # if (is.nan(emi)) browser()
             s_emi <- s_emi + emi
         }
     }
@@ -43,7 +43,7 @@ EMI <- function(counts) {
 }
 
 Chi2_ref <- function(c1, c2) {
-  as.numeric(chisq.test(c1, c2, correct=F)$stat[1])
+  suppressWarnings(as.numeric(chisq.test(c1, c2, correct=F)$stat[1]))
 }
 
 ## Martina's code

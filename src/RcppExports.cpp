@@ -10,16 +10,15 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// countPairs
-List countPairs(IntegerVector classi1, IntegerVector classi2, IntegerVector order);
-RcppExport SEXP _aricode_countPairs(SEXP classi1SEXP, SEXP classi2SEXP, SEXP orderSEXP) {
+// cpp_SortPairs
+List cpp_SortPairs(IntegerVector c1, IntegerVector c2);
+RcppExport SEXP _aricode_cpp_SortPairs(SEXP c1SEXP, SEXP c2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type classi1(classi1SEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type classi2(classi2SEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type order(orderSEXP);
-    rcpp_result_gen = Rcpp::wrap(countPairs(classi1, classi2, order));
+    Rcpp::traits::input_parameter< IntegerVector >::type c1(c1SEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type c2(c2SEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_SortPairs(c1, c2));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -48,7 +47,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_aricode_countPairs", (DL_FUNC) &_aricode_countPairs, 3},
+    {"_aricode_cpp_SortPairs", (DL_FUNC) &_aricode_cpp_SortPairs, 2},
     {"_aricode_expected_MI", (DL_FUNC) &_aricode_expected_MI, 2},
     {"_aricode_getRank", (DL_FUNC) &_aricode_getRank, 1},
     {NULL, NULL, 0}

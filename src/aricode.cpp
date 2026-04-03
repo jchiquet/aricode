@@ -1,63 +1,101 @@
 #include <Rcpp.h>
+
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-List countPairs(IntegerVector classi1, IntegerVector classi2, IntegerVector order) {
-  // first path to count pairs
-  int n = classi1.size();
+List cpp_SortPairs(IntegerVector c1, IntegerVector c2) {
 
-  // count per classification
-  IntegerVector count1(n, 0);
-  for(int i = 0; i < n; i++) count1[classi1[i]]++;
+  int n = c1.size();
+  if (n == 0) return List::create();
 
-  IntegerVector count2(n, 0);
-  for(int i = 0; i < n; i++) count2[classi2[i]]++;
+  int N1 = 0;
+  int N2 = 0;
 
-  // count per pairs
-  int count = 1;
-  int class1_cur = classi1[order[0]];
-  int class2_cur = classi2[order[0]];
+  // Nombre de classes (N1 et N2)
+  N1 = Rcpp::max(c1);
+  N2 = Rcpp::max(c2);
+  N1++; // Car les classes commencent à 0
+  N2++;
 
-  for(int i = 1; i < n; i++){
-    if( (class1_cur != classi1[order[i]]) || (class2_cur != classi2[order[i]]) ){
-      count++;
-      class1_cur = classi1[order[i]];
-      class2_cur = classi2[order[i]];
-    }
+  // Comptage des individus par classe
+  IntegerVector count1(N1);
+  IntegerVector count2(N2);
+
+  for(int i = 0; i < n; i++) {
+    count1[c1[i]]++;
+    count2[c2[i]]++;
   }
 
-  // create output Integer Vector for pairs and initialize
-  IntegerVector nameClassi1(count, 0);
-  IntegerVector nameClassi2(count, 0);
-  IntegerVector numberPair(count, 0);
+  // Allocation temporaire (automatiquement libérée en fin de scope)
+  IntegerVector tmp_c1(n);
+  IntegerVector tmp_c2(n);
 
-  int current_position = 0;
-  nameClassi1[0] = classi1[order[0]];
-  nameClassi2[0] = classi2[order[0]];
-  numberPair[0] = 1;
+  // Tri selon c2 (Counting Sort logic)
+  IntegerVector shift2(N2 + 1);
+  for(int i = 1; i <= N2; i++) {
+    shift2[i] = shift2[i-1] + count2[i-1];
+  }
 
-  // count pairs
-  for(int i = 1; i < n; i++){
-    if( ( nameClassi1[current_position] == classi1[order[i]]) && (nameClassi2[current_position] == classi2[order[i]]) ){
-      numberPair[current_position]++;
+  for(int i = 0; i < n; i++) {
+    int idx = shift2[c2[i]];
+    tmp_c1[idx] = c1[i];
+    tmp_c2[idx] = c2[i];
+    shift2[c2[i]]++;
+  }
+
+  // Tri final selon c1
+  IntegerVector new_c1(n);
+  IntegerVector new_c2(n);
+  IntegerVector shift1(N1 + 1);
+  for(int i = 1; i <= N1; i++) {
+    shift1[i] = shift1[i-1] + count1[i-1];
+  }
+
+  for(int i = 0; i < n; i++) {
+    int idx = shift1[tmp_c1[i]];
+    new_c1[idx] = tmp_c1[i];
+    new_c2[idx] = tmp_c2[i];
+    shift1[tmp_c1[i]]++;
+  }
+
+  // Calcul des paires uniques et comptage
+  // On initialise avec la taille max possible (n)
+  IntegerVector pair_c1(n);
+  IntegerVector pair_c2(n);
+  IntegerVector pair_count(n);
+
+  int i_index = 0;
+  int pair_cur_c1 = new_c1[0];
+  int pair_cur_c2 = new_c2[0];
+
+  pair_c1[0] = pair_cur_c1;
+  pair_c2[0] = pair_cur_c2;
+
+  for(int i = 0; i < n; i++) {
+    if((new_c1[i] == pair_cur_c1) && (new_c2[i] == pair_cur_c2)) {
+      pair_count[i_index]++;
     } else {
-      current_position += 1;
-      nameClassi1[current_position] = classi1[order[i]];
-      nameClassi2[current_position] = classi2[order[i]];
-      numberPair[current_position]  = 1;
+      i_index++;
+      pair_cur_c1 = new_c1[i];
+      pair_cur_c2 = new_c2[i];
+      pair_c1[i_index] = pair_cur_c1;
+      pair_c2[i_index] = pair_cur_c2;
+      pair_count[i_index]++;
     }
   }
 
-  // output as a list
-  List ListOut;
-  ListOut["pair_nb"] = numberPair;
-  ListOut["pair_c1"] = nameClassi1;
-  ListOut["pair_c2"] = nameClassi2;
-  ListOut["c1_nb"]   = count1[count1 > 0];
-  ListOut["c2_nb"]   = count2[count2 > 0];
-  return(ListOut);
-}
+  // Comme i_index est un index basé sur 0, le nombre de paires est i_index + 1
+  int num_pairs = i_index + 1;
 
+  // Retourne une liste de résultats (équivalent à nzero et aux pointeurs modifiés)
+  return List::create(
+    Named("pair_nb") = pair_count[seq(0, i_index)],
+    Named("pair_c1") = pair_c1[seq(0, i_index)],
+    Named("pair_c2") = pair_c2[seq(0, i_index)],
+    Named("c1_nb")   = count1[count1 > 0],
+    Named("c2_nb")   = count2[count2 > 0]
+  );
+}
 
 // [[Rcpp::export]]
 double expected_MI(IntegerVector ni_, IntegerVector n_j) {
@@ -131,3 +169,65 @@ List getRank(IntegerVector classi){
    ListOut["translated"] = translated;
    return ListOut;
 }
+
+
+
+
+//
+// // [[Rcpp::export]]
+// List countPairs(IntegerVector classi1, IntegerVector classi2, IntegerVector order) {
+//   // first path to count pairs
+//   unsigned int n = classi1.size();
+//
+//   // count per classification
+//   IntegerVector count1(n, 0);
+//   IntegerVector count2(n, 0);
+//   for(unsigned int i = 0; i < n; i++) {
+//     count1[classi1[i]]++;
+//     count2[classi2[i]]++;
+//   }
+//
+//   // count per pairs
+//   unsigned int count = 1;
+//   unsigned int class1_cur = classi1[order[0]];
+//   unsigned int class2_cur = classi2[order[0]];
+//
+//   for(unsigned int i = 1; i < n; i++){
+//     if( (class1_cur != classi1[order[i]]) || (class2_cur != classi2[order[i]]) ){
+//       count++;
+//       class1_cur = classi1[order[i]];
+//       class2_cur = classi2[order[i]];
+//     }
+//   }
+//
+//   // create output Integer Vector for pairs and initialize
+//   IntegerVector nameClassi1(count, 0);
+//   IntegerVector nameClassi2(count, 0);
+//   IntegerVector numberPair(count, 0);
+//
+//   unsigned int current_position = 0;
+//   nameClassi1[0] = classi1[order[0]];
+//   nameClassi2[0] = classi2[order[0]];
+//   numberPair[0] = 1;
+//
+//   // count pairs
+//   for(unsigned int i = 1; i < n; i++){
+//     if( ( nameClassi1[current_position] == classi1[order[i]]) && (nameClassi2[current_position] == classi2[order[i]]) ){
+//       numberPair[current_position]++;
+//     } else {
+//       current_position += 1;
+//       nameClassi1[current_position] = classi1[order[i]];
+//       nameClassi2[current_position] = classi2[order[i]];
+//       numberPair[current_position]  = 1;
+//     }
+//   }
+//
+//   // output as a list
+//   return List::create(
+//     Named("pair_nb") = numberPair,
+//     Named("pair_c1") = nameClassi1,
+//     Named("pair_c2") = nameClassi2,
+//     Named("c1_nb")   = count1[count1 > 0],
+//                              Named("c2_nb")   = count2[count2 > 0]
+//   ) ;
+// }
