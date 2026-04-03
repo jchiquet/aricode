@@ -21,8 +21,8 @@ A function to compute the NMI between two classifications
 }
 \examples{
 data(iris)
-cl <- cutree(hclust(dist(iris[,-5])), 4)
-NMI(cl,iris$Species)
+cl <- cutree(hclust(dist(iris[, -5])), 4)
+NMI(cl, iris$Species)
 }
 \seealso{
 \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{ARI}}, \code{\link{clustComp}}

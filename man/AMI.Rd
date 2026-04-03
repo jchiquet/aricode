@@ -19,8 +19,8 @@ A function to compute the adjusted mutual information between two classification
 }
 \examples{
 data(iris)
-cl <- cutree(hclust(dist(iris[,-5])), 4)
-AMI(cl,iris$Species)
+cl <- cutree(hclust(dist(iris[, -5])), 4)
+AMI(cl, iris$Species)
 }
 \seealso{
 \code{\link{ARI}}, \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}

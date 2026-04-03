@@ -19,8 +19,8 @@ A function to compute the NID between two classifications
 }
 \examples{
 data(iris)
-cl <- cutree(hclust(dist(iris[,-5])), 4)
-NID(cl,iris$Species)
+cl <- cutree(hclust(dist(iris[, -5])), 4)
+NID(cl, iris$Species)
 }
 \seealso{
 \code{\link{RI}}, \code{\link{NMI}}, \code{\link{NVI}}, \code{\link{ARI}}, \code{\link{clustComp}}

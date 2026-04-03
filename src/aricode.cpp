@@ -27,8 +27,7 @@ List cpp_SortPairs(IntegerVector c1, IntegerVector c2) {
   }
 
   // Allocation temporaire (automatiquement libérée en fin de scope)
-  IntegerVector tmp_c1(n);
-  IntegerVector tmp_c2(n);
+  IntegerVector tmp_c1(n), tmp_c2(n);
 
   // Tri selon c2 (Counting Sort logic)
   IntegerVector shift2(N2 + 1);
@@ -59,10 +58,7 @@ List cpp_SortPairs(IntegerVector c1, IntegerVector c2) {
   }
 
   // Calcul des paires uniques et comptage
-  // On initialise avec la taille max possible (n)
-  IntegerVector pair_c1(n);
-  IntegerVector pair_c2(n);
-  IntegerVector pair_count(n);
+  IntegerVector pair_c1(n), pair_c2(n), pair_count(n);
 
   int i_index = 0;
   int pair_cur_c1 = new_c1[0];
@@ -84,14 +80,11 @@ List cpp_SortPairs(IntegerVector c1, IntegerVector c2) {
     }
   }
 
-  // Comme i_index est un index basé sur 0, le nombre de paires est i_index + 1
-  int num_pairs = i_index + 1;
-
-  // Retourne une liste de résultats (équivalent à nzero et aux pointeurs modifiés)
+  IntegerVector ind = seq(0, i_index) ;
   return List::create(
-    Named("pair_nb") = pair_count[seq(0, i_index)],
-    Named("pair_c1") = pair_c1[seq(0, i_index)],
-    Named("pair_c2") = pair_c2[seq(0, i_index)],
+    Named("pair_nb") = pair_count[ind],
+    Named("pair_c1") = pair_c1[ind],
+    Named("pair_c2") = pair_c2[ind],
     Named("c1_nb")   = count1[count1 > 0],
     Named("c2_nb")   = count2[count2 > 0]
   );

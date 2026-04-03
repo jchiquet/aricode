@@ -51,16 +51,19 @@ faster than some standard implementation in `R`.
 
 ## Available measures and functions
 
-The functions included in aricode are:
+The functions included in `aricode` are:
 
-- `ARI`: computes the adjusted rand index
+- `AMI`: computes the adjusted mutual information
+- `ARI/RI`: computes the (adjusted) Rand index
 - `Chi2`: computes the Chi-square statistics
-- `MARI/MARIraw`: computes the modified adjusted rand index (Sundqvist
-  et al, 2023)
-- `NVI`: computes the the normalized variation information
+- `Frobenius` compute the Frobenius norm between two classification as
+  defined in [Arlot et al,
+  2019](https://jmlr.org/papers/v20/16-155.html)
+- `MARI/MARIraw`: computes the modified adjusted rand index as defined
+  in [Sundqvist et al, 2023](https://doi.org/10.1007/s00180-022-01230-7)
 - `NID`: computes the normalized information distance
 - `NMI`: computes the normalized mutual information
-- `AMI`: computes the adjusted mutual information
+- `NVI`: computes the the normalized variation information
 - `expected_MI`: computes the expected mutual information
 - `entropy`: computes the conditional and joint entropies
 - `clustComp`: computes all clustering comparison measures at once

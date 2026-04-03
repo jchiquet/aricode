@@ -3,6 +3,7 @@
 export(AMI)
 export(ARI)
 export(Chi2)
+export(Frobenius)
 export(MARI)
 export(MARIraw)
 export(NID)

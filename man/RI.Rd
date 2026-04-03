@@ -19,8 +19,8 @@ A function to compute the rand index between two classifications
 }
 \examples{
 data(iris)
-cl <- cutree(hclust(dist(iris[,-5])), 4)
-RI(cl,iris$Species)
+cl <- cutree(hclust(dist(iris[, -5])), 4)
+RI(cl, iris$Species)
 }
 \seealso{
 \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}

@@ -49,15 +49,16 @@ Our implementation of the ARI for instance is one or two order of magnitude fast
 
 ## Available measures and functions
 
-The functions included in aricode are:
+The functions included in `aricode` are:
 
-- `ARI`: computes the adjusted rand index
+- `AMI`: computes the adjusted mutual information
+- `ARI/RI`: computes the (adjusted) Rand index
 - `Chi2`: computes the Chi-square statistics
-- `MARI/MARIraw`: computes the modified adjusted rand index (Sundqvist et al, 2023)
-- `NVI`: computes the the normalized variation information
+- `Frobenius` compute the Frobenius norm between two classification as defined in [Arlot et al, 2019](https://jmlr.org/papers/v20/16-155.html)
+- `MARI/MARIraw`: computes the modified adjusted rand index as defined in [Sundqvist et al, 2023](https://doi.org/10.1007/s00180-022-01230-7)
 - `NID`: computes the normalized information distance
 - `NMI`: computes the normalized mutual information
-- `AMI`: computes the adjusted mutual information
+- `NVI`: computes the the normalized variation information
 - `expected_MI`: computes the expected mutual information
 - `entropy`: computes the conditional and joint entropies
 - `clustComp`: computes all clustering comparison measures at once
@@ -71,15 +72,15 @@ library(aricode)
 library(mclust)
 library(ggplot2)
 
-time.aricode <- function(times, c1, c2){
+time.aricode <- function(times, c1, c2) {
   replicate(times, system.time(ARI(c1, c2))[3])
 }
 
-time.mclust <- function(times, c1, c2){
+time.mclust <- function(times, c1, c2) {
   replicate(times, system.time(mclust::adjustedRandIndex(c1, c2))[3])
 }
 
-time.method <- function(times, c1, c2, n){
+time.method <- function(times, c1, c2, n) {
   rbind(
     data.frame(time = time.aricode(times, c1, c2), expr = "aricode", n = n),
     data.frame(time = time.mclust(times, c1, c2), expr = "mclust", n = n)
@@ -88,11 +89,12 @@ time.method <- function(times, c1, c2, n){
 
 # with similar classif, number of classes grows with n
 sim.timings <- function(n, times = 10) {
-    c1 <- sample(1:(n/200), n, replace=TRUE);c2 <- c1;
-    i_change <- sample(1:n, n/50, replace=FALSE)
-    c2[i_change] <- c2[rev(i_change)]
-    out <- time.method(times, c1, c2, n)
-    data.frame(time=out$time, method=out$expr, n = n)
+  c1 <- sample(1:(n / 200), n, replace = TRUE)
+  c2 <- c1
+  i_change <- sample(1:n, n / 50, replace = FALSE)
+  c2[i_change] <- c2[rev(i_change)]
+  out <- time.method(times, c1, c2, n)
+  data.frame(time = out$time, method = out$expr, n = n)
 }
 ```
 
@@ -103,15 +105,19 @@ timings <- do.call("rbind", lapply(ns, sim.timings))
 ```
 
 ```{r timings_plot, echo=FALSE, message=FALSE, warning=FALSE}
-p.timings <- ggplot(timings, aes(x=n, y=time, colour=method)) +
-  geom_smooth(data = dplyr::filter(timings, n > 1e4), method = "lm") + geom_point(size=0.25, alpha=0.9) + labs(y="time (sec.)") +
-    scale_x_log10(
-   breaks = scales::trans_breaks("log10", function(x) 10^x),
-   labels = scales::trans_format("log10", scales::math_format(10^.x))
- ) +
- scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
-   labels = scales::trans_format("log10", scales::math_format(10^.x))) +
-   annotation_logticks()                 
+p.timings <- ggplot(timings, aes(x = n, y = time, colour = method)) +
+  geom_smooth(data = dplyr::filter(timings, n > 1e4), method = "lm") +
+  geom_point(size = 0.25, alpha = 0.9) +
+  labs(y = "time (sec.)") +
+  scale_x_log10(
+    breaks = scales::trans_breaks("log10", function(x) 10^x),
+    labels = scales::trans_format("log10", scales::math_format(10^.x))
+  ) +
+  scale_y_log10(
+    breaks = scales::trans_breaks("log10", function(x) 10^x),
+    labels = scales::trans_format("log10", scales::math_format(10^.x))
+  ) +
+  annotation_logticks()
 
 p.timings + ggtitle("number of classes grows with n") + theme_bw()
 ```

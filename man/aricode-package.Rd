@@ -8,16 +8,22 @@
 \description{
 Implements an efficient O(n) algorithm based on bucket-sorting for fast computation of standard clustering comparison measures. Available measures include adjusted Rand index (ARI), normalized information distance (NID), normalized mutual information (NMI), adjusted mutual information (AMI), normalized variation information (NVI) and entropy, as described in Vinh et al (2009) \doi{10.1145/1553374.1553511}. Include AMI (Adjusted Mutual Information) since version 0.1.2, a modified version of ARI (MARI), as described in Sundqvist et al. \doi{10.1007/s00180-022-01230-7} and simple Chi-square distance since version 1.0.0.
 
-A package for efficient computations of standard clustering comparison measures. Most of the available measures are described in the paper of Vinh et al, JMLR, 2009 (see reference below).
+A package for efficient computations of standard clustering comparison
+measures. Most of the available measures are described in the paper of Vinh
+et al, JMLR, 2009 (see reference below).
 }
 \details{
-Traditional implementations (e.g., function \code{adjustedRandIndex} of package \code{mclust}) are in Omega(n + u v) where n is the size of the vectors the classifications of which are to be compared, u and v are the respective number of classes in each vectors. Here, the implementation is in Theta(n), plus the gain of speed due to the C++ code.
+Traditional implementations (e.g., function \code{adjustedRandIndex} of
+package \code{mclust}) are in Omega(n + u v) where n is the size of the
+vectors the classifications of which are to be compared, u and v are the
+respective number of classes in each vectors. Here, the implementation is
+in Theta(n), plus the gain of speed due to the C++ code.
 
 The functions included in aricode are:
 
 * ARI: computes the adjusted rand index
 * Chi2: computes the Chi-square statistic
-* MARI: computes the modified adjusted rand index (Sundqvist et al, in preparation)
+* MARI: computes the modified adjusted rand index (Sundqvist et al, 2023)
 * MARIraw: computes the raw version of the modified adjusted rand index
 * RI: computes the rand index
 * NVI: computes the normalized variation information
@@ -28,8 +34,13 @@ The functions included in aricode are:
 * clustComp: computes all clustering comparison measures at once
 }
 \references{
-* Nguyen Xuan Vinh, Julien Epps, and James Bailey. "Information theoretic measures for clusterings comparison: Variants, properties, normalization and correction for chance." Journal of Machine Learning Research 11.Oct (2010): 2837-2854. as described in Vinh et al (2009)
- * Sundqvist, Martina, Julien Chiquet, and Guillem Rigaill. "Adjusting the adjusted Rand Index: A multinomial story." Computational Statistics 38.1 (2023): 327-347.
+* Nguyen Xuan Vinh, Julien Epps, and James Bailey. "Information theoretic
+ measures for clusterings comparison: Variants, properties, normalization
+ and correction for chance." Journal of Machine Learning Research 11.Oct
+ (2010): 2837-2854. as described in Vinh et al (2009)
+ * Sundqvist, Martina, Julien Chiquet, and Guillem Rigaill. "Adjusting the
+ adjusted Rand Index: A multinomial story." Computational Statistics 38.1
+ (2023): 327-347.
 }
 \seealso{
 Useful links:
@@ -39,7 +50,9 @@ Useful links:
 }
 
 
-\code{\link{ARI}}, \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{AMI}}, \code{\link{NMI}}, \code{\link{entropy}}, \code{\link{clustComp}}
+\code{\link{ARI}}, \code{\link{RI}}, \code{\link{NID}},
+ \code{\link{NVI}}, \code{\link{AMI}}, \code{\link{NMI}},
+ \code{\link{entropy}}, \code{\link{clustComp}}
 }
 \author{
 \strong{Maintainer}: Julien Chiquet \email{julien.chiquet@inrae.fr} (\href{https://orcid.org/0000-0002-3629-3429}{ORCID})

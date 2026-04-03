@@ -19,8 +19,8 @@ A function various measures of similarity between two classifications
 }
 \examples{
 data(iris)
-cl <- cutree(hclust(dist(iris[,-5])), 4)
-clustComp(cl,iris$Species)
+cl <- cutree(hclust(dist(iris[, -5])), 4)
+clustComp(cl, iris$Species)
 }
 \seealso{
 \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{ARI}}

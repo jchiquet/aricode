@@ -19,6 +19,6 @@ A function to compute the empirical entropy for two vectors of classification an
 }
 \examples{
 data(iris)
-cl <- cutree(hclust(dist(iris[,-5])), 4)
-entropy(cl,iris$Species)
+cl <- cutree(hclust(dist(iris[, -5])), 4)
+entropy(cl, iris$Species)
 }
