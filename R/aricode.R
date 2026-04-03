@@ -275,8 +275,8 @@ entropy <- function(c1, c2) {
   N <- length(c1)
 
   H.UV <- -sum(res$nij * log(res$nij)) / N + log(N)
-  H.U  <- -sum(res$ni. * log(res$ni.)) / N + log(N)
-  H.V  <- -sum(res$n.j * log(res$n.j)) / N + log(N)
+  H.U <- -sum(res$ni. * log(res$ni.)) / N + log(N)
+  H.V <- -sum(res$n.j * log(res$n.j)) / N + log(N)
 
   res <- list(UV = H.UV, U = H.U, V = H.V, sortPairs = res)
   res
