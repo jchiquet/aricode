@@ -1,9 +1,8 @@
 on:
   push:
-  paths: "src/**"
-pull_request:
-  branches:
-  - "*"
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
 
 name: R-linting
 
