@@ -28,7 +28,9 @@ Imports:
     Rcpp
 Suggests: 
     testthat,
-    spelling
+    spelling,
+    mclust, 
+    ggplot2
 LinkingTo: Rcpp
 RoxygenNote: 7.3.3
 Language: en-US

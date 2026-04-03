@@ -1,5 +1,6 @@
 ---
-title: "aricode: fast computations of clustering comparison measures"
+title: "aricode"
+subtitle: "fast computations of clustering comparison measures"
 format: gfm
 ---
 
@@ -9,8 +10,6 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/"
 )
 ```
-
-# aricode
 
  <!-- badges: start -->
 [![R-CMD-check](https://github.com/jchiquet/aricode/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jchiquet/aricode/actions/workflows/R-CMD-check.yaml)
@@ -121,4 +120,3 @@ p.timings <- ggplot(timings, aes(x = n, y = time, colour = method)) +
 
 p.timings + ggtitle("number of classes grows with n") + theme_bw()
 ```
-

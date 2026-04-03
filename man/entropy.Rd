@@ -7,9 +7,13 @@
 entropy(c1, c2)
 }
 \arguments{
-\item{c1}{a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.}
-
-\item{c2}{a vector containing the labels of the second classification.}
+\item{...}{
+  Arguments passed on to \code{\link[=ARI]{ARI}}
+  \describe{
+    \item{\code{c1}}{a vector containing the labels of the first classification.
+Must be a vector of characters, integers, a numeric or a factor, but not a list.}
+    \item{\code{c2}}{a vector containing the labels of the second classification.}
+  }}
 }
 \value{
 a list with the two conditional entropies, the joint entropy and output of sortPairs.

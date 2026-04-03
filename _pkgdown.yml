@@ -1,6 +1,7 @@
 templates:
   params:
     bootswatch: readable
+url: https://github.com/jchiquet/aricode
 
 navbar:
   title: "aricode"
@@ -16,4 +17,3 @@ navbar:
   right:
     - icon: fa-github
       href: https://github.com/jchiquet/aricode
-

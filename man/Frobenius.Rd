@@ -7,22 +7,28 @@
 Frobenius(c1, c2)
 }
 \arguments{
-\item{c1}{a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.}
-
-\item{c2}{a vector containing the labels of the second classification.}
+\item{...}{
+  Arguments passed on to \code{\link[=ARI]{ARI}}
+  \describe{
+    \item{\code{c1}}{a vector containing the labels of the first classification.
+Must be a vector of characters, integers, a numeric or a factor, but not a list.}
+    \item{\code{c2}}{a vector containing the labels of the second classification.}
+  }}
 }
 \value{
 a scalar with the chi-square statistics.
 }
 \description{
 A function to compute the Frobenius norm between two classification as defined in Lajugie et al. 2014 and Arlot et al 2019
-Lajugie, Rémi, Francis Bach, and Sylvain Arlot. "Large-margin metric learning for constrained partitioning problems." International Conference on Machine Learning. PMLR, 2014.
-Arlot, Sylvain, Alain Celisse, and Zaid Harchaoui. "A kernel multiple change-point algorithm via model selection." Journal of machine learning research 20.162 (2019): 1-56.
 }
 \examples{
 data(iris)
 cl <- cutree(hclust(dist(iris[, -5])), 4)
 Frobenius(cl, iris$Species)
+}
+\references{
+- Rémi Lajugie, Francis Bach, and Sylvain Arlot. "Large-margin metric learning for constrained partitioning problems." International Conference on Machine Learning. PMLR, 2014.
+  - Sylvain Arlot , Alain Celisse, and Zaid Harchaoui. "A kernel multiple change-point algorithm via model selection." Journal of machine learning research 20.162 (2019): 1-56.
 }
 \seealso{
 \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}

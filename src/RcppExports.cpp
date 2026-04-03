@@ -6,54 +6,53 @@
 using namespace Rcpp;
 
 #ifdef RCPP_USE_GLOBAL_ROSTREAM
-Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<true>& Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // cpp_SortPairs
-List cpp_SortPairs(IntegerVector c1, IntegerVector c2);
+Rcpp::List cpp_SortPairs(Rcpp::IntegerVector c1, Rcpp::IntegerVector c2);
 RcppExport SEXP _aricode_cpp_SortPairs(SEXP c1SEXP, SEXP c2SEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type c1(c1SEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type c2(c2SEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_SortPairs(c1, c2));
-    return rcpp_result_gen;
-END_RCPP
+  BEGIN_RCPP
+  Rcpp::RObject rcpp_result_gen;
+  Rcpp::RNGScope rcpp_rngScope_gen;
+  Rcpp::traits::input_parameter<Rcpp::IntegerVector>::type c1(c1SEXP);
+  Rcpp::traits::input_parameter<Rcpp::IntegerVector>::type c2(c2SEXP);
+  rcpp_result_gen = Rcpp::wrap(cpp_SortPairs(c1, c2));
+  return rcpp_result_gen;
+  END_RCPP
 }
 // expected_MI
-double expected_MI(IntegerVector ni_, IntegerVector n_j);
+double expected_MI(Rcpp::IntegerVector ni_, Rcpp::IntegerVector n_j);
 RcppExport SEXP _aricode_expected_MI(SEXP ni_SEXP, SEXP n_jSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type ni_(ni_SEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type n_j(n_jSEXP);
-    rcpp_result_gen = Rcpp::wrap(expected_MI(ni_, n_j));
-    return rcpp_result_gen;
-END_RCPP
+  BEGIN_RCPP
+  Rcpp::RObject rcpp_result_gen;
+  Rcpp::RNGScope rcpp_rngScope_gen;
+  Rcpp::traits::input_parameter<Rcpp::IntegerVector>::type ni_(ni_SEXP);
+  Rcpp::traits::input_parameter<Rcpp::IntegerVector>::type n_j(n_jSEXP);
+  rcpp_result_gen = Rcpp::wrap(expected_MI(ni_, n_j));
+  return rcpp_result_gen;
+  END_RCPP
 }
 // getRank
-List getRank(IntegerVector classi);
+Rcpp::List getRank(Rcpp::IntegerVector classi);
 RcppExport SEXP _aricode_getRank(SEXP classiSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type classi(classiSEXP);
-    rcpp_result_gen = Rcpp::wrap(getRank(classi));
-    return rcpp_result_gen;
-END_RCPP
+  BEGIN_RCPP
+  Rcpp::RObject rcpp_result_gen;
+  Rcpp::RNGScope rcpp_rngScope_gen;
+  Rcpp::traits::input_parameter<Rcpp::IntegerVector>::type classi(classiSEXP);
+  rcpp_result_gen = Rcpp::wrap(getRank(classi));
+  return rcpp_result_gen;
+  END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_aricode_cpp_SortPairs", (DL_FUNC) &_aricode_cpp_SortPairs, 2},
-    {"_aricode_expected_MI", (DL_FUNC) &_aricode_expected_MI, 2},
-    {"_aricode_getRank", (DL_FUNC) &_aricode_getRank, 1},
-    {NULL, NULL, 0}
-};
+    {"_aricode_cpp_SortPairs", (DL_FUNC)&_aricode_cpp_SortPairs, 2},
+    {"_aricode_expected_MI", (DL_FUNC)&_aricode_expected_MI, 2},
+    {"_aricode_getRank", (DL_FUNC)&_aricode_getRank, 1},
+    {NULL, NULL, 0}};
 
-RcppExport void R_init_aricode(DllInfo *dll) {
-    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
-    R_useDynamicSymbols(dll, FALSE);
+RcppExport void R_init_aricode(DllInfo* dll) {
+  R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+  R_useDynamicSymbols(dll, FALSE);
 }

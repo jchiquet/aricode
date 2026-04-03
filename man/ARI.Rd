@@ -7,12 +7,13 @@
 ARI(c1, c2)
 }
 \arguments{
-\item{c1}{a vector containing the labels of the first classification. Must be a vector of characters, integers, numerics, or a factor, but not a list.}
+\item{c1}{a vector containing the labels of the first classification.
+Must be a vector of characters, integers, a numeric or a factor, but not a list.}
 
 \item{c2}{a vector containing the labels of the second classification.}
 }
 \value{
-a scalar with the adjusted rand index.
+a scalar with the adjusted Rand index.
 }
 \description{
 A function to compute the adjusted rand index between two classifications
