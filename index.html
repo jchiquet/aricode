@@ -74,9 +74,14 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
 <div class="section level1">
-<div class="page-header"><h1 id="aricode">aricode<a class="anchor" aria-label="anchor" href="#aricode"></a>
+<div class="page-header"><h1 id="aricode-fast-computations-of-clustering-comparison-measures">aricode: fast computations of clustering comparison measures<a class="anchor" aria-label="anchor" href="#aricode-fast-computations-of-clustering-comparison-measures"></a>
 </h1></div>
+</div>
+<div class="section level1">
+<h1 id="aricode">aricode<a class="anchor" aria-label="anchor" href="#aricode"></a>
+</h1>
 <!-- badges: start -->
 
 <p>A package for efficient computations of standard clustering comparison measures</p>
@@ -93,33 +98,39 @@
 <div class="section level2">
 <h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
 </h2>
-<p>Computation of measures for clustering comparison (ARI, AMI, NID and even the (^2) distance) are usually based on the contingency table. Traditional implementations (e.g., function <code>adjustedRandIndex</code> of package <strong>mclust</strong>) are in ((n + u v)) where</p>
+<p>Computation of measures for clustering comparison (ARI, AMI, NID and even the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>χ</mi><mn>2</mn></msup><annotation encoding="application/x-tex">\chi^2</annotation></semantics></math> distance) are usually based on the contingency table. Traditional implementations (e.g., function <code>adjustedRandIndex</code> of package <strong>mclust</strong>) are in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Ω</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo>+</mo><mi>u</mi><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\Omega(n + u v)</annotation></semantics></math> where</p>
 <ul>
-<li>(n) is the size of the vectors the classifications of which are to be compared,</li>
-<li>(u) and (v) are the respective number of classes in each vectors.</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> is the size of the vectors the classifications of which are to be compared,</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>u</mi><annotation encoding="application/x-tex">u</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math> are the respective number of classes in each vectors.</li>
 </ul>
-<p>In <strong>aricode</strong> we propose an implementation, based on radix sort, that is in ((n)) in time and space.<br>
-Importantly, the complexity does not depends on (u) and (v). Our implementation of the ARI for instance is one or two order of magnitude faster than some standard implementation in <code>R</code>.</p>
+<p>In <strong>aricode</strong> we propose an implementation, based on radix sort, that is in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Θ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\Theta(n)</annotation></semantics></math> in time and space.<br>
+Importantly, the complexity does not depends on <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>u</mi><annotation encoding="application/x-tex">u</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>v</mi><annotation encoding="application/x-tex">v</annotation></semantics></math>. Our implementation of the ARI for instance is one or two order of magnitude faster than some standard implementation in <code>R</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="available-measures-and-functions">Available measures and functions<a class="anchor" aria-label="anchor" href="#available-measures-and-functions"></a>
 </h2>
-<p>The functions included in aricode are:</p>
+<p>The functions included in <code>aricode</code> are:</p>
 <ul>
 <li>
-<code>ARI</code>: computes the adjusted rand index</li>
+<code>AMI</code>: computes the adjusted mutual information</li>
+<li>
+<code>ARI/RI</code>: computes the (adjusted) Rand index</li>
 <li>
 <code>Chi2</code>: computes the Chi-square statistics</li>
 <li>
-<code>MARI/MARIraw</code>: computes the modified adjusted rand index (Sundqvist et al, in preparation)</li>
+<code>Frobenius</code> compute the Frobenius norm between two classification as defined in <a href="https://jmlr.org/papers/v20/16-155.html" class="external-link">Arlot et al, 2019</a>
+</li>
 <li>
-<code>NVI</code>: computes the the normalized variation information</li>
+<code>MARI/MARIraw</code>: computes the modified adjusted rand index as defined in <a href="https://doi.org/10.1007/s00180-022-01230-7" class="external-link">Sundqvist et al, 2023</a>
+</li>
 <li>
 <code>NID</code>: computes the normalized information distance</li>
 <li>
 <code>NMI</code>: computes the normalized mutual information</li>
 <li>
-<code>AMI</code>: computes the adjusted mutual information</li>
+<code>NVI</code>: computes the the normalized variation information</li>
 <li>
 <code>expected_MI</code>: computes the expected mutual information</li>
 <li>
@@ -132,9 +143,10 @@ Importantly, the complexity does not depends on (u) and (v). Our implementation 
 <h2 id="timings">Timings<a class="anchor" aria-label="anchor" href="#timings"></a>
 </h2>
 <p>Here are some timings to compare the cost of computing the adjusted Rand Index with <strong>aricode</strong> or with the commonly used function <code>adjustedRandIndex</code> of the <em>mclust</em> package: the cost of the latter can be prohibitive for large vectors:</p>
-<p><img src="reference/figures/timings_plot-1.png"><!-- --></p>
+<p><img src="reference/figures/timings_plot-1.png"></p>
 </div>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -175,7 +187,8 @@ Importantly, the complexity does not depends on (u) and (v). Our implementation 
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://CRAN.R-project.org/package=aricode" class="external-link"><img src="https://www.r-pkg.org/badges/version/aricode" alt="CRAN Status"></a></li>
+<li><a href="https://github.com/jchiquet/aricode/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/jchiquet/aricode/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://CRAN.R-project.org/package=aricode" class="external-link"><img src="https://www.r-pkg.org/badges/version/aricode.png" alt="CRAN Status"></a></li>
 <li><a href="https://codecov.io/gh/jchiquet/aricode" class="external-link"><img src="https://codecov.io/gh/jchiquet/aricode/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
 <li><a href="https://www.tidyverse.org/lifecycle/#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-blue.svg" alt="Lifecycle: stable"></a></li>
 <li><a href="https://github.com/jchiquet/aricode/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/jchiquet/aricode.svg"></a></li>
