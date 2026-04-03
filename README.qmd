@@ -1,5 +1,6 @@
 ---
-output: github_document
+title: "aricode: fast computations of clustering comparison measures"
+format: gfm
 ---
 
 ```{r setup, include=FALSE}
