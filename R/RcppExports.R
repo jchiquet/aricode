@@ -2,14 +2,13 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 cpp_SortPairs <- function(c1, c2) {
-    .Call('_aricode_cpp_SortPairs', PACKAGE = 'aricode', c1, c2)
+  .Call("_aricode_cpp_SortPairs", PACKAGE = "aricode", c1, c2)
 }
 
 expected_MI <- function(ni_, n_j) {
-    .Call('_aricode_expected_MI', PACKAGE = 'aricode', ni_, n_j)
+  .Call("_aricode_expected_MI", PACKAGE = "aricode", ni_, n_j)
 }
 
 getRank <- function(classi) {
-    .Call('_aricode_getRank', PACKAGE = 'aricode', classi)
+  .Call("_aricode_getRank", PACKAGE = "aricode", classi)
 }
-

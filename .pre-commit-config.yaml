@@ -6,6 +6,11 @@ repos:
     hooks:
     -   id: style-files
         args: [--style_pkg=styler, --style_fun=tidyverse_style]
+        exclude: >
+          (?x)^(
+          R/RcppExports.R|
+          src/RcppExports.cpp|
+          )$
     # -   id: roxygenize
     #     # roxygen requires loading pkg -> add dependencies from DESCRIPTION
     #     additional_dependencies:
@@ -41,7 +46,8 @@ repos:
           (.*/|)WORDLIST|
           \.github/workflows/.*|
           data/.*|
-          (.*/|)src/RcppExports\.cpp|
+          src/RcppExports\.cpp|
+          R/RcppExports\.R|
           )$
     -   id: lintr
         args: [--warn_only]
@@ -90,3 +96,4 @@ repos:
 
 ci:
     autoupdate_schedule: monthly
+    skip: [pkgdown]
