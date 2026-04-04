@@ -30,7 +30,8 @@ Suggests:
     testthat,
     spelling,
     mclust, 
-    ggplot2
+    ggplot2,
+    pkgdown
 LinkingTo: Rcpp
 RoxygenNote: 7.3.3
 Language: en-US

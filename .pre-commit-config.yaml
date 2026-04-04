@@ -26,7 +26,7 @@ repos:
           .*\.Rds|
           .*\.Rproj|
           .*\.sh|
-          (.*/|)\.gitignore|
+          (.*/|)\<.gitignore|
           (.*/|)\.gitlab-ci\.yml|
           (.*/|)\.lintr|
           (.*/|)\.pre-commit-.*|
@@ -41,6 +41,7 @@ repos:
           (.*/|)WORDLIST|
           \.github/workflows/.*|
           data/.*|
+          (.*/|)src/RcppExports\.cpp|
           )$
     -   id: lintr
         args: [--warn_only]
