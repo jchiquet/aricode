@@ -1,6 +1,7 @@
 .travis.yml
 AUTHORS
 README.md
+README.qmd
 README.rmd
 README_cache
 ^.*\.Rproj$

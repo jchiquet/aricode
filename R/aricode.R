@@ -109,7 +109,7 @@ ARI <- function(c1, c2) {
 #'
 #' A function to compute the rand index between two classifications
 #'
-#' @inheritDotParams ARI c1 c2
+#' @inheritParams ARI
 #' @return a scalar with the rand index.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
@@ -134,7 +134,7 @@ RI <- function(c1, c2) {
 #'
 #' A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep, based on a multinomial model.
 #'
-#' @inheritDotParams ARI c1 c2
+#' @inheritParams ARI
 #' @return a scalar with the modified ARI.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
@@ -178,7 +178,7 @@ MARI <- function(c1, c2) {
 #'
 #' A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep, based on a multinomial model. Raw means, that the index is not divided by the (maximum - expected) value.
 #'
-#' @inheritDotParams ARI c1 c2
+#' @inheritParams ARI
 #' @return a scalar with the modified ARI without the division by the (maximum - expected)
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
@@ -214,7 +214,7 @@ MARIraw <- function(c1, c2) {
 #'
 #' A function to compute the Chi-2 statistics
 #'
-#' @inheritDotParams ARI c1 c2
+#' @inheritParams ARI
 #' @return a scalar with the chi-square statistics.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
@@ -238,7 +238,7 @@ Chi2 <- function(c1, c2) {
 #'
 #' A function to compute the Frobenius norm between two classification as defined in Lajugie et al. 2014 and Arlot et al 2019
 #'
-#' @inheritDotParams ARI c1 c2
+#' @inheritParams ARI
 #' @return a scalar with the chi-square statistics.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @references
@@ -262,7 +262,7 @@ Frobenius <- function(c1, c2) {
 #'
 #' A function to compute the empirical entropy for two vectors of classification and the joint entropy
 #'
-#' @inheritDotParams ARI c1 c2
+#' @inheritParams ARI
 #' @return a list with the two conditional entropies, the joint entropy and output of sortPairs.
 #' @examples
 #' data(iris)
@@ -286,7 +286,7 @@ entropy <- function(c1, c2) {
 #'
 #' A function various measures of similarity between two classifications
 #'
-#' @inheritDotParams ARI c1 c2
+#' @inheritParams ARI
 #' @return a list with all the measures available
 #' @seealso \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{ARI}}
 #' @examples
@@ -328,7 +328,7 @@ clustComp <- function(c1, c2) {
 #'
 #' A function to compute the adjusted mutual information between two classifications
 #'
-#' @inheritDotParams ARI c1 c2
+#' @inheritParams ARI
 #' @return a scalar with the adjusted rand index.
 #' @seealso \code{\link{ARI}}, \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
@@ -349,7 +349,7 @@ AMI <- function(c1, c2) {
 #'
 #' A function to compute the NMI between two classifications
 #'
-#' @inheritDotParams ARI c1 c2
+#' @inheritParams ARI
 #' @param variant a string in ("max", "min", "sqrt", "sum", "joint"): different variants of NMI. Default use "max".
 #' @return a scalar with the normalized mutual information .
 #' @seealso \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{ARI}}, \code{\link{clustComp}}
@@ -379,7 +379,7 @@ NMI <- function(c1, c2, variant = c("max", "min", "sqrt", "sum", "joint")) {
 #'
 #' A function to compute the NID between two classifications
 #'
-#' @inheritDotParams ARI c1 c2
+#' @inheritParams ARI
 #' @return a scalar with the normalized information distance .
 #' @seealso \code{\link{RI}}, \code{\link{NMI}}, \code{\link{NVI}}, \code{\link{ARI}}, \code{\link{clustComp}}
 #' @examples
@@ -398,7 +398,7 @@ NID <- function(c1, c2) {
 #'
 #' A function to compute the NVI between two classifications
 #'
-#' @inheritDotParams ARI c1 c2
+#' @inheritParams ARI
 #' @return a scalar with the normalized variation of information.
 #' @seealso \code{\link{RI}}, \code{\link{NID}}, \code{\link{NMI}}, \code{\link{ARI}}, \code{\link{clustComp}}
 #' @examples
