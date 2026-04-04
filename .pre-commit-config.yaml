@@ -58,6 +58,10 @@ repos:
     -   id: no-print-statement
     -   id: no-debug-statement
     -   id: deps-in-desc
+        exclude: >
+          (?x)^(
+          inst/check_speed.R|
+          )$
     -   id: pkgdown
 - repo: https://github.com/pre-commit/mirrors-clang-format
   rev: v22.1.2

@@ -9,40 +9,36 @@
 #' @import Matrix
 #' @export
 sortPairs <- function(c1, c2, spMat = FALSE) {
-  if (anyNA(c1) || anyNA(c2)) {
-    stop("NA are not supported.")
-  }
+  if (anyNA(c1) || anyNA(c2)) stop("NA are not supported.")
+  stopifnot("c1 and c2 must have the same length." = length(c1) == length(c2))
 
   if (((!is.vector(c1) && !is.factor(c1)) || is.list(c1)) ||
     ((!is.vector(c2) && !is.factor(c2)) || is.list(c2))) {
     stop("c1 and c2 must be vectors or factors but not lists.")
   }
 
-  if (length(c1) != length(c2)) {
-    stop("the two vectors must have the same length.")
+  if (is.character(c1) || is.character(c2)) {
+    c1 <- as.factor(c1)
+    c2 <- as.factor(c2)
   }
 
-  ## if c1 and c2 are integer
-  if (is.integer(c1) && is.integer(c2)) {
+  if (is.factor(c1) && is.factor(c2)) {
+    mylevels <- list(c1 = levels(c1), c2 = levels(c2))
+    c1 <- as.integer(c1) - 1L
+    c2 <- as.integer(c2) - 1L
+  } else {
     ## getRank is O(n) if max(c1)-min(c1) and max(c2)-min(c2) is of order length(c1)=length(c2)
     ## NOTE: getRank does not assume c1 and c2 are between 0 and n
+    c1 <- as.integer(c1)
+    c2 <- as.integer(c2)
     res1 <- getRank(c1)
     res2 <- getRank(c2)
     mylevels <- list(c1 = res1$index, c2 = res2$index)
     c1 <- res1$translated # here ranks are in [0, n)
     c2 <- res2$translated # here ranks are in [0, n)
-  } else if (is.factor(c1) && is.factor(c2)) {
-    mylevels <- list(c1 = levels(c1), c2 = levels(c2))
-    c1 <- as.integer(c1) - 1L
-    c2 <- as.integer(c2) - 1L
-  } else {
-    ## if neither a factor nor an integer or different of types force to factor then integer
-    mylevels <- list(c1 = unique(c1), c2 = unique(c2))
-    c1 <- as.integer(factor(c1, levels = mylevels$c1)) - 1L
-    c2 <- as.integer(factor(c2, levels = mylevels$c2)) - 1L
   }
 
-  out <- cpp_SortPairs(c1, c2)
+  out <- std_SortPairs(c1, c2, length(mylevels$c1), length(mylevels$c2))
 
   if (spMat) {
     spOut <- sparseMatrix(

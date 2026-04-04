@@ -2,12 +2,12 @@ library(testthat)
 library(aricode)
 
 test_that("Testing supposedly handled input types", {
-  c1 <- rep(1:3, each = 3) * 1.5
-  c2 <- rep(4:6, each = 3) * 2.7
+  c1 <- rep(1:3, each = 3)
+  c2 <- rep(4:6, each = 3)
 
   cat("\n-numeric type-")
-  c1.numeric <- c1
-  c2.numeric <- c2
+  c1.numeric <- as.numeric(c1)
+  c2.numeric <- as.numeric(c2)
   ref.object <-
     list(
       spMat = NULL,
@@ -41,7 +41,7 @@ test_that("Testing supposedly handled input types", {
       spMat = NULL,
       levels = list(
         c1 = unique(c1.char),
-        c2 = unique(c2.factor)
+        c2 = levels(c2.factor)
       ),
       nij = rep(3, 3), ni. = rep(3, 3),
       n.j = rep(3, 3), pair_c1 = 0:2, pair_c2 = 0:2

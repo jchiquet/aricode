@@ -7,26 +7,19 @@
 #include <Rcpp.h>
 
 #include <algorithm>
+#include <vector>
 
 // [[Rcpp::export]]
-Rcpp::List cpp_SortPairs(Rcpp::IntegerVector c1, Rcpp::IntegerVector c2) {
-  int n = c1.size();
+Rcpp::List cpp_SortPairs(Rcpp::IntegerVector& c1, Rcpp::IntegerVector& c2,
+                         unsigned int N1, unsigned int N2) {
+  unsigned int n = c1.size();
   if (n == 0) return Rcpp::List::create();
-
-  int N1 = 0;
-  int N2 = 0;
-
-  // Nombre de classes (N1 et N2)
-  N1 = Rcpp::max(c1);
-  N2 = Rcpp::max(c2);
-  N1++;  // Car les classes commencent à 0
-  N2++;
 
   // Comptage des individus par classe
   Rcpp::IntegerVector count1(N1);
   Rcpp::IntegerVector count2(N2);
 
-  for (int i = 0; i < n; i++) {
+  for (unsigned int i = 0; i < n; i++) {
     count1[c1[i]]++;
     count2[c2[i]]++;
   }
@@ -36,11 +29,11 @@ Rcpp::List cpp_SortPairs(Rcpp::IntegerVector c1, Rcpp::IntegerVector c2) {
 
   // Tri selon c2 (Counting Sort logic)
   Rcpp::IntegerVector shift2(N2 + 1);
-  for (int i = 1; i <= N2; i++) {
+  for (unsigned int i = 1; i <= N2; i++) {
     shift2[i] = shift2[i - 1] + count2[i - 1];
   }
 
-  for (int i = 0; i < n; i++) {
+  for (unsigned int i = 0; i < n; i++) {
     int idx = shift2[c2[i]];
     tmp_c1[idx] = c1[i];
     tmp_c2[idx] = c2[i];
@@ -49,11 +42,11 @@ Rcpp::List cpp_SortPairs(Rcpp::IntegerVector c1, Rcpp::IntegerVector c2) {
 
   // Tri final selon c1
   Rcpp::IntegerVector new_c1(n), new_c2(n), shift1(N1 + 1);
-  for (int i = 1; i <= N1; i++) {
+  for (unsigned int i = 1; i <= N1; i++) {
     shift1[i] = shift1[i - 1] + count1[i - 1];
   }
 
-  for (int i = 0; i < n; i++) {
+  for (unsigned int i = 0; i < n; i++) {
     int idx = shift1[tmp_c1[i]];
     new_c1[idx] = tmp_c1[i];
     new_c2[idx] = tmp_c2[i];
@@ -63,14 +56,14 @@ Rcpp::List cpp_SortPairs(Rcpp::IntegerVector c1, Rcpp::IntegerVector c2) {
   // Calcul des paires uniques et comptage
   Rcpp::IntegerVector pair_c1(n), pair_c2(n), pair_count(n);
 
-  int i_index = 0;
+  unsigned int i_index = 0;
   int pair_cur_c1 = new_c1[0];
   int pair_cur_c2 = new_c2[0];
 
   pair_c1[0] = pair_cur_c1;
   pair_c2[0] = pair_cur_c2;
 
-  for (int i = 0; i < n; i++) {
+  for (unsigned int i = 0; i < n; i++) {
     if ((new_c1[i] == pair_cur_c1) && (new_c2[i] == pair_cur_c2)) {
       pair_count[i_index]++;
     } else {
@@ -89,6 +82,97 @@ Rcpp::List cpp_SortPairs(Rcpp::IntegerVector c1, Rcpp::IntegerVector c2) {
                             Rcpp::Named("pair_c2") = pair_c2[ind],
                             Rcpp::Named("c1_nb") = count1[count1 > 0],
                             Rcpp::Named("c2_nb") = count2[count2 > 0]);
+}
+
+// [[Rcpp::export]]
+Rcpp::List std_SortPairs(Rcpp::IntegerVector c1_in, Rcpp::IntegerVector c2_in,
+                         unsigned int N1, unsigned int N2) {
+  unsigned int n = c1_in.size();
+  if (n == 0) return Rcpp::List::create();
+
+  // Conversion des entrées en std::vector
+  std::vector<int> c1 = Rcpp::as<std::vector<int>>(c1_in);
+  std::vector<int> c2 = Rcpp::as<std::vector<int>>(c2_in);
+
+  // Comptage des individus par classe
+  std::vector<int> count1(N1, 0);
+  std::vector<int> count2(N2, 0);
+
+  for (unsigned int i = 0; i < n; i++) {
+    count1[c1[i]]++;
+    count2[c2[i]]++;
+  }
+
+  // Allocation temporaire
+  std::vector<int> tmp_c1(n), tmp_c2(n);
+
+  // Tri selon c2 (Counting Sort logic)
+  std::vector<int> shift2(N2 + 1, 0);
+  for (unsigned int i = 1; i <= N2; i++) {
+    shift2[i] = shift2[i - 1] + count2[i - 1];
+  }
+
+  for (unsigned int i = 0; i < n; i++) {
+    int idx = shift2[c2[i]];
+    tmp_c1[idx] = c1[i];
+    tmp_c2[idx] = c2[i];
+    shift2[c2[i]]++;
+  }
+
+  // Tri final selon c1
+  std::vector<int> new_c1(n), new_c2(n);
+  std::vector<int> shift1(N1 + 1, 0);
+  for (unsigned int i = 1; i <= N1; i++) {
+    shift1[i] = shift1[i - 1] + count1[i - 1];
+  }
+
+  for (unsigned int i = 0; i < n; i++) {
+    int idx = shift1[tmp_c1[i]];
+    new_c1[idx] = tmp_c1[i];
+    new_c2[idx] = tmp_c2[i];
+    shift1[tmp_c1[i]]++;
+  }
+
+  // Calcul des paires uniques et comptage
+  std::vector<int> pair_c1(n), pair_c2(n), pair_count(n, 0);
+
+  unsigned int i_index = 0;
+  int pair_cur_c1 = new_c1[0];
+  int pair_cur_c2 = new_c2[0];
+
+  pair_c1[0] = pair_cur_c1;
+  pair_c2[0] = pair_cur_c2;
+
+  for (unsigned int i = 0; i < n; i++) {
+    if ((new_c1[i] == pair_cur_c1) && (new_c2[i] == pair_cur_c2)) {
+      pair_count[i_index]++;
+    } else {
+      i_index++;
+      pair_cur_c1 = new_c1[i];
+      pair_cur_c2 = new_c2[i];
+      pair_c1[i_index] = pair_cur_c1;
+      pair_c2[i_index] = pair_cur_c2;
+      pair_count[i_index]++;
+    }
+  }
+
+  // Préparation du retour : on retaille les vecteurs à la taille réelle i_index
+  // + 1
+  pair_c1.resize(i_index + 1);
+  pair_c2.resize(i_index + 1);
+  pair_count.resize(i_index + 1);
+
+  // Filtrage des counts > 0
+  std::vector<int> res_count1, res_count2;
+  for (int c : count1)
+    if (c > 0) res_count1.push_back(c);
+  for (int c : count2)
+    if (c > 0) res_count2.push_back(c);
+
+  return Rcpp::List::create(
+      Rcpp::Named("pair_nb") = pair_count, Rcpp::Named("pair_c1") = pair_c1,
+      Rcpp::Named("pair_c2") = pair_c2, Rcpp::Named("c1_nb") = res_count1,
+      Rcpp::Named("c2_nb") = res_count2);
 }
 
 // [[Rcpp::export]]

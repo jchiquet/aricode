@@ -1,7 +1,5 @@
-# aricode: fast computations of clustering comparison measures
-
-
 # aricode
+
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jchiquet/aricode/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jchiquet/aricode/actions/workflows/R-CMD-check.yaml)

@@ -2,9 +2,12 @@ library(microbenchmark)
 library(aricode)
 library(mclust)
 
-n <- 10^7
+n <- 10^6
 c1 <- sample.int(100, size = n, replace = TRUE)
 c2 <- sample.int(100, size = n, replace = TRUE)
+res1 <- aricode:::getRank(c1)
+res2 <- aricode:::getRank(c2)
+mylevels <- list(c1 = res1$index, c2 = res2$index)
 
 ## define the ARI as in the mclust package
 adjusted_rand_index <- function(x, y) {
@@ -32,3 +35,23 @@ res <- microbenchmark(
   mclust = mclust::adjustedRandIndex(c1, c2), times = 20L
 )
 ggplot2::autoplot(res)
+
+
+res2 <- microbenchmark::microbenchmark(
+  aricode:::std_SortPairs(c1, c2, length(mylevels$c1), length(mylevels$c2)),
+  aricode:::cpp_SortPairs(c1, c2, length(mylevels$c1), length(mylevels$c2)),
+  times = 20L
+)
+ggplot2::autoplot(res2)
+
+
+c1 <- sample(1:(n / 200), n, replace = TRUE)
+c2 <- c1
+i_change <- sample(1:n, n / 50, replace = FALSE)
+c2[i_change] <- c2[rev(i_change)]
+
+profvis::profvis(sortPairs(c1, c2))
+
+c1 <- as.numeric(c1)
+c2 <- as.numeric(c2)
+profvis::profvis(sortPairs(c1, c2))

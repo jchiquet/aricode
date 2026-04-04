@@ -50,11 +50,13 @@ dyn
 emi
 endif
 entropies
+entrées
 Epps
 et
 factorielles
 faf
 fd
+Filtrage
 florent
 Florent
 Frobenius
@@ -124,6 +126,7 @@ pkgdown
 PMLR
 Probabilité
 Pré
+Préparation
 radix
 Rapp
 Rcerr
@@ -135,6 +138,8 @@ RCPP
 RcppExport
 RData
 registerRoutines
+retaille
+retour
 revdep
 Rhistory
 rigaill
@@ -148,6 +153,7 @@ roxygen
 RoxygenNote
 Rproj
 RStudio
+réelle
 Rémi
 selon
 SEXP
@@ -158,6 +164,7 @@ src
 sundqvist
 Sundqvist
 Sylvain
+taille
 temporaire
 terme
 testthat
@@ -168,6 +175,7 @@ uniques
 useDynamicSymbols
 utf
 valentin
+vecteurs
 Vinh
 Xuan
 Zaid
