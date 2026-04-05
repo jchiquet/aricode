@@ -7,13 +7,21 @@
 sortPairs(c1, c2, spMat = FALSE)
 }
 \arguments{
-\item{c1}{a vector of length n with value between 0 and N1 < n}
+\item{c1}{a vector of length n with value between 0 and N1 < n containing the first classification.
+Must be a vector of integers or characters, a numeric, a factor, but not a list. Avoid character.}
 
-\item{c2}{a vector of length n with value between 0 and N2 < n}
+\item{c2}{a vector of length n with value between 0 and N2 < n containing the second classification.
+Must be a vector of integers or characters, a numeric or a factor, but not a list. Avoid character.}
 
 \item{spMat}{logical: send back the contingency table as sparsely encoded
 (cost more than the algorithm itself). Default is FALSE}
 }
 \description{
-A function to sort pairs of integers or factors and identify the pairs
+A function to sort pairs of integers or factors and identify the pairs between two classifications
+}
+\details{
+Pair sorting, which is at the heart of computing all clustering comparison measures, has been carefully
+optimized. Hence, even basic R operations (checking for the presence of NAs, type conversion, or
+constructing a sparse contingency matrix as an output) have non negligible cost compare to the pair
+sorting itself. For optimal performance, please provide the vectors as integers or factors without any NAs.
 }

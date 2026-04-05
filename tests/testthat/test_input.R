@@ -26,7 +26,7 @@ test_that("Testing supposedly handled input types", {
   cat("\n-character type-")
   c1.char <- as.character(c1)
   c2.char <- as.character(c2)
-  ref.object <- list(spMat = NULL, levels = list(c1 = unique(c1.char), c2 = unique(c2.char)), nij = rep(3, 3), ni. = rep(3, 3), n.j = rep(3, 3), pair_c1 = 0:2, pair_c2 = 0:2)
+  ref.object <- list(spMat = NULL, levels = list(c1 = as.integer(unique(c1.char)), c2 = as.integer(unique(c2.char))), nij = rep(3, 3), ni. = rep(3, 3), n.j = rep(3, 3), pair_c1 = 0:2, pair_c2 = 0:2)
   expect_that(sortPairs(c1.char, c2.char), equals(ref.object))
 
   cat("\n-factor type-")
@@ -40,8 +40,8 @@ test_that("Testing supposedly handled input types", {
     list(
       spMat = NULL,
       levels = list(
-        c1 = unique(c1.char),
-        c2 = levels(c2.factor)
+        c1 = as.integer(unique(c1.char)),
+        c2 = unique(as.integer(c2.factor))
       ),
       nij = rep(3, 3), ni. = rep(3, 3),
       n.j = rep(3, 3), pair_c1 = 0:2, pair_c2 = 0:2

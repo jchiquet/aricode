@@ -1,26 +1,39 @@
 #' Sort Pairs
 #'
-#' A function to sort pairs of integers or factors and identify the pairs
+#' A function to sort pairs of integers or factors and identify the pairs between two classifications
 #'
-#' @param c1 a vector of length n with value between 0 and N1 < n
-#' @param c2 a vector of length n with value between 0 and N2 < n
+#' @param c1 a vector of length n with value between 0 and N1 < n containing the first classification.
+#' Must be a vector of integers or characters, a numeric, a factor, but not a list. Avoid character.
+#' @param c2 a vector of length n with value between 0 and N2 < n containing the second classification.
+#' Must be a vector of integers or characters, a numeric or a factor, but not a list. Avoid character.
 #' @param spMat logical: send back the contingency table as sparsely encoded
 #' (cost more than the algorithm itself). Default is FALSE
+#' @details
+#' Pair sorting, which is at the heart of computing all clustering comparison measures, has been carefully
+#' optimized. Hence, even basic R operations (checking for the presence of NAs, type conversion, or
+#' constructing a sparse contingency matrix as an output) have non negligible cost compare to the pair
+#' sorting itself. For optimal performance, please provide the vectors as integers or factors without any NAs.
+#'
 #' @import Matrix
 #' @export
 sortPairs <- function(c1, c2, spMat = FALSE) {
-  if (anyNA(c1) || anyNA(c2)) stop("NA are not supported.")
   stopifnot("c1 and c2 must have the same length." = length(c1) == length(c2))
 
-  if (((!is.vector(c1) && !is.factor(c1)) || is.list(c1)) ||
-    ((!is.vector(c2) && !is.factor(c2)) || is.list(c2))) {
-    stop("c1 and c2 must be vectors or factors but not lists.")
-  }
+  stopifnot(
+    "c1 and c2 must be vectors or factors but not lists." =
+      (is.vector(c1) || is.factor(c1)) && !is.list(c1) &&
+        (is.vector(c2) || is.factor(c2)) && !is.list(c2)
+  )
 
   if (is.character(c1) || is.character(c2)) {
-    c1 <- as.factor(c1)
-    c2 <- as.factor(c2)
+    if (length(c1) > 1e4 || length(c2) > 1e4) {
+      warning("Converting a long vector of characters to integers is much slower than the pair sorting itself. Consider using integers or factors, or converting them beforehand for better performance")
+    }
+    c1 <- as.integer(c1)
+    c2 <- as.integer(c2)
   }
+
+  if (anyNA(c1) || anyNA(c2)) stop("NA are not supported.")
 
   if (is.factor(c1) && is.factor(c2)) {
     mylevels <- list(c1 = levels(c1), c2 = levels(c2))
@@ -68,9 +81,8 @@ sortPairs <- function(c1, c2, spMat = FALSE) {
 #'
 #' A function to compute the adjusted rand index between two classifications
 #'
-#' @param c1 a vector containing the labels of the first classification.
-#' Must be a vector of characters, integers, a numeric or a factor, but not a list.
-#' @param c2 a vector containing the labels of the second classification.
+#' @inheritParams sortPairs
+#'
 #' @return a scalar with the adjusted Rand index.
 #' @seealso \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
@@ -105,7 +117,7 @@ ARI <- function(c1, c2) {
 #'
 #' A function to compute the rand index between two classifications
 #'
-#' @inheritParams ARI
+#' @inheritParams sortPairs
 #' @return a scalar with the rand index.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
@@ -130,7 +142,7 @@ RI <- function(c1, c2) {
 #'
 #' A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep, based on a multinomial model.
 #'
-#' @inheritParams ARI
+#' @inheritParams sortPairs
 #' @return a scalar with the modified ARI.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
@@ -174,7 +186,7 @@ MARI <- function(c1, c2) {
 #'
 #' A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep, based on a multinomial model. Raw means, that the index is not divided by the (maximum - expected) value.
 #'
-#' @inheritParams ARI
+#' @inheritParams sortPairs
 #' @return a scalar with the modified ARI without the division by the (maximum - expected)
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
@@ -210,7 +222,7 @@ MARIraw <- function(c1, c2) {
 #'
 #' A function to compute the Chi-2 statistics
 #'
-#' @inheritParams ARI
+#' @inheritParams sortPairs
 #' @return a scalar with the chi-square statistics.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
@@ -234,7 +246,7 @@ Chi2 <- function(c1, c2) {
 #'
 #' A function to compute the Frobenius norm between two classification as defined in Lajugie et al. 2014 and Arlot et al 2019
 #'
-#' @inheritParams ARI
+#' @inheritParams sortPairs
 #' @return a scalar with the chi-square statistics.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @references
@@ -258,7 +270,7 @@ Frobenius <- function(c1, c2) {
 #'
 #' A function to compute the empirical entropy for two vectors of classification and the joint entropy
 #'
-#' @inheritParams ARI
+#' @inheritParams sortPairs
 #' @return a list with the two conditional entropies, the joint entropy and output of sortPairs.
 #' @examples
 #' data(iris)
@@ -282,7 +294,7 @@ entropy <- function(c1, c2) {
 #'
 #' A function various measures of similarity between two classifications
 #'
-#' @inheritParams ARI
+#' @inheritParams sortPairs
 #' @return a list with all the measures available
 #' @seealso \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{ARI}}
 #' @examples
@@ -324,7 +336,7 @@ clustComp <- function(c1, c2) {
 #'
 #' A function to compute the adjusted mutual information between two classifications
 #'
-#' @inheritParams ARI
+#' @inheritParams sortPairs
 #' @return a scalar with the adjusted rand index.
 #' @seealso \code{\link{ARI}}, \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
@@ -345,7 +357,7 @@ AMI <- function(c1, c2) {
 #'
 #' A function to compute the NMI between two classifications
 #'
-#' @inheritParams ARI
+#' @inheritParams sortPairs
 #' @param variant a string in ("max", "min", "sqrt", "sum", "joint"): different variants of NMI. Default use "max".
 #' @return a scalar with the normalized mutual information .
 #' @seealso \code{\link{RI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{ARI}}, \code{\link{clustComp}}
@@ -375,7 +387,7 @@ NMI <- function(c1, c2, variant = c("max", "min", "sqrt", "sum", "joint")) {
 #'
 #' A function to compute the NID between two classifications
 #'
-#' @inheritParams ARI
+#' @inheritParams sortPairs
 #' @return a scalar with the normalized information distance .
 #' @seealso \code{\link{RI}}, \code{\link{NMI}}, \code{\link{NVI}}, \code{\link{ARI}}, \code{\link{clustComp}}
 #' @examples
@@ -394,7 +406,7 @@ NID <- function(c1, c2) {
 #'
 #' A function to compute the NVI between two classifications
 #'
-#' @inheritParams ARI
+#' @inheritParams sortPairs
 #' @return a scalar with the normalized variation of information.
 #' @seealso \code{\link{RI}}, \code{\link{NID}}, \code{\link{NMI}}, \code{\link{ARI}}, \code{\link{clustComp}}
 #' @examples

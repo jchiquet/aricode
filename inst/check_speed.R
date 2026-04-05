@@ -2,7 +2,7 @@ library(microbenchmark)
 library(aricode)
 library(mclust)
 
-n <- 10^6
+n <- 10^7
 c1 <- sample.int(100, size = n, replace = TRUE)
 c2 <- sample.int(100, size = n, replace = TRUE)
 res1 <- aricode:::getRank(c1)
@@ -44,14 +44,16 @@ res2 <- microbenchmark::microbenchmark(
 )
 ggplot2::autoplot(res2)
 
-
 c1 <- sample(1:(n / 200), n, replace = TRUE)
 c2 <- c1
 i_change <- sample(1:n, n / 50, replace = FALSE)
 c2[i_change] <- c2[rev(i_change)]
-
 profvis::profvis(sortPairs(c1, c2))
 
 c1 <- as.numeric(c1)
 c2 <- as.numeric(c2)
+profvis::profvis(sortPairs(c1, c2))
+
+c1 <- as.character(c1)
+c2 <- as.character(c2)
 profvis::profvis(sortPairs(c1, c2))

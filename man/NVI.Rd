@@ -7,10 +7,11 @@
 NVI(c1, c2)
 }
 \arguments{
-\item{c1}{a vector containing the labels of the first classification.
-Must be a vector of characters, integers, a numeric or a factor, but not a list.}
+\item{c1}{a vector of length n with value between 0 and N1 < n containing the first classification.
+Must be a vector of integers or characters, a numeric, a factor, but not a list. Avoid character.}
 
-\item{c2}{a vector containing the labels of the second classification.}
+\item{c2}{a vector of length n with value between 0 and N2 < n containing the second classification.
+Must be a vector of integers or characters, a numeric or a factor, but not a list. Avoid character.}
 }
 \value{
 a scalar with the normalized variation of information.
