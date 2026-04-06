@@ -36,14 +36,6 @@ res <- microbenchmark(
 )
 ggplot2::autoplot(res)
 
-
-res2 <- microbenchmark::microbenchmark(
-  aricode:::std_SortPairs(c1, c2, length(mylevels$c1), length(mylevels$c2)),
-  aricode:::cpp_SortPairs(c1, c2, length(mylevels$c1), length(mylevels$c2)),
-  times = 20L
-)
-ggplot2::autoplot(res2)
-
 c1 <- sample(1:(n / 200), n, replace = TRUE)
 c2 <- c1
 i_change <- sample(1:n, n / 50, replace = FALSE)

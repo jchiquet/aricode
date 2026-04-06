@@ -18,6 +18,7 @@
 #' @export
 sortPairs <- function(c1, c2, spMat = FALSE) {
   stopifnot("c1 and c2 must have the same length." = length(c1) == length(c2))
+  stopifnot("c1 and c2 must have positive length." = length(c1) > 0)
 
   stopifnot(
     "c1 and c2 must be vectors or factors but not lists." =
@@ -40,15 +41,14 @@ sortPairs <- function(c1, c2, spMat = FALSE) {
     c1 <- as.integer(c1) - 1L
     c2 <- as.integer(c2) - 1L
   } else {
-    ## getRank is O(n) if max(c1)-min(c1) and max(c2)-min(c2) is of order length(c1)=length(c2)
-    ## NOTE: getRank does not assume c1 and c2 are between 0 and n
     c1 <- as.integer(c1)
     c2 <- as.integer(c2)
+    ## getRank is O(n) if max(c1)-min(c1) and max(c2)-min(c2) is of order n=length(c1)=length(c2)
     res1 <- getRank(c1)
     res2 <- getRank(c2)
     mylevels <- list(c1 = res1$index, c2 = res2$index)
     c1 <- res1$translated # here ranks are in [0, n)
-    c2 <- res2$translated # here ranks are in [0, n)
+    c2 <- res2$translated
   }
 
   out <- std_SortPairs(c1, c2, length(mylevels$c1), length(mylevels$c2))
@@ -57,7 +57,7 @@ sortPairs <- function(c1, c2, spMat = FALSE) {
     spOut <- sparseMatrix(
       i = out$pair_c1,
       j = out$pair_c2,
-      x = out$pair_nb,
+      x = out$count_pair,
       dims = sapply(mylevels, length),
       dimnames = mylevels, index1 = FALSE
     )
@@ -68,9 +68,9 @@ sortPairs <- function(c1, c2, spMat = FALSE) {
   res <- list(
     spMat = spOut,
     levels = mylevels,
-    nij = out$pair_nb,
-    ni. = out$c1_nb,
-    n.j = out$c2_nb,
+    nij = out$count_pair,
+    ni. = out$count_c1,
+    n.j = out$count_c2,
     pair_c1 = out$pair_c1,
     pair_c2 = out$pair_c2
   )

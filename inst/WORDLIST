@@ -24,6 +24,7 @@ chiquet
 Chiquet
 classe
 classi
+classif
 classiSEXP
 clustComp
 CMD
@@ -101,6 +102,7 @@ MARIraw
 martina
 mclust
 md
+minmax
 nameClassi
 navbar
 nb
@@ -137,6 +139,8 @@ Rcpp
 RCPP
 RcppExport
 RData
+reallocations
+reallocs
 registerRoutines
 retaille
 retour
@@ -161,6 +165,8 @@ SHA
 SortPairs
 sortPairs
 src
+struct
+Structs
 sundqvist
 Sundqvist
 Sylvain
@@ -175,6 +181,7 @@ uniques
 useDynamicSymbols
 utf
 valentin
+vec
 vecteurs
 Vinh
 Xuan
