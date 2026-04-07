@@ -443,7 +443,7 @@ AMI <- function(c1, c2, sorted_pairs = NULL) {
 #' Measures of similarity between two classification
 #'
 #' A function for computing all the measures of similarity implemented in this package at once.
-#' Include ARI, RI, MI VI, NVI, ID, NID, NMI, Chi2, MARI, Frobenius
+#' Include (A)RI, (N)MI, (N)VI, (N)ID, Chi2, MARI, Frobenius
 #'
 #' @inheritParams ARI
 #' @param AMI Boolean: should the AMI be computed (more costly than all other measures)? Default is `FALSE`.
@@ -472,11 +472,11 @@ compare_clustering <- function(c1, c2, sorted_pairs = NULL, AMI = FALSE) {
     RI = RI(c1, c2, sorted_pairs),
     ARI = ARI(c1, c2, sorted_pairs),
     MI = -H$UV + H$U + H$V,
+    NMI = MI / max(H$U, H$V),
     VI = H$UV - MI,
     NVI = 1 - MI / H$UV,
     ID = max(H$U, H$V) - MI,
     NID = 1 - MI / max(H$U, H$V),
-    NMI = MI / max(H$U, H$V),
     Chi2 = Chi2(c1, c2, sorted_pairs),
     MARI = MARI(c1, c2, sorted_pairs),
     MARIraw = MARIraw(c1, c2, sorted_pairs),
