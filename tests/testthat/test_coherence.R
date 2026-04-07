@@ -151,7 +151,7 @@ test_that("Testing coherence of the MARI", {
   n <- 1e5
   c1 <- as.numeric(sample(1:(n / 100), n, replace = TRUE))
   c2 <- as.numeric(sample(1:(n / 100), n, replace = TRUE))
-  expect_equal(aricode::MARIraw(c1, c2), ARI_estimated(c1, c2))
+  expect_equal(aricode::MARI(c1, c2, raw = TRUE), ARI_estimated(c1, c2))
 
   ## "\n-moderate random-
   n <- rpois(lambda = 100, n = 1) + 3
@@ -159,27 +159,27 @@ test_that("Testing coherence of the MARI", {
   k2 <- rpois(lambda = 5, n = 1) + 2
   c1 <- sample(1:k1, n, replace = T)
   c2 <- sample(1:k2, n, replace = T)
-  expect_equal(aricode::MARIraw(c1, c2), ARI_estimated(c1, c2))
+  expect_equal(aricode::MARI(c1, c2, raw = TRUE), ARI_estimated(c1, c2))
 
   ## "\n-real data-
   data(iris)
   cl <- cutree(hclust(dist(iris[, -5])), 4)
-  expect_equal(aricode::MARIraw(c1, c2), ARI_estimated(c1, c2))
+  expect_equal(aricode::MARI(c1, c2, raw = TRUE), ARI_estimated(c1, c2))
 
   ## "\n-completely equal vectors with no groups-")
   c1 <- 1:100
   c2 <- 1:100
-  expect_equal(aricode::MARIraw(c1, c2), ARI_estimated(c1, c2))
+  expect_equal(aricode::MARI(c1, c2, raw = TRUE), ARI_estimated(c1, c2))
 
   ## "\n-completely equal vectors with one groups-")
   c1 <- rep(1, 100)
   c2 <- rep(2, 100)
-  expect_equal(aricode::MARIraw(c1, c2), ARI_estimated(c1, c2))
+  expect_equal(aricode::MARI(c1, c2, raw = TRUE), ARI_estimated(c1, c2))
 
   ## "\n-completely different vectors with one groups-")
   c1 <- c(rep(0, 99), 1)
   c2 <- rep(1, 100)
-  expect_equal(aricode::MARIraw(c1, c2), ARI_estimated(c1, c2))
+  expect_equal(aricode::MARI(c1, c2, raw = TRUE), ARI_estimated(c1, c2))
 })
 
 test_that("Testing coherence of the MARI with ARI : in case of independance their values should be close", {

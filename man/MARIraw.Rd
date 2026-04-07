@@ -6,29 +6,20 @@
 \usage{
 MARIraw(c1, c2, sorted_pairs = NULL)
 }
-\arguments{
-\item{c1}{A vector of length $n$ with values between 0 and $N_1 < n$ representing the
-first classification. Supported types: integer, numeric, or factor. Avoid character
-vectors for better performance. Must not be a list.}
-
-\item{c2}{A vector of length $n$ with values between 0 and $N_2 < n$ representing the
-second classification. Supported types: integer, numeric, or factor. Avoid character
-vectors for better performance. Must not be a list.}
-
-\item{sorted_pairs}{optional output of function sort_pairs (if already computed).
-If `NULL` (the default), will be called internally}
-}
-\value{
-a scalar with the modified ARI without the division by the (maximum - expected)
-}
 \description{
-A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep, based on a multinomial model. Raw means, that the index is not divided by the (maximum - expected) value.
+`r lifecycle::badge("deprecated")`
+
+The function MARI now owns an argument function `raw` if one wishes to compute the raw version of MARI.
+}
+\details{
+A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist (2023), based on a multinomial model.
+Raw means that the index is not divided by the (maximum - expected) value.
 }
 \examples{
 data(iris)
 cl <- cutree(hclust(dist(iris[, -5])), 4)
-MARIraw(cl, iris$Species)
+out <- MARIraw(cl, iris$Species)
+# ->
+out <- MARI(cl, iris$Species, raw = TRUE)
 }
-\seealso{
-\code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
-}
+\keyword{internal}

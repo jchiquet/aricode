@@ -25,7 +25,7 @@
 #' @details
 #' Pair sorting, which is at the heart of computing all clustering comparison measures, has been carefully
 #' optimized. Hence, even basic R operations (checking for the presence of NAs, type conversion, or
-#' constructing a sparse contingency matrix as an output) have non negligible cost compare to the pair
+#' constructing a sparse contingency matrix as an output) have non-negligible cost compared to the pair
 #' sorting itself. For optimal performance, please provide the vectors as integers or factors without any NAs.
 #'
 #' @examples
@@ -159,11 +159,11 @@ ARI <- function(c1, c2, sorted_pairs = NULL) {
 
 #' Rand Index
 #'
-#' A function to compute the rand index between two classifications
+#' A function to compute the Rand index between two classifications
 #'
 #' @inheritParams ARI
 #'
-#' @return a scalar with the rand index.
+#' @return a scalar with the Rand index.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
 #' data(iris)
@@ -182,18 +182,21 @@ RI <- function(c1, c2, sorted_pairs = NULL) {
 
 #' Modified Adjusted Rand Index
 #'
-#' A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep, based on a multinomial model.
+#' A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. (2023), based on a multinomial model.
 #'
 #' @inheritParams ARI
-#'
+#' @param raw Boolean: should the raw version of the MARI be computed? Default to `FALSE`.
 #' @return a scalar with the modified ARI.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
+#' @references Sundqvist, Martina, Julien Chiquet, and Guillem Rigaill. "Adjusting the
+#'  adjusted Rand Index: A multinomial story." Computational Statistics 38.1
+#'  (2023): 327-347.
 #' @examples
 #' data(iris)
 #' cl <- cutree(hclust(dist(iris[, -5])), 4)
 #' MARI(cl, iris$Species)
 #' @export
-MARI <- function(c1, c2, sorted_pairs = NULL) {
+MARI <- function(c1, c2, sorted_pairs = NULL, raw = FALSE) {
   if (is.null(sorted_pairs)) {
     sorted_pairs <- sort_pairs(c1, c2)
   }
@@ -213,61 +216,51 @@ MARI <- function(c1, c2, sorted_pairs = NULL) {
   expectedIndex <- (srow * scol - stot - (T1 + T2 + T3)) / (6 * choose(N, 4))
 
   ## return the rand-index
-  expectedIndex <- expectedIndex * choose(N, 2) ## RESCALE SO THAT THE CODE IS EQUIVALENT TO THE ARI
-  maximumIndex <- (srow + scol) / 2
-  if (expectedIndex == maximumIndex & stot != 0) {
-    res <- 1
+  if (raw) {
+    res <- (stot / choose(N, 2)) - expectedIndex
   } else {
-    res <- (stot - expectedIndex) / (maximumIndex - expectedIndex)
+    expectedIndex <- expectedIndex * choose(N, 2) ## RESCALE SO THAT THE CODE IS EQUIVALENT TO THE ARI
+    maximumIndex <- (srow + scol) / 2
+    if (expectedIndex == maximumIndex & stot != 0) {
+      res <- 1
+    } else {
+      res <- (stot - expectedIndex) / (maximumIndex - expectedIndex)
+    }
   }
-  res
-  ## return the adjusted (and divided) rand-index
   res
 }
 
 #' raw Modified Adjusted Rand Index
 #'
-#' A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep, based on a multinomial model.
+#' A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist (2023), based on a multinomial model.
 #' Raw means that the index is not divided by the (maximum - expected) value.
 #'
-#' @inheritParams ARI
-#' @return a scalar with the modified ARI without the division by the (maximum - expected)
-#' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' The function MARI now owns an argument function `raw` if one wishes to compute the raw version of MARI.
+#'
 #' @examples
 #' data(iris)
 #' cl <- cutree(hclust(dist(iris[, -5])), 4)
-#' MARIraw(cl, iris$Species)
+#' out <- MARIraw(cl, iris$Species)
+#' # ->
+#' out <- MARI(cl, iris$Species, raw = TRUE)
+#' @keywords internal
+#' @importFrom lifecycle badge deprecate_warn
 #' @export
 MARIraw <- function(c1, c2, sorted_pairs = NULL) {
-  if (is.null(sorted_pairs)) {
-    sorted_pairs <- sort_pairs(c1, c2)
-  }
-
-  N <- length(c1)
-  stot <- sum(choose(sorted_pairs$nij, 2), na.rm = TRUE)
-  srow <- sum(choose(sorted_pairs$ni., 2), na.rm = TRUE)
-  scol <- sum(choose(sorted_pairs$n.j, 2), na.rm = TRUE)
-
-  ## using Lemma 3.3
-  ## triplets
-  T1 <- 2 * N
-  T2 <- sum(as.double(sorted_pairs$nij) * as.double(sorted_pairs$ni.[sorted_pairs$pair_c1 + 1]) * as.double(sorted_pairs$n.j[sorted_pairs$pair_c2 + 1]), na.rm = TRUE)
-  T3 <- -sum(sorted_pairs$nij^2, na.rm = TRUE) - sum(sorted_pairs$ni.^2, na.rm = TRUE) - sum(sorted_pairs$n.j^2, na.rm = TRUE)
-
-  ## quadruplets (and division by 6 choose(N, 4)
-  expectedIndex <- (srow * scol - stot - (T1 + T2 + T3)) / (6 * choose(N, 4))
-
-  ## return the rand-index
-  res <- (stot / choose(N, 2)) - expectedIndex
-  res
+  lifecycle::deprecate_warn("1.1.0", "clustComp()", "compare_clustering()")
+  MARI(c1, c2, sorted_pairs, raw = TRUE)
 }
+
 
 #' Chi-square statistics
 #'
-#' A function to compute the Chi-2 statistics
+#' A function to compute the Chi-2 statistic
 #'
 #' @inheritParams ARI
-#' @return a scalar with the chi-square statistics.
+#' @return a scalar with the Chi-square statistic.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @examples
 #' data(iris)
@@ -287,10 +280,10 @@ Chi2 <- function(c1, c2, sorted_pairs = NULL) {
 
 #' Frobenius norm
 #'
-#' A function to compute the Frobenius norm between two classification as defined in Lajugie et al. 2014 and Arlot et al 2019
+#' A function to compute the Frobenius norm between two classifications as defined in Lajugie et al. 2014 and Arlot et al 2019
 #'
 #' @inheritParams ARI
-#' @return a scalar with the chi-square statistics.
+#' @return a scalar with the Frobenius norm.
 #' @seealso \code{\link{ARI}}, \code{\link{NID}}, \code{\link{NVI}}, \code{\link{NMI}}, \code{\link{clustComp}}
 #' @references
 #'   - Rémi Lajugie, Francis Bach, and Sylvain Arlot. "Large-margin metric learning for constrained partitioning problems." International Conference on Machine Learning. PMLR, 2014.

@@ -37,7 +37,7 @@ A function to sort pairs of integers or factors and identify the pairs between t
 \details{
 Pair sorting, which is at the heart of computing all clustering comparison measures, has been carefully
 optimized. Hence, even basic R operations (checking for the presence of NAs, type conversion, or
-constructing a sparse contingency matrix as an output) have non negligible cost compare to the pair
+constructing a sparse contingency matrix as an output) have non-negligible cost compared to the pair
 sorting itself. For optimal performance, please provide the vectors as integers or factors without any NAs.
 }
 \examples{

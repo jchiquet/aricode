@@ -25,7 +25,7 @@ a list with all the measures available
 }
 \description{
 A function for computing all the measures of similarity implemented in this package at once.
-Include ARI, RI, MI VI, NVI, ID, NID, NMI, Chi2, MARI, Frobenius
+Include (A)RI, (N)MI, (N)VI, (N)ID, Chi2, MARI, Frobenius
 }
 \examples{
 data(iris)

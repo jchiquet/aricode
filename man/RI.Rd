@@ -19,10 +19,10 @@ vectors for better performance. Must not be a list.}
 If `NULL` (the default), will be called internally}
 }
 \value{
-a scalar with the rand index.
+a scalar with the Rand index.
 }
 \description{
-A function to compute the rand index between two classifications
+A function to compute the Rand index between two classifications
 }
 \examples{
 data(iris)

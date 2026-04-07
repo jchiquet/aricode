@@ -19,10 +19,10 @@ vectors for better performance. Must not be a list.}
 If `NULL` (the default), will be called internally}
 }
 \value{
-a scalar with the chi-square statistics.
+a scalar with the Frobenius norm.
 }
 \description{
-A function to compute the Frobenius norm between two classification as defined in Lajugie et al. 2014 and Arlot et al 2019
+A function to compute the Frobenius norm between two classifications as defined in Lajugie et al. 2014 and Arlot et al 2019
 }
 \examples{
 data(iris)

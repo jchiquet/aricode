@@ -9,9 +9,9 @@
 #'
 #' Traditional implementations (e.g., function \code{adjustedRandIndex} of
 #' package \code{mclust}) are in Omega(n + u v) where n is the size of the
-#' vectors the classifications of which are to be compared, u and v are the
-#' respective number of classes in each vectors. Here, the implementation is
-#' in Theta(n), plus the gain of speed due to the C++ code.
+#' vectors whose classifications are to be compared, u and v are the
+#' respective numbers of classes in each vector. In aricode, the implementation is
+#' in Theta(n), with additional speed gains from C++ code.
 #'
 #' The functions included in aricode are:
 #'

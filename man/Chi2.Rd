@@ -19,10 +19,10 @@ vectors for better performance. Must not be a list.}
 If `NULL` (the default), will be called internally}
 }
 \value{
-a scalar with the chi-square statistics.
+a scalar with the Chi-square statistic.
 }
 \description{
-A function to compute the Chi-2 statistics
+A function to compute the Chi-2 statistic
 }
 \examples{
 data(iris)

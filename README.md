@@ -43,8 +43,8 @@ package **mclust**) are in $\Omega(n + u v)$ where
 
 In **aricode** we propose an implementation, based on radix sort, that
 is in $\Theta(n)$ in time and space.  
-Importantly, the complexity does not depends on $u$ and $v$. Our
-implementation of the ARI for instance is one or two order of magnitude
+Importantly, the complexity does not depend on $u$ and $v$. Our
+implementation of the ARI for instance is one or two orders of magnitude
 faster than some standard implementation in `R`.
 
 ## Available measures and functions
