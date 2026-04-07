@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">aricode</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -62,7 +62,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">RI</span><span class="op">(</span><span class="va">c1</span>, <span class="va">c2</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">RI</span><span class="op">(</span><span class="va">c1</span>, <span class="va">c2</span>, sorted_pairs <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -70,13 +70,20 @@
 
 
 <dl><dt id="arg-c-">c1<a class="anchor" aria-label="anchor" href="#arg-c-"></a></dt>
-<dd><p>a vector of length n with value between 0 and N1 &lt; n containing the first classification.
-Must be a vector of integers or characters, a numeric, a factor, but not a list. Avoid character.</p></dd>
+<dd><p>A vector of length $n$ with values between 0 and $N_1 &lt; n$ representing the
+first classification. Supported types: integer, numeric, or factor. Avoid character
+vectors for better performance. Must not be a list.</p></dd>
 
 
 <dt id="arg-c-">c2<a class="anchor" aria-label="anchor" href="#arg-c-"></a></dt>
-<dd><p>a vector of length n with value between 0 and N2 &lt; n containing the second classification.
-Must be a vector of integers or characters, a numeric or a factor, but not a list. Avoid character.</p></dd>
+<dd><p>A vector of length $n$ with values between 0 and $N_2 &lt; n$ representing the
+second classification. Supported types: integer, numeric, or factor. Avoid character
+vectors for better performance. Must not be a list.</p></dd>
+
+
+<dt id="arg-sorted-pairs">sorted_pairs<a class="anchor" aria-label="anchor" href="#arg-sorted-pairs"></a></dt>
+<dd><p>optional output of function sort_pairs (if already computed).
+If `NULL` (the default), will be called internally</p></dd>
 
 </dl></div>
     <div id="value">
