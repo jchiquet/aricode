@@ -206,7 +206,7 @@ MARI <- function(c1, c2, sorted_pairs = NULL) {
   ## using Lemma 3.3
   ## triplets
   T1 <- 2 * N
-  T2 <- sum(sorted_pairs$nij * sorted_pairs$ni.[sorted_pairs$pair_c1 + 1] * sorted_pairs$n.j[sorted_pairs$pair_c2 + 1], na.rm = TRUE)
+  T2 <- sum(as.double(sorted_pairs$nij) * as.double(sorted_pairs$ni.[sorted_pairs$pair_c1 + 1]) * as.double(sorted_pairs$n.j[sorted_pairs$pair_c2 + 1]), na.rm = TRUE)
   T3 <- -sum(sorted_pairs$nij^2, na.rm = TRUE) - sum(sorted_pairs$ni.^2, na.rm = TRUE) - sum(sorted_pairs$n.j^2, na.rm = TRUE)
 
   ## quadruplets (and division by 6 choose(N, 4)
@@ -227,7 +227,8 @@ MARI <- function(c1, c2, sorted_pairs = NULL) {
 
 #' raw Modified Adjusted Rand Index
 #'
-#' A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep, based on a multinomial model. Raw means, that the index is not divided by the (maximum - expected) value.
+#' A function to compute a modified adjusted rand index between two classifications as proposed by Sundqvist et al. in prep, based on a multinomial model.
+#' Raw means that the index is not divided by the (maximum - expected) value.
 #'
 #' @inheritParams ARI
 #' @return a scalar with the modified ARI without the division by the (maximum - expected)
@@ -250,7 +251,7 @@ MARIraw <- function(c1, c2, sorted_pairs = NULL) {
   ## using Lemma 3.3
   ## triplets
   T1 <- 2 * N
-  T2 <- sum(sorted_pairs$nij * sorted_pairs$ni.[sorted_pairs$pair_c1 + 1] * sorted_pairs$n.j[sorted_pairs$pair_c2 + 1], na.rm = TRUE)
+  T2 <- sum(as.double(sorted_pairs$nij) * as.double(sorted_pairs$ni.[sorted_pairs$pair_c1 + 1]) * as.double(sorted_pairs$n.j[sorted_pairs$pair_c2 + 1]), na.rm = TRUE)
   T3 <- -sum(sorted_pairs$nij^2, na.rm = TRUE) - sum(sorted_pairs$ni.^2, na.rm = TRUE) - sum(sorted_pairs$n.j^2, na.rm = TRUE)
 
   ## quadruplets (and division by 6 choose(N, 4)
@@ -277,9 +278,8 @@ Chi2 <- function(c1, c2, sorted_pairs = NULL) {
   if (is.null(sorted_pairs)) {
     sorted_pairs <- sort_pairs(c1, c2)
   }
-
   N <- length(c1)
-  res <- N * sum(sorted_pairs$nij^2 / (sorted_pairs$ni.[sorted_pairs$pair_c1 + 1] * sorted_pairs$n.j[sorted_pairs$pair_c2 + 1]))
+  res <- N * sum(sorted_pairs$nij^2 / (as.double(sorted_pairs$ni.[sorted_pairs$pair_c1 + 1]) * as.double(sorted_pairs$n.j[sorted_pairs$pair_c2 + 1])))
   res <- res - N
   res
 }
@@ -304,8 +304,7 @@ Frobenius <- function(c1, c2, sorted_pairs = NULL) {
   if (is.null(sorted_pairs)) {
     sorted_pairs <- sort_pairs(c1, c2)
   }
-
-  out <- length(sorted_pairs$ni.) + length(sorted_pairs$n.j) - 2 * sum(sorted_pairs$nij^2 / (sorted_pairs$ni.[sorted_pairs$pair_c1 + 1] * sorted_pairs$n.j[sorted_pairs$pair_c2 + 1]))
+  out <- length(sorted_pairs$ni.) + length(sorted_pairs$n.j) - 2 * sum(sorted_pairs$nij^2 / (as.double(sorted_pairs$ni.[sorted_pairs$pair_c1 + 1]) * as.double(sorted_pairs$n.j[sorted_pairs$pair_c2 + 1])))
   out
 }
 
