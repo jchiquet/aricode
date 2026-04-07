@@ -18,6 +18,7 @@ calcul
 CallEntries
 CallMethodDef
 cb
+ccb
 Celisse
 cerr
 Changelog
@@ -57,6 +58,8 @@ Epps
 et
 factorielles
 faf
+fbd
+fbe
 fd
 Filtrage
 florent
@@ -83,6 +86,7 @@ indexCur
 individus
 inrae
 IntegerVector
+ints
 jchiquet
 JMLR
 jSEXP
@@ -96,6 +100,7 @@ lgamma
 librairies
 libérée
 Lifecycle
+lifecycle
 LinkingTo
 LogicalVector
 LTS
@@ -127,9 +132,13 @@ paires
 params
 pkgdown
 PMLR
+pre
+Pre
+precommit
 Probabilité
 Pré
 Préparation
+ptr
 radix
 Rapp
 Rcerr
@@ -166,6 +175,7 @@ SHA
 SortPairs
 sortPairs
 src
+STL
 struct
 Structs
 sundqvist

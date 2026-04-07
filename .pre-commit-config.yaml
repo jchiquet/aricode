@@ -41,6 +41,7 @@ repos:
           (.*/|)\.travis\.yml|
           (.*/|)appveyor\.yml|
           (.*/|)NAMESPACE|
+          (.*/|)CRAN-SUBMISSION|
           (.*/|)renv/settings\.dcf|
           (.*/|)renv\.lock|
           (.*/|)WORDLIST|

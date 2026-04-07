@@ -7,17 +7,19 @@
 #include <Rcpp.h>
 
 #include <algorithm>
-#include <execution>  // C++17
+#include <execution>
 #include <numeric>
 #include <vector>
 
-// Function getRank
+// ====================================================================
+//
+// Function get_rank
 //
 // This function performs a rank transformation (dense encoding)
 // on an integer vector.
 //
 // [[Rcpp::export]]
-Rcpp::List getRank(Rcpp::IntegerVector& classif) {
+Rcpp::List get_rank(Rcpp::IntegerVector& classif) {
   unsigned int n = classif.size();
 
   // 1. Find min and max in a single pass using std::minmax_element
@@ -72,8 +74,9 @@ struct Pair {
 };
 
 // [[Rcpp::export]]
-Rcpp::List std_SortPairs(Rcpp::IntegerVector& c1_in, Rcpp::IntegerVector& c2_in,
-                         unsigned int N1, unsigned int N2) {
+Rcpp::List std_sort_pairs(Rcpp::IntegerVector& c1_in,
+                          Rcpp::IntegerVector& c2_in, unsigned int N1,
+                          unsigned int N2) {
   // ----------------------------------------------------------
   // Initialization
   //
@@ -143,50 +146,72 @@ Rcpp::List std_SortPairs(Rcpp::IntegerVector& c1_in, Rcpp::IntegerVector& c2_in,
                             Rcpp::Named("pair_c2") = pair_c2);
 }
 
-// [[Rcpp::export]]
-double expected_MI(Rcpp::IntegerVector ni_, Rcpp::IntegerVector n_j) {
-  int n_rows = ni_.size();
-  int n_cols = n_j.size();
-  int N = sum(ni_);
-  double N_double = static_cast<double>(N);
+// ====================================================================
+//
+// Compute the expected Mutual Information between two classification
+//
 
-  double emi = 0.0;
+// [[Rcpp::export]]
+double expected_MI(const Rcpp::IntegerVector& ni_r,
+                   const Rcpp::IntegerVector& nj_r) {
+  int n_rows = ni_r.size();
+  int n_cols = nj_r.size();
+
+  //  Direct pointer access (bypasses Rcpp operator[] bounds checking)
+  const int* ni_ptr = INTEGER(ni_r);
+  const int* nj_ptr = INTEGER(nj_r);
+
+  int64_t N = 0;
+  for (int i = 0; i < n_rows; ++i) N += ni_ptr[i];
+
+  if (N == 0) return 0.0;
+  double N_double = static_cast<double>(N);
   double log_N = std::log(N_double);
 
-  // Pré-calcul des log-factorielles pour gagner en performance
-  Rcpp::NumericVector log_fact = lfactorial(Rcpp::seq(0, N));
+  // Pre-calculate logs AND log-factorials in one pass using std::vector
+  std::vector<double> log_fact(N + 1);
+  std::vector<double> log_ints(N + 1);
+  log_fact[0] = 0.0;
+  log_ints[0] = -INFINITY;  // log(0) is undefined, but helps catch errors
+
+  for (int i = 1; i <= N; ++i) {
+    double val = static_cast<double>(i);
+    log_ints[i] = std::log(val);
+    log_fact[i] = log_fact[i - 1] + log_ints[i];
+  }
+
+  double emi = 0.0;
   double log_fact_N = log_fact[N];
 
-  for (int i = 0; i < n_rows; i++) {
-    int ni = ni_[i];
-    if (ni == 0) continue;
+  for (int i = 0; i < n_rows; ++i) {
+    int ni = ni_ptr[i];
+    if (ni <= 0) continue;
 
     double term_ni = log_fact[ni] + log_fact[N - ni];
 
-    for (int j = 0; j < n_cols; j++) {
-      int nj = n_j[j];
-      if (nj == 0) continue;
-
-      int start_nij = std::max(1, ni + nj - N);
+    for (int j = 0; j < n_cols; ++j) {
+      int nj = nj_ptr[j];
+      if (nj <= 0) continue;
+      int start_nij = std::max(1, ni + nj - static_cast<int>(N));
       int end_nij = std::min(ni, nj);
 
+      // Move as much as possible out of the nij loop
       double common_term =
           term_ni + log_fact[nj] + log_fact[N - nj] - log_fact_N;
-      double log_ni_nj = std::log(static_cast<double>(ni) * nj);
+      double log_ni_nj = log_ints[ni] + log_ints[nj];
 
-      for (int nij = start_nij; nij <= end_nij; nij++) {
-        // Probabilité hypergéométrique P(nij)
+      for (int nij = start_nij; nij <= end_nij; ++nij) {
+        // Hypergeometric probability using pre-calculated STL vector
         double log_p_nij =
-            common_term - (log_fact[nij] + log_fact[ni - nij] +
-                           log_fact[nj - nij] + log_fact[N - ni - nj + nij]);
+            common_term -
+            (log_fact[nij] + log_fact[ni - nij] + log_fact[nj - nj] +
+             log_fact[nj - nij] + log_fact[N - ni - nj + nij]);
 
         double p_nij = std::exp(log_p_nij);
 
-        // Calcul du terme MI : (nij / N) * log( (nij * N) / (ni * nj) )
-        // Équivalent à : (nij / N) * (log(nij) + log(N) - log(ni * nj))
-        double mi_term =
-            (static_cast<double>(nij) / N_double) *
-            (std::log(static_cast<double>(nij)) + log_N - log_ni_nj);
+        // Optimized MI term: No calls to std::log here
+        double mi_term = (static_cast<double>(nij) / N_double) *
+                         (log_ints[nij] + log_N - log_ni_nj);
 
         emi += p_nij * mi_term;
       }

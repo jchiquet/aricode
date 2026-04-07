@@ -4,16 +4,26 @@
 \alias{NMI}
 \title{Normalized mutual information (NMI)}
 \usage{
-NMI(c1, c2, variant = c("max", "min", "sqrt", "sum", "joint"))
+NMI(
+  c1,
+  c2,
+  variant = c("max", "min", "sqrt", "sum", "joint"),
+  sorted_pairs = NULL
+)
 }
 \arguments{
-\item{c1}{a vector of length n with value between 0 and N1 < n containing the first classification.
-Must be a vector of integers or characters, a numeric, a factor, but not a list. Avoid character.}
+\item{c1}{A vector of length $n$ with values between 0 and $N_1 < n$ representing the
+first classification. Supported types: integer, numeric, or factor. Avoid character
+vectors for better performance. Must not be a list.}
 
-\item{c2}{a vector of length n with value between 0 and N2 < n containing the second classification.
-Must be a vector of integers or characters, a numeric or a factor, but not a list. Avoid character.}
+\item{c2}{A vector of length $n$ with values between 0 and $N_2 < n$ representing the
+second classification. Supported types: integer, numeric, or factor. Avoid character
+vectors for better performance. Must not be a list.}
 
 \item{variant}{a string in ("max", "min", "sqrt", "sum", "joint"): different variants of NMI. Default use "max".}
+
+\item{sorted_pairs}{optional output of function sort_pairs (if already computed).
+If `NULL` (the default), will be called internally}
 }
 \value{
 a scalar with the normalized mutual information .

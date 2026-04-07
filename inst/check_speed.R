@@ -2,11 +2,11 @@ library(microbenchmark)
 library(aricode)
 library(mclust)
 
-n <- 10^7
+n <- 1e7
 c1 <- sample.int(100, size = n, replace = TRUE)
 c2 <- sample.int(100, size = n, replace = TRUE)
-res1 <- aricode:::getRank(c1)
-res2 <- aricode:::getRank(c2)
+res1 <- aricode:::get_rank(c1)
+res2 <- aricode:::get_rank(c2)
 mylevels <- list(c1 = res1$index, c2 = res2$index)
 
 ## define the ARI as in the mclust package
@@ -40,12 +40,14 @@ c1 <- sample(1:(n / 200), n, replace = TRUE)
 c2 <- c1
 i_change <- sample(1:n, n / 50, replace = FALSE)
 c2[i_change] <- c2[rev(i_change)]
-profvis::profvis(sortPairs(c1, c2))
+profvis::profvis(sort_pairs(c1, c2))
+
+profvis::profvis(compare_clustering(c1, c2))
 
 c1 <- as.numeric(c1)
 c2 <- as.numeric(c2)
-profvis::profvis(sortPairs(c1, c2))
+profvis::profvis(sort_pairs(c1, c2))
 
 c1 <- as.character(c1)
 c2 <- as.character(c2)
-profvis::profvis(sortPairs(c1, c2))
+profvis::profvis(sort_pairs(c1, c2))
