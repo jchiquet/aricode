@@ -50,17 +50,17 @@ Our implementation of the ARI for instance is one or two orders of magnitude fas
 
 The functions included in `aricode` are:
 
-- `AMI`: computes the adjusted mutual information
-- `ARI/RI`: computes the (adjusted) Rand index
-- `Chi2`: computes the Chi-square statistics
-- `Frobenius` compute the Frobenius norm between two classification as defined in [Arlot et al, 2019](https://jmlr.org/papers/v20/16-155.html)
-- `MARI/MARIraw`: computes the modified adjusted rand index as defined in [Sundqvist et al, 2023](https://doi.org/10.1007/s00180-022-01230-7)
+- `(A)RI`: computes the (adjusted) Rand index
+- `MARI`: computes the modified adjusted rand index as defined in [Sundqvist et al, 2023](https://doi.org/10.1007/s00180-022-01230-7)
 - `NID`: computes the normalized information distance
 - `NMI`: computes the normalized mutual information
 - `NVI`: computes the the normalized variation information
-- `expected_MI`: computes the expected mutual information
+- `AMI`: computes the adjusted mutual information
+- `Chi2`: computes the Chi-square statistics
+- `Frobenius` compute the Frobenius norm between two classification as defined in [Arlot et al, 2019](https://jmlr.org/papers/v20/16-155.html)
 - `entropy`: computes the conditional and joint entropies
-- `clustComp`: computes all clustering comparison measures at once
+- `compare_clustering`: computes all clustering comparison measures at once
+- `sort_pairs`: radix sort for pairs of elements
 
 ## Timings
 
