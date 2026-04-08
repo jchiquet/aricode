@@ -109,16 +109,9 @@ Importantly, the complexity does not depend on <math display="inline" xmlns="htt
 <p>The functions included in <code>aricode</code> are:</p>
 <ul>
 <li>
-<code>AMI</code>: computes the adjusted mutual information</li>
+<code>(A)RI</code>: computes the (adjusted) Rand index</li>
 <li>
-<code>ARI/RI</code>: computes the (adjusted) Rand index</li>
-<li>
-<code>Chi2</code>: computes the Chi-square statistics</li>
-<li>
-<code>Frobenius</code> compute the Frobenius norm between two classification as defined in <a href="https://jmlr.org/papers/v20/16-155.html" class="external-link">Arlot et al, 2019</a>
-</li>
-<li>
-<code>MARI/MARIraw</code>: computes the modified adjusted rand index as defined in <a href="https://doi.org/10.1007/s00180-022-01230-7" class="external-link">Sundqvist et al, 2023</a>
+<code>MARI</code>: computes the modified adjusted rand index as defined in <a href="https://doi.org/10.1007/s00180-022-01230-7" class="external-link">Sundqvist et al, 2023</a>
 </li>
 <li>
 <code>NID</code>: computes the normalized information distance</li>
@@ -127,11 +120,18 @@ Importantly, the complexity does not depend on <math display="inline" xmlns="htt
 <li>
 <code>NVI</code>: computes the the normalized variation information</li>
 <li>
-<code>expected_MI</code>: computes the expected mutual information</li>
+<code>AMI</code>: computes the adjusted mutual information</li>
+<li>
+<code>Chi2</code>: computes the Chi-square statistics</li>
+<li>
+<code>Frobenius</code> compute the Frobenius norm between two classification as defined in <a href="https://jmlr.org/papers/v20/16-155.html" class="external-link">Arlot et al, 2019</a>
+</li>
 <li>
 <code>entropy</code>: computes the conditional and joint entropies</li>
 <li>
-<code>clustComp</code>: computes all clustering comparison measures at once</li>
+<code>compare_clustering</code>: computes all clustering comparison measures at once</li>
+<li>
+<code>sort_pairs</code>: radix sort for pairs of elements</li>
 </ul>
 </div>
 <div class="section level2">
