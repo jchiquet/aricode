@@ -1,4 +1,4 @@
-This submission follows the reporting of a bug in the calculation of the AMI.
+Various improvment in the speed of our algorithm
 
 ## aricode 1.1.0
 
@@ -21,7 +21,7 @@ This submission follows the reporting of a bug in the calculation of the AMI.
 - Linux ubuntu 24.04, R-release, gcc + unit test with sanitizers (github-action)
 - Linux ubuntu 24.04, R-release, clang + unit test with sanitizers (github-action)
 
-* tested remotely with win-builder (R version 4.3.1, R unstable, R version 4.2.3)
+* tested remotely with win-builder (R version 4.5.3, R unstable, R version 4.6.0)
 
 all status OK
 
