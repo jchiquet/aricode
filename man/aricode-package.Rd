@@ -59,6 +59,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Julien Chiquet \email{julien.chiquet@inrae.fr} (\href{https://orcid.org/0000-0002-3629-3429}{ORCID})
   \item Guillem Rigaill \email{guillem.rigaill@inrae.fr}
   \item Martina Sundqvist \email{martina.sundqvist@agroparistech.fr}
 }

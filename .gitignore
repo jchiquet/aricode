@@ -46,3 +46,4 @@ src/*.dll
 
 # revdep testing
 revdep/
+.positai

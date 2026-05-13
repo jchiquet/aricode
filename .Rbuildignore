@@ -9,7 +9,6 @@ README_cache
 ^CRAN-SUBMISSION$
 ^\.Rproj\.user$
 ^\.github$
-^\.pre-commit-config\.yaml$
 ^_pkgdown\.yml$
 ^docs
 ^docs/*
@@ -18,3 +17,5 @@ README_cache
 ^revdep
 cran-comments.md
 figure
+^\.positai$
+^\.claude$

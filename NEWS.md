@@ -1,4 +1,4 @@
-## aricode 1.1-0 (2026-04-xx)
+## aricode 1.1-0 (2026-05-13)
 
 - Use original code for sorting pairs, which is faster than radix R implementation
 - Code linting and automation with precommit
